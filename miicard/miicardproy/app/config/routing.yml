@@ -1,0 +1,7 @@
+proy_mc_main:
+    resource: "@ProyMCMainBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

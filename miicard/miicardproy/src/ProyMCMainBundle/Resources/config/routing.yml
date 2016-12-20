@@ -1,0 +1,3 @@
+proy_mc_main_homepage:
+    path:     /
+    defaults: { _controller: ProyMCMainBundle:Default:index }
