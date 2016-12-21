@@ -1,4 +1,0 @@
-services:
-#    proy_mc_main.example:
-#        class: ProyMCMainBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]

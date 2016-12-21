@@ -1,8 +1,0 @@
-mycard_main_homepage:
-    path:     /
-    defaults: { _controller: MycardMainBundle:Default:index }
-
-mycard_main_usuario:
-    path:     /usuario/registro
-    defaults: { _controller: MycardMainBundle:Default:index }
-

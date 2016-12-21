@@ -1,4 +1,0 @@
-services:
-#    mycard_main.example:
-#        class: MycardMainBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]

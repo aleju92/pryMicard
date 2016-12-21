@@ -1,7 +1,0 @@
-mycard_main:
-    resource: "@MycardMainBundle/Resources/config/routing.yml"
-    prefix:   /
-
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
