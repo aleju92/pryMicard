@@ -1,0 +1,7 @@
+pw_mc_main:
+    resource: "@PwMCMainBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
