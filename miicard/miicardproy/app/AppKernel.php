@@ -16,7 +16,11 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
+<<<<<<< HEAD:miicard/miicardproy/app/AppKernel.php
             new ProyMCMainBundle\ProyMCMainBundle(),
+=======
+            new MycardMainBundle\MycardMainBundle(),
+>>>>>>> e9d2e3e9eb1cf7f58fe73df76a615e894e0e8973:mycard/app/AppKernel.php
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

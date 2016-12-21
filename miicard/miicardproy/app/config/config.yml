@@ -2,7 +2,11 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+<<<<<<< HEAD:miicard/miicardproy/app/config/config.yml
     - { resource: "@ProyMCMainBundle/Resources/config/services.yml" }
+=======
+    - { resource: "@MycardMainBundle/Resources/config/services.yml" }
+>>>>>>> e9d2e3e9eb1cf7f58fe73df76a615e894e0e8973:mycard/app/config/config.yml
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
