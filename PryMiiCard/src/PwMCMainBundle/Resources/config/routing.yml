@@ -2,7 +2,10 @@ pw_mc_main_homepage:
     path:     /
     defaults: { _controller: PwMCMainBundle:Default:index }
 
-pw_mc_main_help:
-    path:     /ayuda
-    defaults: { _controller: PwMCMainBundle:Default:ayuda }
-    
+pw_mc_main_admin:
+    path:     /sa/
+    defaults: { _controller: PwMCMainBundle:SAdmin:index }
+
+pw_mc_main_adminp:
+    path:     /sa/{page}
+    defaults: { _controller: PwMCMainBundle:SAdmin:pageselect,page:index }
