@@ -1,3 +1,8 @@
 pw_mc_main_homepage:
     path:     /
     defaults: { _controller: PwMCMainBundle:Default:index }
+
+pw_mc_main_help:
+    path:     /ayuda
+    defaults: { _controller: PwMCMainBundle:Default:ayuda }
+    
