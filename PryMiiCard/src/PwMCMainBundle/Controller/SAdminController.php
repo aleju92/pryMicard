@@ -15,7 +15,7 @@ class SAdminController extends Controller
     public function pageselectAction($page)
     {
     	if($page =="categorias" || $page=="admins"){
-    		return $this->render("PwMCMainBundle:sa:".$page.".html.twig",array());
+    		return $this->render("PwMCMainBundle:sa:".$page.".html.twig",array("menssaje"=>' '));
     	}else{
     		return  $this->redirect($this->generateUrl("pw_mc_main_adminp"));
     	}
