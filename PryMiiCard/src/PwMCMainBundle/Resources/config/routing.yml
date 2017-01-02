@@ -13,3 +13,7 @@ pw_mc_main_adminp:
 pw_mc_main_catadd:
     path:     /categoria/addCat/{descripcion}
     defaults: { _controller: PwMCMainBundle:categorias:addCat,descripcion:ropa }
+
+pw_mc_main_user:
+    path:     /user/
+    defaults: { _controller: PwMCMainBundle:SAdmin:pageselect,page:index }
