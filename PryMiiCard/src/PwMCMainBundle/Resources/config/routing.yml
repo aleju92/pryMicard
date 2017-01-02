@@ -21,3 +21,7 @@ pw_mc_main_user:
 pw_mc_main_userp:
     path:     /user/{page}
     defaults: { _controller: PwMCMainBundle:User:pageselect,page:index }
+
+pw_mc_main_userp:
+    path:     /user/miicard/
+    defaults: { _controller: PwMCMainBundle:User:pageselect,page:index }
