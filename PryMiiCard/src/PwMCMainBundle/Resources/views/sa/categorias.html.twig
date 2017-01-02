@@ -1,13 +1,11 @@
-
 {% extends "::Admin.html.twig" %}
 {% block title %}Categorias{% endblock %}
 {% block titulo %} Administracion de Categorias{%  endblock %}
 {% block cuerpo %}
-
-<div class ="row">
- <div id="mensaje">
+<div id="mensaje">
  	<p>{{ menssaje }}</p>
- </div>
+</div>
+<div class ="row">
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
     <li role="presentation" class="active"><a href="#ingreso" aria-controls="ingreso" role="tab" data-toggle="tab">Ingreso</a></li>
@@ -42,13 +40,14 @@
         <th>Nombre</th>
         <th>Cantidad de Promociones</th>
       </tr>
-      <tr>
-        <td>Row 1: Col 1</td>
-        <td>Row 1: Col 2</td>
-        <td>Row 1: Col 1</td>
-        <td>Selecionar</td>
-        
+      {% for categoria in categorias %}
+      <tr>		      
+        <td>{{ categoria.id }}</td>
+        <td>{{ categoria.desCat }}</td>
+        <td></td>
+        <td><button>Selecionar</button></td>        
       </tr>
+      {% endfor %}
     </table>
 </div>
 
