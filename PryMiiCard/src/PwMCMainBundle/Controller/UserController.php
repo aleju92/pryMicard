@@ -11,6 +11,17 @@ class UserController extends Controller
 	{
 		return $this->render('PwMCMainBundle:user:index.html.twig');
 	}
+	
+	public function pageselectAction($page)
+	{
+		if($page =="registrarse" || $page=="miperfil"){
+			return $this->render("PwMCMainBundle:sa:".$page.".html.twig",array("menssaje"=>' '));
+		}else{
+			return  $this->redirect($this->generateUrl("pw_mc_main_adminp"));
+		}
+		 
+	}
+	
 	public function ayudaAction()
 	{
 		return new Response("<html><body>hola</body></html>");

@@ -17,3 +17,7 @@ pw_mc_main_catadd:
 pw_mc_main_user:
     path:     /user/
     defaults: { _controller: PwMCMainBundle:User:index }
+
+pw_mc_main_user:
+    path:     /user/{page}
+    defaults: { _controller: PwMCMainBundle:User:index }
