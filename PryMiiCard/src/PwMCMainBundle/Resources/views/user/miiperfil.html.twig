@@ -1,0 +1,50 @@
+{% extends "::user.html.twig" %}
+{% block titulo %}MiiPerfil{% endblock %}
+{% block cuerpo %}
+<div class="row">
+	<h2>Nombre de Usuario</h2>
+    <div class ="row">
+     <div id="mensaje">
+     	<p>{{ menssaje }}</p>
+     </div>
+      <!-- Nav tabs -->
+      <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#ingreso" aria-controls="ingreso" role="tab" data-toggle="tab">MiiPerfil</a></li>
+        <li role="presentation"><a href="#modificacion" aria-controls="modificacion" role="tab" data-toggle="tab">Modificacion</a></li>    
+      </ul>
+      
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div role="tabpanel"  id="miiperfil">
+        	<table>
+                <tr>
+                	<td height="200" width="150"><img height="200" width="200" src="{{asset('images/perfil.jpg') }}" ></td>
+                    <td rowspan="3">
+                    	
+                    	<table >
+                			<tr>
+                            	<td>Tatiana Montenegro</td>
+                            </tr>
+                            <tr>
+                            	<td>tattocsb_010994@hotmail.com</td>
+                            </tr>
+                            <tr>
+                            	<td>1721795126</td>
+                            </tr>
+                            <tr>
+                            	<td>0989295810</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                	<td>TatyMaybeth</td>
+                </tr>
+                <tr>
+                	<td>*********</td>
+                </tr>
+			</table>
+      </div>
+    
+</div>
+{% endblock %}
