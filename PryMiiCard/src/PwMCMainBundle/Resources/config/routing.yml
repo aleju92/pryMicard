@@ -18,6 +18,6 @@ pw_mc_main_user:
     path:     /user/
     defaults: { _controller: PwMCMainBundle:User:index }
 
-pw_mc_main_user:
+pw_mc_main_userp:
     path:     /user/{page}
-    defaults: { _controller: PwMCMainBundle:User:index }
+    defaults: { _controller: PwMCMainBundle:User:pageselect,page:index }

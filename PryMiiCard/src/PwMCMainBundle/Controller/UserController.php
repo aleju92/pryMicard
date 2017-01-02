@@ -14,10 +14,10 @@ class UserController extends Controller
 	
 	public function pageselectAction($page)
 	{
-		if($page =="registrarse" || $page=="miperfil"){
-			return $this->render("PwMCMainBundle:sa:".$page.".html.twig",array("menssaje"=>' '));
+		if($page =="registrarse" || $page=="miiperfil" || $page=="creditos"){
+			return $this->render("PwMCMainBundle:user:".$page.".html.twig",array("menssaje"=>''));
 		}else{
-			return  $this->redirect($this->generateUrl("pw_mc_main_adminp"));
+			return  $this->redirect($this->generateUrl("pw_mc_main_userp"));
 		}
 		 
 	}
