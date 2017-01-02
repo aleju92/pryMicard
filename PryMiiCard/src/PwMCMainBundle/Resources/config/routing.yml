@@ -1,0 +1,65 @@
+pw_mc_main_homepage:
+    path:     /
+    defaults: { _controller: PwMCMainBundle:Default:index }
+
+pw_mc_main_admin:
+    path:     /sa/
+    defaults: { _controller: PwMCMainBundle:SAdmin:index }
+
+pw_mc_main_adminp:
+    path:     /sa/{page}
+    defaults: { _controller: PwMCMainBundle:SAdmin:pageselect,page:index }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+pw_mc_main_catadd:
+<<<<<<< HEAD
+    path:     /sa/categorias/addCat/{descripcion}
+    defaults: { _controller: PwMCMainBundle:categorias:addCat,descripcion:ropa }
+
+pw_mc_main_catedit:
+    path:     /sa/categorias/editCat/{id}/{descripcion}
+    defaults: { _controller: PwMCMainBundle:categorias:addCat,id:1}
+    
+pw_mc_main_catgetall:
+    path:     /sa/categorias/all
+    defaults: { _controller: PwMCMainBundle:categorias:getCats }
+    
+pw_mc_main_catgetXid:
+    path:     /sa/categorias/xId/{id}
+    defaults: { _controller: PwMCMainBundle:categorias:getCatXid,id:1 }
+=======
+    path:     /categoria/addCat/{descripcion}
+    defaults: { _controller: PwMCMainBundle:categorias:addCat,descripcion:ropa }
+
+pw_mc_main_user:
+    path:     /user/
+    defaults: { _controller: PwMCMainBundle:User:index }
+
+pw_mc_main_userp:
+    path:     /user/{page}
+    defaults: { _controller: PwMCMainBundle:User:pageselect,page:index }
+
+pw_mc_main_userp:
+    path:     /user/miicard/
+    defaults: { _controller: PwMCMainBundle:User:pageselect,page:index }
+>>>>>>> 94f2f4b25f41af377c1f32aad4b2b655373d61bd
