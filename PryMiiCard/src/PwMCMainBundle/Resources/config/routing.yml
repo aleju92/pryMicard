@@ -10,29 +10,7 @@ pw_mc_main_adminp:
     path:     /sa/{page}
     defaults: { _controller: PwMCMainBundle:SAdmin:pageselect,page:index }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 pw_mc_main_catadd:
-<<<<<<< HEAD
     path:     /sa/categorias/addCat/{descripcion}
     defaults: { _controller: PwMCMainBundle:categorias:addCat,descripcion:ropa }
 
@@ -47,9 +25,6 @@ pw_mc_main_catgetall:
 pw_mc_main_catgetXid:
     path:     /sa/categorias/xId/{id}
     defaults: { _controller: PwMCMainBundle:categorias:getCatXid,id:1 }
-=======
-    path:     /categoria/addCat/{descripcion}
-    defaults: { _controller: PwMCMainBundle:categorias:addCat,descripcion:ropa }
 
 pw_mc_main_user:
     path:     /user/
