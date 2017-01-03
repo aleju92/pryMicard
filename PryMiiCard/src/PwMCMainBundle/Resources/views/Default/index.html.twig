@@ -1,8 +1,27 @@
 {% extends "::base.html.twig" %}
+{% block stylesheets %}
+<link href="{{ asset('css/index.css')}}" rel="stylesheet">
+{% endblock %}
 
 {% block body %}
-<h1>Hello Worldo</h1>
-hola
+<div class="row">
+	<div class="col-md-12">
+
+		<div class="image">
+
+        <img class="imagen" src="{{asset('images/fondo.png') }}" alt="fondoMyCard">
+        
+         <h2><span>Plataforma de promociones al alcance de ti</span><br><br>
+         <p class="textoBlanco p"><a class="p" href="">Registrate ahora</a></p>
+         </h2>
+        </div>
+		 
+	</div>
+</div>
+<div class="row centrar">
+	<div class="col-md-12 centrar banner verde">Registrate como empresa para promocionarte</div>
+	<div class="col-md-12 centrar banner azul">Registrate como usuario para tener tu membresia</div>
+</div>
 <button type="button" class="btn btn-default" aria-label="Left Align">
   <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
 </button>

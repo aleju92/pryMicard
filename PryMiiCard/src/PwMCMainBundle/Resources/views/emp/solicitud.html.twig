@@ -1,0 +1,35 @@
+{% extends "::empresas.html.twig" %}
+{% block titulo %}Registro de Empresas{% endblock %}
+{% block cuerpo %}
+<div class="row">
+	<h2>Ingresa tu solicitud de registro</h2>
+    <table class="table table-striped">
+      <tr>
+        <td>Nombre:</td>
+        <td>
+          <input type ="Text" name="txtnom"/>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Ruc:</td>
+        <td>
+          <input type="text"name="txtruc"/>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Telefono:</td>
+        <td>
+          <input type="text" name="txttlf"/>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <input type="submit" name="btnsolicitar" value="SOLICITAR"/>
+        </td>
+      </tr>
+    </table>
+</div>
+{% endblock %}

@@ -11,5 +11,56 @@ pw_mc_main_adminp:
     defaults: { _controller: PwMCMainBundle:SAdmin:pageselect,page:index }
     
 pw_mc_main_catadd:
-    path:     /categoria/addCat/{descripcion}
+    path:     /sa/categorias/addCat/{descripcion}
     defaults: { _controller: PwMCMainBundle:categorias:addCat,descripcion:ropa }
+
+pw_mc_main_catedit:
+    path:     /sa/categorias/editCat/{id}/{descripcion}
+    defaults: { _controller: PwMCMainBundle:categorias:editCat,id:1}
+    
+pw_mc_main_catdelete:
+    path:     /sa/categorias/deleteCat/{id}/{estado}
+    defaults: { _controller: PwMCMainBundle:categorias:deleteCat,id:1,estado:0}
+    
+pw_mc_main_catgetall:
+    path:     /sa/categorias/all
+    defaults: { _controller: PwMCMainBundle:categorias:getCats }
+    
+pw_mc_main_catgetXid:
+    path:     /sa/categorias/xId/{id}
+    defaults: { _controller: PwMCMainBundle:categorias:getCatXid,id:1 }
+    
+pw_mc_main_adminadd:
+    path:     /sa/admins/add/{nom}/{ape}/{email}/{use}/{pass}
+    defaults: { _controller: PwMCMainBundle:Admins:addAdmin,id:1 }
+    
+pw_mc_main_adminedit:
+    path:     /admin/edit/{id}/{nom}/{ape}/{email}/{use}/{pass}
+    defaults: { _controller: PwMCMainBundle:Admins:editAdmin,id:1 }
+    
+pw_mc_main_admindelete:
+    path:     /sa/admins/delete/{id}/{estado}
+    defaults: { _controller: PwMCMainBundle:Admins:deleteAdmin,id:1,estado:0 }
+    
+pw_mc_main_admins:
+    path:     /sa/admins/all
+    defaults: { _controller: PwMCMainBundle:Admins:getAdmis }
+    
+pw_mc_main_admingetXid:
+    path:     /sa/admins/xId/{id}
+    defaults: { _controller: PwMCMainBundle:Admins:getAdminXid,id:1 }
+pw_mc_main_user:
+    path:     /user/
+    defaults: { _controller: PwMCMainBundle:User:index }
+
+pw_mc_main_userp:
+    path:     /user/{page}
+    defaults: { _controller: PwMCMainBundle:User:pageselect,page:index }
+
+pw_mc_main_userp:
+    path:     /user/miicard/
+    defaults: { _controller: PwMCMainBundle:User:pageselect,page:index }
+pw_mc_main_empr:
+    path:     /empresa/{page}
+    defaults: { _controller: PwMCMainBundle:Empresas:pageselect,page:solicitud }
+

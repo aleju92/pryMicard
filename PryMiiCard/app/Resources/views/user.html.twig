@@ -1,0 +1,27 @@
+{% extends "::base.html.twig" %}
+{% block title %}Usuario{% endblock %}
+{% block usert %}Usuario{% endblock %}
+{% block menuser %}
+	<li><a href="#">Registrarse</a></li>
+	<li><a href="#">MiiCard</a></li>
+{% endblock %}
+{% block body %}
+<div class="container">
+	<div class="page-header">
+		<h1>{% block titulo %}Usuario Premiun{% endblock %}</h1>		
+	</div>
+	<div class="row well well-sm hidden-md ">
+		<h2><small>Tareas</small></h2>
+		<ul class="nav nav-pills">
+			<li role="presentation"><a>Perfil de Usuario</a></li>
+    		<li role="presentation"><a>Adminsitracion de MiiCard</a></li>
+        </ul>
+	</div>
+	{% block cuerpo %}
+	
+    {% endblock %}
+        	
+    
+</div>
+
+{% endblock %}
