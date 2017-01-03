@@ -37,4 +37,4 @@ pw_mc_main_userp:
 pw_mc_main_userp:
     path:     /user/miicard/
     defaults: { _controller: PwMCMainBundle:User:pageselect,page:index }
->>>>>>> 94f2f4b25f41af377c1f32aad4b2b655373d61bd
+
