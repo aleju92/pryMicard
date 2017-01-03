@@ -1,0 +1,77 @@
+.banner{
+	height: 400px;
+	text-align: center;
+	vertical-align: middle;
+	
+	color: white;
+	font:  24px/45px Helvetica, Sans-Serif;
+}
+.verde{
+	background-color: green;
+}
+
+.azul{
+	background-color: blue;
+}
+
+.centrar{
+	text-align: center;
+	vertical-align: middle;
+}
+.p{
+	color: white;
+}
+.p:hover{
+	opacity: 0.7;
+	color:white;
+	text-decoration: none;
+}
+.textoBlanco{
+	
+	color: white;
+	
+	
+}
+.imagen{
+	filter: blur(6px);
+	width: 100%; /* for IE 6 */
+}
+.image {
+
+	
+text-align: center;
+position: relative;
+
+width: 100%; /* for IE 6 */
+
+}
+
+h2 {
+
+position: absolute;
+vertical-align: middle;
+top: 200px;
+
+left: 0;
+
+width: 100%;
+
+}
+
+h2 span {
+	
+text-align: center;
+
+color: white;
+
+font: bold 24px/45px Helvetica, Sans-Serif;
+
+letter-spacing: 10px;
+
+background: rgb(0, 0, 0);
+
+background: rgba(0, 0, 0, 0.7);
+
+padding: 10px;
+
+}

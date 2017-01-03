@@ -32,7 +32,7 @@ pw_mc_main_catgetXid:
     
 pw_mc_main_adminadd:
     path:     /sa/admins/add/{nom}/{ape}/{email}/{use}/{pass}
-    defaults: { _controller: PwMCMainBundle:Admins:getCatXid,id:1 }
+    defaults: { _controller: PwMCMainBundle:Admins:addAdmin,id:1 }
     
 pw_mc_main_adminedit:
     path:     /admin/edit/{id}/{nom}/{ape}/{email}/{use}/{pass}
