@@ -22,7 +22,7 @@ class EmpresasController extends Controller
     	/*
     	if($page =="solicitud" || $page=="registroe"){
     		
-    		if($page=="categorias"){
+    		if($page=="solicitud"){
     			return  $this->redirect($this->generateUrl("pw_mc_main_catgetall"));
     		}else{
     			return  $this->redirect($this->generateUrl("pw_mc_main_admins"));
