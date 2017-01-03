@@ -1,0 +1,69 @@
+{% extends "::admin.html.twig" %}
+{% block titulo %}Registro de Empresas{% endblock %}
+{% block cuerpo %}
+<div class="row">
+	<h2>Registra tu empresa</h2>
+    <table class="table table-striped">
+      <tr>
+        <td>Nombre:</td>
+        <td>
+          <imput type ="Text" name="txtnome"/>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Usuario:</td>
+        <td>
+          <imput type ="Text" name="txtusue"/>
+        </td>
+      </tr>
+      <tr>
+        <td>Contraseña:</td>
+        <td>
+          <imput type ="Text" name="txtpasse"/>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Ruc:</td>
+        <td>
+          <imput type="text"name="txtruce"/>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Telefono:</td>
+        <td>
+          <imput type="text" name="txttlfe"/>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Pagina web:</td>
+        <td>
+          <imput type ="text" name="txtpag"/>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Logo:</td>
+        <td>
+          <imput type ="file" name="fotoe"/>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Slogan:</td>
+        <td>
+          <imput type ="text" name="txtnome"/>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <imput type="submit" name="btnregistrar" value="REGISTRAR"/>
+        </td>
+      </tr>
+    </table>
+</div>
+{% endblock %}

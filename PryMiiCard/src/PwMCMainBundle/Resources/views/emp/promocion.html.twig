@@ -1,0 +1,87 @@
+{% extends "::promociones.html.twig" %}
+{% block titulo %}Registro de Promociones{% endblock %}
+{% block cuerpo %}
+<div class="row">
+	<h2>Ingresa una promocion</h2>
+    <table class="table table-striped">
+      <tr>
+        <td>Codigo :</td>
+        <td>
+          
+        </td>
+      </tr>
+
+      <tr>
+        <td>Detalle Promocion:</td>
+        <td>
+          <input type="text"name="txtruc"/>
+        </td>
+      </tr>
+
+      <tr>
+        <td>Tipo de Promocion:</td>
+        <td>
+        	<form>
+          		<input type="radio" name="ratipo" value="1"/> Limitada <br/>
+          		<input type="radio" name="ratipo" value="2"/> Ilimitada
+        	</form>
+        </td>
+      </tr>
+      
+      <tr>
+        <td>Numero de Promociones:</td>
+        <td>
+          	<input type="text" name="numpromo"/> 
+        </td>
+      </tr>
+      
+      <tr>
+        <td>Imagen de Promocion:</td>
+        <td>
+          	<input type="file" name="fotopromo"/> 
+        </td>
+      </tr>
+      
+      <tr>
+        <td>Fecha de Inicio:</td>
+        <td>
+          	<input type="date" name="fechainipromo"/> 
+        </td>
+      </tr>
+      
+      <tr>
+        <td>Fecha de Vencimiento:</td>
+        <td>
+          	<input type="date" name="fechafinpromo"/> 
+        </td>
+      </tr>
+      
+      <tr>
+        <td>Precio Promocion:</td>
+        <td>
+          	<input type="text" name="txtpreciopromo"/> 
+        </td>
+      </tr>
+      
+      <tr>
+        <td>Categoria Promocion:</td>
+        <td>
+          	<select>
+          		<option value="1">Vestimenta</option>
+          		<option value="2">Entretenimiento</option>
+          		<option value="3">Tecnologia</option>
+          		<option value="4">Electrodomesticos</option>
+          		<option value="5">varios</option>
+          	</select>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <input type="submit" name="btnregistrar" value="REGISTRAR"/>
+        </td>
+      </tr>
+      
+    </table>
+</div>
+{% endblock %}

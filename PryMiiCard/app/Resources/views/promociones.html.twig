@@ -1,0 +1,29 @@
+
+{% extends "::base.html.twig" %}
+{% block title %}Promociones{% endblock %}
+{% block usert %}Promociones{% endblock %}
+{% block menuser %}
+	<li><a href="#">Admin-Promociones</a></li>
+	<li><a href="#">Admin-Promociones</a></li>
+{% endblock %}
+{% block body %}
+<div class="container">
+	<div class="page-header">
+		<h1>{% block titulo %} Caracteristicas del Sistema{% endblock %}</h1>		
+	</div>
+	<div class="row well well-sm hidden-md ">
+		<h2><small>Tareas</small></h2>
+		<ul class="nav nav-pills">
+			<li role="presentation"><a> Administracion de Promociones</a></li>
+    		<li role="presentation"><a>Adminsitracion de Promociones</a></li>
+    		<li role="presentation"><a>Promociones</a></li>
+        </ul>
+	</div>
+	{% block cuerpo %}
+	
+    {% endblock %}
+        	
+    
+</div>
+
+{% endblock %}
