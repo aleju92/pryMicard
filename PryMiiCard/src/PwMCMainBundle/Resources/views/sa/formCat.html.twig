@@ -5,6 +5,7 @@
 <div id="mensaje">
  	<p>{{ menssaje }}</p>
 </div>
+{{ form }}
 <div class ="row">
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
@@ -22,34 +23,14 @@
           </div>
           <div class="form-group">
             <label for="exampleInputPassword1">Nombre</label>
-            <input type="password" class="form-control" id="categoria" placeholder="ingrese un nombre">
+            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="ingrese un nombre">
           </div>
-          <button type="submit" class="btn btn-default">{#<a href="{{ path('pw_mc_main_catadd',{'descripcion':categoria}) }}">#}Guardar{#</a>#}</button>
+          <button type="submit" class="btn btn-default">Submit</button>
         </form>
     </div>
     <div role="tabpanel" class="tab-pane" id="modificacion">...</div>
   </div>
 
-</div>
-
-<div class="row">
-	<h2>Lista de Categorias</h2>
-    <table class="table table-striped">
-      <tr>
-        <th>Codigo</th>
-        <th>Nombre</th>
-        <th>Estado</th>
-        <th>Cantidad de Promociones</th>
-      </tr>
-      {% for categoria in categorias %}
-      <tr>		      
-        <td>{{ categoria.id }}</td>
-        <td>{{ categoria.desCat }}</td>
-        <td>{% if categoria.estado == 1 %}Activo{% else %}Inactivo{% endif %}</td>
-        <td><a href="{{ path('pw_mc_main_catgetXid',{'id':categoria.id}) }}">Selecionar</a></td>        
-      </tr>
-      {% endfor %}
-    </table>
 </div>
 
 {% endblock %}
