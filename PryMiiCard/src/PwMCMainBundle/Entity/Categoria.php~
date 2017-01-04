@@ -66,28 +66,4 @@ class Categoria
     {
         return $this->desCat;
     }
-
-    /**
-     * Set estado
-     *
-     * @param integer $estado
-     *
-     * @return Categoria
-     */
-    public function setEstado($estado)
-    {
-        $this->estado = $estado;
-
-        return $this;
-    }
-
-    /**
-     * Get estado
-     *
-     * @return integer
-     */
-    public function getEstado()
-    {
-        return $this->estado;
-    }
 }
