@@ -1,14 +1,20 @@
 <?php
 
-namespace PwMCMainBundle\Controller;
+namespace AppBundle\Controller;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use PwMCMainBundle\Entity\Categoria;
+use AppBundle\Entity\Categoria;
 use Symfony\Component\HttpFoundation\Response;
 //use PwMCMainBundle\Form\CategoriaType;
 
 class categoriasController extends Controller
 {
+	/**
+	 *
+	 * @Route("/sa/categorias/nuevo/{descripcion}",name="catgegoria_add");
+	 *
+	 */
     public function addCatAction($descripcion){
     	$Categoria= new Categoria();
     	$Categoria->setDesCat($descripcion);
@@ -22,7 +28,7 @@ class categoriasController extends Controller
     	//$form->handleRequest($request);
     	$ms="La categoria ".$descripcion." ha sido ingresada con exito";
     	//return $this->render("PwMCMainBundle:sa:formCat.html.twig",array("menssaje"=>$ms,"form",$form->createView()));
-    	return $this->render("PwMCMainBundle:sa:categorias.html.twig",array("menssaje"=>$ms,"categorias"=>$categorias));
+    	return $this->render("sa/categorias.html.twig",array("menssaje"=>$ms,"categorias"=>$categorias));
     }
     public function editCatAction($id,$descripcion){
     	/*if(isset($descripcion)||$descripcion==" "){
@@ -54,6 +60,12 @@ class categoriasController extends Controller
     	}
     	return $this->render("PwMCMainBundle:sa:categorias.html.twig",array("menssaje"=>$ms,"categorias"=>$categorias));
     }
+    
+    /**
+     *
+     * @Route("/sa/categorias/all",name="catgegoria_all");
+     *
+     */
     public function getCatsAction(){
     	$categorias= $this->catAll();
     	/*
@@ -63,7 +75,7 @@ class categoriasController extends Controller
     	}
     	//return new Response("<html><body>hola</body></html>");
     	return new Response($ms);*/    	    	
-    	return $this->render("PwMCMainBundle:sa:categorias.html.twig",array("menssaje"=>'',"categorias"=>$categorias));
+    	return $this->render("sa/categorias.html.twig",array("menssaje"=>'',"categorias"=>$categorias));
     }
     public function getCatXidAction($id){
     	$em=$this->getDoctrine()->getManager(); 
@@ -72,7 +84,7 @@ class categoriasController extends Controller
     }
     private function catAll(){
     	$em=$this->getDoctrine()->getManager();
-    	$categorias= $em->getRepository('PwMCMainBundle:Categoria')->findAll();
+    	$categorias= $em->getRepository('AppBundle:Categoria')->findAll();
     	return $categorias;
     }
 }

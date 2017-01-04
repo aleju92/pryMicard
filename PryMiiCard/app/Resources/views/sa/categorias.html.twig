@@ -46,7 +46,7 @@
         <td>{{ categoria.id }}</td>
         <td>{{ categoria.desCat }}</td>
         <td>{% if categoria.estado == 1 %}Activo{% else %}Inactivo{% endif %}</td>
-        <td><a href="{{ path('pw_mc_main_catgetXid',{'id':categoria.id}) }}">Selecionar</a></td>        
+      {#  <td><a href="{{ path('pw_mc_main_catgetXid',{'id':categoria.id}) }}">Selecionar</a></td>#}        
       </tr>
       {% endfor %}
     </table>

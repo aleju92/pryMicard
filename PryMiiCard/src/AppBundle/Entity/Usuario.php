@@ -1,6 +1,6 @@
 <?php
 
-namespace PwMCMainBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Usuario
  *
  * @ORM\Table(name="usuario")
- * @ORM\Entity(repositoryClass="PwMCMainBundle\Repository\UsuarioRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UsuarioRepository")
  */
 class Usuario
 {

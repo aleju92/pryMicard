@@ -1,6 +1,6 @@
 <?php
 
-namespace PwMCMainBundle\Repository;
+namespace AppBundle\Repository;
 
 /**
  * AdministradorRepository
