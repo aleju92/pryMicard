@@ -8,13 +8,20 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
-	
+	/**
+	 * 
+	 * @return \Symfony\Component\HttpFoundation\Response
+	 */
 	public function indexAction()
 	{
 		return $this->render('user/index.html.twig');
 	}
 	
-	
+	/**
+	 * 
+	 * @param unknown $page
+	 * @return \Symfony\Component\HttpFoundation\Response|\Symfony\Component\HttpFoundation\RedirectResponse
+	 */
 	public function pageselectAction($page)
 	{
 		if($page =="registrarse" || $page=="miiperfil" || $page=="miicard"){
