@@ -8,9 +8,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
+	 /**
+	  * @Route("/usuario", name="user_index");
+	  */
 	public function indexAction()
 	{
-		return $this->render('PwMCMainBundle:user:index.html.twig');
+		return $this->render('user/index.html.twig');
 	}
 	
 	public function pageselectAction($page)
