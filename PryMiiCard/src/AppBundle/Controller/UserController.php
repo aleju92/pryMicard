@@ -9,8 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 class UserController extends Controller
 {
 	/**
-	 * 
-	 * @return \Symfony\Component\HttpFoundation\Response
+	 * @Route("/user", name="user_index")
 	 */
 	public function indexAction()
 	{
@@ -18,9 +17,7 @@ class UserController extends Controller
 	}
 	
 	/**
-	 * 
-	 * @param unknown $page
-	 * @return \Symfony\Component\HttpFoundation\Response|\Symfony\Component\HttpFoundation\RedirectResponse
+	 * @Route("/user/{page}", name="user_pageselect")
 	 */
 	public function pageselectAction($page)
 	{
