@@ -1,10 +1,11 @@
 <?php
 
-namespace PwMCMainBundle\Controller;
+namespace AppBundle\Controller;
+
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use PwMCMainBundle\Entity\Administrador;
+use AppBundle\Entity\Administrador;
 
 class AdminsController extends Controller
 {

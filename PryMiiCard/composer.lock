@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "hash": "9374805a25769c8a80de0a001c7f7180",
+=======
+    "hash": "ad4ae0febd9d5b6a7bb53ca4c2c1edda",
+>>>>>>> 5297c6b72b8c73591bcbd1d30f9aa1e67a8a9424
     "content-hash": "e8806838d7235c3d2ab386293836949f",
     "packages": [
         {
@@ -434,7 +438,11 @@
                 "orm",
                 "persistence"
             ],
+<<<<<<< HEAD
             "time": "2017-01-07 21:47:22"
+=======
+            "time": "2016-08-10 15:35:22"
+>>>>>>> 5297c6b72b8c73591bcbd1d30f9aa1e67a8a9424
         },
         {
             "name": "doctrine/doctrine-cache-bundle",
@@ -1097,6 +1105,7 @@
         },
         {
             "name": "sensio/distribution-bundle",
+<<<<<<< HEAD
             "version": "v5.0.17",
             "source": {
                 "type": "git",
@@ -1107,6 +1116,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/4e98a1a6d3935d05414bd11e421a2047c93619f7",
                 "reference": "4e98a1a6d3935d05414bd11e421a2047c93619f7",
+=======
+            "version": "v5.0.16",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sensiolabs/SensioDistributionBundle.git",
+                "reference": "68e3dc02e66fec5036557d457cfdffa332a40da4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sensiolabs/SensioDistributionBundle/zipball/68e3dc02e66fec5036557d457cfdffa332a40da4",
+                "reference": "68e3dc02e66fec5036557d457cfdffa332a40da4",
+>>>>>>> 5297c6b72b8c73591bcbd1d30f9aa1e67a8a9424
                 "shasum": ""
             },
             "require": {
@@ -1145,7 +1166,11 @@
                 "configuration",
                 "distribution"
             ],
+<<<<<<< HEAD
             "time": "2017-01-04 13:35:35"
+=======
+            "time": "2016-12-31 08:39:25"
+>>>>>>> 5297c6b72b8c73591bcbd1d30f9aa1e67a8a9424
         },
         {
             "name": "sensio/framework-extra-bundle",

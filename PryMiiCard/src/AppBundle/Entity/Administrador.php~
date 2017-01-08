@@ -1,6 +1,6 @@
 <?php
 
-namespace PwMCMainBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Administrador
  *
  * @ORM\Table(name="administrador")
- * @ORM\Entity(repositoryClass="PwMCMainBundle\Repository\AdministradorRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\AdministradorRepository")
  */
 class Administrador
 {
@@ -68,9 +68,7 @@ class Administrador
 	 * @ORM\Column(name="estAdm",type="integer")	 
 	 * */
     private $estAdm;
-    //1=activo 0=inactivo
-    
-    
+    //1=est 0=est
     
     /**
      * Get id
@@ -225,28 +223,5 @@ class Administrador
     {
         return $this->tipAdm;
     }
-
-    /**
-     * Set estAdm
-     *
-     * @param integer $estAdm
-     *
-     * @return Administrador
-     */
-    public function setEstAdm($estAdm)
-    {
-        $this->estAdm = $estAdm;
-
-        return $this;
-    }
-
-    /**
-     * Get estAdm
-     *
-     * @return integer
-     */
-    public function getEstAdm()
-    {
-        return $this->estAdm;
-    }
 }
+

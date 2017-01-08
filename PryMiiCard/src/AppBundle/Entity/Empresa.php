@@ -1,6 +1,6 @@
 <?php
 
-namespace PwMCMainBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Empresa
  *
  * @ORM\Table(name="empresa")
- * @ORM\Entity(repositoryClass="PwMCMainBundle\Repository\EmpresaRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\EmpresaRepository")
  */
 class Empresa
 {

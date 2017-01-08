@@ -1,6 +1,6 @@
 <?php
 
-namespace PwMCMainBundle\Entity;
+namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Categoria
  *
  * @ORM\Table(name="categoria")
- * @ORM\Entity(repositoryClass="PwMCMainBundle\Repository\CategoriaRepository")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoriaRepository")
  */
 class Categoria
 {
@@ -65,29 +65,5 @@ class Categoria
     public function getDesCat()
     {
         return $this->desCat;
-    }
-
-    /**
-     * Set estado
-     *
-     * @param integer $estado
-     *
-     * @return Categoria
-     */
-    public function setEstado($estado)
-    {
-        $this->estado = $estado;
-
-        return $this;
-    }
-
-    /**
-     * Get estado
-     *
-     * @return integer
-     */
-    public function getEstado()
-    {
-        return $this->estado;
     }
 }
