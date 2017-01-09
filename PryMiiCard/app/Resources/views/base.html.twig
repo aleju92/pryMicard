@@ -5,13 +5,13 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
         <link href="{{ asset('css/bootstrap.min.css')}}" rel="stylesheet">
-        
+        {% block stylesheets %}{% endblock %}
     </head>
     <body>
-    	<nav class="navbar navbar-default">
+    	<nav class="navbar navbar-default navbar-fixed-top">
           <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -58,10 +58,11 @@
         </nav>
     
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     	<!-- Include all compiled plugins (below), or include individual files as needed -->
     	<script src="{{ asset('js/bootstrap.min.js')}}"></script>
+        {% block javascripts %}{% endblock %}
     </body>
 </html>
