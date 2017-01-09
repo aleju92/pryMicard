@@ -1,27 +1,27 @@
 {% extends "::base.html.twig" %}
+{% block stylesheets %}<link href="{{ asset('css/dashboard.css')}}" rel="stylesheet">{% endblock %}
 {% block title %}Usuario{% endblock %}
 {% block usert %}Usuario{% endblock %}
-{% block menuser %}
-	<li><a href="#">Registrarse</a></li>
-	<li><a href="#">MiiCard</a></li>
-{% endblock %}
 {% block body %}
-<div class="container">
-	<div class="page-header">
-		<h1>{% block titulo %}Usuario Premiun{% endblock %}</h1>		
-	</div>
-	<div class="row well well-sm hidden-md ">
-		<h2><small>Tareas</small></h2>
-		<ul class="nav nav-pills">
-			<li role="presentation"><a>Perfil de Usuario</a></li>
-    		<li role="presentation"><a>Adminsitracion de MiiCard</a></li>
+	<div class="container-fluid">
+		<div class="row ">
+			<div class="col-sm-3 col-md-2 sidebar">
+				<ul class="nav nav-sidebar">
+					<li class="{% block m1%} {% endblock %}"><a>Inicio</a></li>
+        			<li class="{% block m2%} {% endblock %}"><a>Perfil de Usuario</a></li>
+            		<li class="{% block m3%} {% endblock %}"><a>Adminsitracion de MiiCard</a></li>
         </ul>
 	</div>
-	{% block cuerpo %}
-	
-    {% endblock %}
-        	
-    
-</div>
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+				<h1 class="page-header" >{% block titulo %} Caracteristicas del Sistema{% endblock %}</h1>
+                <div class="contenido">
+                    {% block cuerpo %}{% endblock %}
+				</div>
+
+				<!--- <h2 class="sub-header">Section title</h2>-->
+
+			</div>
+		</div>
+	</div>
 
 {% endblock %}
