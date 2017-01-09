@@ -21,10 +21,12 @@ class EmpresasController extends Controller
      */
     public function pageselectAction($page)
     {
+
+
     	return $this->render("emp/".$page.".html.twig");
     	/*
     	if($page =="solicitud" || $page=="registroe"){
-    		
+
     		if($page=="solicitud"){
     			return  $this->redirect($this->generateUrl("pw_mc_main_catgetall"));
     		}else{
@@ -34,6 +36,20 @@ class EmpresasController extends Controller
     	}else{
     		return  $this->redirect($this->generateUrl("pw_mc_main_adminp"));
     	}*/
-    	 
+
+    }
+    /**
+     * @Route("/emp/regs/p", name="user_emp")
+     */
+    public function registarAction(){
+        $cats=$this->catAll();
+        return $this->render("emp/promocion.html.twig",array("categorias"=>$cats));
+    }
+
+
+    private function catAll(){
+        $em=$this->getDoctrine()->getManager();
+        $categorias= $em->getRepository('AppBundle:Categoria')->findAll();
+        return $categorias;
     }
 }

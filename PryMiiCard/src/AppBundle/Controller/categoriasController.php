@@ -100,6 +100,12 @@ class categoriasController extends Controller
 //        return new Response ($categoria->getId()."=".$categoria->getDesCat()."<br>");
     }
 
+    public function getCatsactAction(){
+        $em=$this->getDoctrine()->getManager();
+        $categorias= $em->find('AppBundle:Categoria');
+        return $categorias;
+    }
+
     private function catAll(){
     	$em=$this->getDoctrine()->getManager();
     	$categorias= $em->getRepository('AppBundle:Categoria')->findAll();
