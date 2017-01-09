@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 class UserController extends Controller
 {
 	/**
-	 * @Route("/user", name="user_index");
+	 * @Route("/usuario", name="user_index")
 	 */
 	public function indexAction()
 	{
@@ -17,12 +17,12 @@ class UserController extends Controller
 	}
 	
 	/**
-	 * @Route("/comentarios/{page}", name="user_pageselect");
+	 * @Route("/usuario/{page}", name="user_pageselect")
 	 */
 	public function pageselectAction($page)
 	{
 		if($page =="registrarse" || $page=="miiperfil" || $page=="miicard"){
-			return $this->render("user/".$page.".html.twig",array("mensaje"=>''));
+			return $this->render("user/".$page.".html.twig",array("menssaje"=>''));
 		}else{
 			return  $this->redirect($this->generateUrl("pw_mc_main_userp"));
 		}
