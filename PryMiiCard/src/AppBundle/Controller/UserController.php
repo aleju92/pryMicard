@@ -22,7 +22,7 @@ class UserController extends Controller
 	public function pageselectAction($page)
 	{
 		if($page =="registrarse" || $page=="miiperfil" || $page=="miicard"){
-			return $this->render("PwMCMainBundle:user:".$page.".html.twig",array("menssaje"=>''));
+			return $this->render("user/".$page.".html.twig",array("menssaje"=>''));
 		}else{
 			return  $this->redirect($this->generateUrl("pw_mc_main_userp"));
 		}
