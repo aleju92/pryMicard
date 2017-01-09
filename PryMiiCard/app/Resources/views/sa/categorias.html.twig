@@ -1,4 +1,5 @@
 {% extends "::admin.html.twig" %}
+{# {% block stylesheets %}<link href="{{ asset('css/menubar.css')}}" rel="stylesheet">{% endblock %} #}
 {% block m2%}active {% endblock %}
 {% block title %}Categorias{% endblock %}
 {% block titulo %} Administracion de Categorias{%  endblock %}
@@ -91,6 +92,7 @@
 
 {% endblock %}
 {% block javascripts %}
+    {# <script src="{{ asset('js/menusidebar.min.js')}}"></script> #}
     {% if categoria != null %}
     <script>
         $('#FormEdit').modal('show')

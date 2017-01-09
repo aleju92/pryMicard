@@ -16,10 +16,12 @@ class EmpresasController extends Controller
     {
     	return new Response("<html><body>hola</body></html>");
     }
-    
+    /**
+     * @Route("/emp/{page}", name="user_pageselectemp")
+     */
     public function pageselectAction($page)
     {
-    	return $this->render("PwMCMainBundle:emp:".$page.".html.twig");
+    	return $this->render("emp/".$page.".html.twig");
     	/*
     	if($page =="solicitud" || $page=="registroe"){
     		
