@@ -4,7 +4,7 @@ namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
+
 
 class UserController extends Controller
 {
@@ -17,20 +17,42 @@ class UserController extends Controller
 	}
 	
 	/**
+	 * @Route("/usuario/Registro", name="user_register")
+	 */
+	
+	public function registerAction(){
+		return $this->render('user/registrarse.html.twig');
+	}
+	
+	
+	
+	/**
 	 * @Route("/usuario/{page}", name="user_pageselect")
 	 */
 	public function pageselectAction($page)
 	{
-		if($page =="registrarse" || $page=="miiperfil" || $page=="miicard"){
+		switch ($page) {
+			case 'Registrate':
+				return $this->redirectToRoute('user_register');
+				break;
+			case 'Mi_iPerfil':
+				return $this->redirectToRoute('');
+				break;
+			case 'Mi_iCard':
+				return $this->redirectToRoute('');
+				break;
+			default:
+				return $this->redirectToRoute('user_index');
+		}
+		
+		
+		/*if($page =="registrarse" || $page=="miiperfil" || $page=="miicard"){
 			return $this->render("user/".$page.".html.twig",array("menssaje"=>''));
 		}else{
 			return  $this->redirect($this->generateUrl("pw_mc_main_userp"));
-		}
+		}*/
 		 
 	}
 	
-	public function ayudaAction()
-	{
-		return new Response("<html><body>hola</body></html>");
-	}
+	
 }
