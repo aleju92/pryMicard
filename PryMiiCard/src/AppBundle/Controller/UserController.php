@@ -20,9 +20,9 @@ class UserController extends Controller
 	 * @Route("/usuario/Registro", name="user_register")
 	 */
 	
-	public function registerAction(){
+	/*public function registerAction(){
 		return $this->render('user/registrarse.html.twig');
-	}
+	}*/
 	
 	
 	
@@ -31,7 +31,7 @@ class UserController extends Controller
 	 */
 	public function pageselectAction($page)
 	{
-		switch ($page) {
+		/*switch ($page) {
 			case 'Registrate':
 				return $this->redirectToRoute('user_register');
 				break;
@@ -43,14 +43,14 @@ class UserController extends Controller
 				break;
 			default:
 				return $this->redirectToRoute('user_index');
-		}
+		}*/
 		
 		
-		/*if($page =="registrarse" || $page=="miiperfil" || $page=="miicard"){
+		if($page =="registrarse" || $page=="miiperfil" || $page=="miicard"){
 			return $this->render("user/".$page.".html.twig",array("menssaje"=>''));
 		}else{
 			return  $this->redirect($this->generateUrl("pw_mc_main_userp"));
-		}*/
+		}
 		 
 	}
 	
