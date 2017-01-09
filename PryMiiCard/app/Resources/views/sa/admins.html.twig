@@ -1,0 +1,150 @@
+{% extends "::admin.html.twig" %}
+{% block m3%}active {% endblock %}
+{% block titulo %}Administracion de usuarios{% endblock %}
+{% block cuerpo %}
+  <div id="mensaje">
+      <p>{{ menssaje }}</p>
+  </div>
+  <div class="row">
+      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#FormNuevo"><span class="glyphicon glyphicon-edit" aria-hidden="true">   Nuevo</span></button>
+      <div class="modal fade" id="FormNuevo" tabindex="-1" role="dialog" aria-labelledby="FormNuevo">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <form>
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="FormNuevo">Nuevo Usuario Administador</h4>
+              </div>
+              <div class="modal-body">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">codigo</label>
+                  <input type="number" class="form-control col-xs-6" id="exampleInputEmail1" disabled="true">
+                </div>
+                <div class="form-group col-xs-12 col-md-6">
+                  <label for="exampleInputPassword1">Nombre</label>
+                  <input type="text" class="form-control" id="categoria" placeholder=" ex: Pepito">
+                </div>
+                <div class="col-xs-12 col-md-6">
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Apellido</label>
+                    <input type="text" class="form-control" id="categoria" placeholder="ex: Fernadez">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">email</label>
+                  <input type="text" class="form-control" id="categoria" placeholder="ex: pepe@email.com">
+                </div>
+                <hr>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Nombre de usuario</label>
+                  <input type="text" class="form-control" id="categoria" placeholder="ex: pepito123">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Contraseña</label>
+                  <input type="password" class="form-control" id="categoria" placeholder="**********">
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Confirme su contraseña</label>
+                  <input type="password" class="form-control" id="categoria" placeholder="**********">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="submit" class="btn btn-default">{#<a href="{{ path('pw_mc_main_catadd',{'descripcion':categoria}) }}">#}Guardar{#</a>#}</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      {% if Admin != null %}
+          <div class="modal fade" id="Formdet" tabindex="-1" role="dialog" aria-labelledby="Formdet">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <form>
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="FormNuevo">Nuevo Usuario Administador</h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <label for="exampleInputEmail1">codigo</label>
+                <input type="number" class="form-control col-xs-6" id="exampleInputEmail1" disabled="true" value="{{ Admin.id }}">
+              </div>
+              <div class="form-group col-xs-12 col-md-6">
+                <label for="exampleInputPassword1">Nombre</label>
+                <input type="text" class="form-control" id="categoria" value="{{ Admin.nomAdm }}">
+              </div>
+              <div class="col-xs-12 col-md-6">
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Apellido</label>
+                  <input type="text" class="form-control" id="categoria" value="{{ Admin.apeAdm }}">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">email</label>
+                <input type="text" class="form-control" id="categoria" value="{{ Admin.emAdm }}">
+              </div>
+              <hr>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Nombre de usuario</label>
+                <input type="text" class="form-control" id="categoria" value="{{ Admin.useAdm }}">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Contraseña</label>
+                <input type="password" class="form-control" id="categoria" placeholder="**********">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Nueva Contraseña</label>
+                <input type="password" class="form-control" id="categoria" placeholder="**********">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Confirme su contraseña</label>
+                <input type="password" class="form-control" id="categoria" placeholder="**********">
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              <button type="submit" class="btn btn-default">{#<a href="{{ path('pw_mc_main_catadd',{'descripcion':categoria}) }}">#}Guardar{#</a>#}</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+      {% endif %}
+  </div>
+  <div class="row">
+      <h2>Lista de Administradores</h2>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <tr>
+            <th>Codigo</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Nombre de Usuario</th>
+            <th>Privilegios</th>
+            <th>Estado</th>
+          </tr>
+          {% for adm in Admins %}
+          <tr>
+            <td>{{ adm.id }}</td>
+            <td>{{ adm.nomAdm }}</td>
+            <td>{{ adm.apeAdm }}</td>
+            <td>{{ adm.emAdm }}</td>
+            <td>{{ adm.useAdm }}</td>
+            <td>{% if adm.tipAdm == 1 %} Adminstador {% else %} SuperAdminstador{% endif %}</td>
+            <td>{% if adm.estAdm == 1 %} Activo {% else %} Inactivo {% endif %}</td>
+            <td><a href="{{ path('getAdmin',{'id':adm.id}) }}">Selecionar</a></td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+  </div>
+{% endblock %}
+{% block javascripts %}
+    {% if Admin != null %}
+      <script>
+          $('#Formdet').modal('show')
+      </script>
+    {% endif %}
+{% endblock %}
