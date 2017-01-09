@@ -26,16 +26,18 @@ class SAdminController extends Controller
     
     public function pageselectAction($page)
     {
-    	if($page =="categorias" || $page=="admins"){
-    		if($page=="categorias"){
-    			return  $this->redirectToRoute('catgegoria_all');
-    		}else{
-    			return  $this->redirect($this->generateUrl("pw_mc_main_admins"));
-    			//return $this->render("PwMCMainBundle:sa:".$page.".html.twig",array("menssaje"=>' '));
-    		}    		
-    	}else{
-    		return  $this->redirectToRoute('indexSAdmin');
-    	}
-    	
+    	switch ($page) {
+            case 'categorias':
+                return $this->redirectToRoute('catgegoria_all');
+                break;
+            case 'admins':
+                return $this->redirectToRoute('administradores_all');
+                break;
+            case 'Mi_Perfil':
+                return $this->redirectToRoute("miPerfilSa",array("idUser"=>1));
+                break;
+            default:
+                return $this->redirectToRoute('indexSAdmin');
+        }
     }
 }
