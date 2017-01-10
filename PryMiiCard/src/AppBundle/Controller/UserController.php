@@ -17,12 +17,12 @@ class UserController extends Controller
 	}
 	
 	/**
-	 * @Route("/usuario/Registro", name="user_register")
+	 * @Route("/registrate", name="user_register")
 	 */
 	
-	/*public function registerAction(){
-		return $this->render('user/registrarse.html.twig');
-	}*/
+	public function registerAction(){
+		return $this->render('user/registrarse.html.twig',array("menssaje"=>''));
+	}
 	
 	
 	
@@ -46,7 +46,7 @@ class UserController extends Controller
 		}*/
 		
 		
-		if($page =="registrarse" || $page=="miiperfil" || $page=="miicard"){
+		if( $page=="miiperfil" || $page=="miicard"){
 			return $this->render("user/".$page.".html.twig",array("menssaje"=>''));
 		}else{
 			return  $this->redirect($this->generateUrl("pw_mc_main_userp"));
