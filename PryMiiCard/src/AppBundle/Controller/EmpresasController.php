@@ -5,51 +5,55 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use AppBundle\Entity\Empresa;
 
 class EmpresasController extends Controller
 {
-    public function indexAction()
-    {
-        return $this->render('PwMCMainBundle:Default:index.html.twig');
-    }
-    public function ayudaAction()
-    {
-    	return new Response("<html><body>hola</body></html>");
-    }
     /**
-     * @Route("/emp/{page}", name="user_pageselectemp")
+     * @Route("/emp/registro", name="registroemp")
      */
-    public function pageselectAction($page)
+
+    public function empAction()
     {
-
-
-    	return $this->render("emp/".$page.".html.twig");
-    	/*
-    	if($page =="solicitud" || $page=="registroe"){
-
-    		if($page=="solicitud"){
-    			return  $this->redirect($this->generateUrl("pw_mc_main_catgetall"));
-    		}else{
-    			return  $this->redirect($this->generateUrl("pw_mc_main_admins"));
-    			//return $this->render("PwMCMainBundle:sa:".$page.".html.twig",array("menssaje"=>' '));
-    		}
-    	}else{
-    		return  $this->redirect($this->generateUrl("pw_mc_main_adminp"));
-    	}*/
-
+        return $this->render('emp/registroe.html.twig');
     }
+
     /**
-     * @Route("/emp/regs/p", name="user_emp")
+     * @Route("/emp/solicitud", name="solicitudemp")
      */
-    public function registarAction(){
-        $cats=$this->catAll();
-        return $this->render("emp/promocion.html.twig",array("categorias"=>$cats));
+
+    public function soliAction()
+    {
+        return $this->render('emp/solicitud.html.twig');
     }
 
+    public function addEmpAction($nomEmp,$usrEmp,$pasEmp,$rucEmp,$tlfEmp,$pagEmp,$logEmp,$slogEmp){
+        $emp= new Empresa();
+        $emp->setNomEmp($nomEmp);
+        $emp->setUsrEmp($usrEmp);
+        $emp->setPasEmp($pasEmp);
+        $emp->setRucEmp($rucEmp);
+        $emp->setTlfEmp($tlfEmp);
+        $emp->setPagEmp($pagEmp);
+        $emp->setLogEmp($logEmp);
+        $emp->setSlgEmp($slogEmp);
 
-    private function catAll(){
         $em=$this->getDoctrine()->getManager();
-        $categorias= $em->getRepository('AppBundle:Categoria')->findAll();
-        return $categorias;
+        $em->persist($emp);
+        $em->flush();
+        $Emp=$this->EmpAll();
+        $ms="La Empresa (".$nomEmp.") ha sido registrada con exito";
+        return $this->render("PwMCMainBundle:emp:registroe.html.twig",array("menssaje"=>$ms,"Admin"=>$Emp));
     }
+
+    public function modEmpAction($nomEmp)
+    {
+
+    }
+
+
+
+
+
+
 }

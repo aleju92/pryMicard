@@ -67,9 +67,11 @@
         <td>Categoria Promocion:</td>
         <td>
           	<select>
-                    {% for categ in categorias %}
+              <option value="1">Comida</option>
+                {#{% for categ in categorias %}
           		        <option value="{{ categ.id }}">{{ categ.desCat }}</option>
                         {% endfor %}
+                 #}
           	</select>
         </td>
       </tr>
