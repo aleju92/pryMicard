@@ -7,15 +7,17 @@
     <div class ="row">
      <div id="mensaje">
      	<p>{{ menssaje }}</p>
+     	 <input type="button" onclick="habilitar()" value="Editar">
      </div>
      
      <div class="col-xs-12 col-sm-12  col-md-6 placeholder">
     	<img src="{{asset('images/perfil.jpg') }}" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
   	 </div>
+  	
   	 <form>
       <div class="form-group col-xs-12 col-md-6">
         <label for="exampleInputPassword1">Nombre</label>
-        <input type="text" class="form-control" id="usuario" disabled="true" value="Tatiana">
+        <input type="text" class="form-control" id="usuario1" disabled="true" value="Tatiana">
       </div>
       <div class="col-xs-12 col-md-6">
         <div class="form-group">
@@ -47,6 +49,7 @@
     <div class ="row">
     	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#FormNuevo"><span class="glyphicon glyphicon-edit" aria-hidden="true">   Editar</span></button>
     	<div class="modal fade" id="FormNuevo" tabindex="-1" role="dialog" aria-labelledby="FormNuevo">
+    	
   </form>
   <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -97,4 +100,12 @@
             </div>
         </div>
 
+{% endblock %}
+{% block javascripts %}
+      <script>
+      function habilitar(){
+    	  $('#usuario1').removeAttr('disabled');
+      }
+      </script>
+    
 {% endblock %}

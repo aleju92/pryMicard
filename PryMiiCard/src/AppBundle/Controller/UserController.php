@@ -21,6 +21,7 @@ class UserController extends Controller
 	 */
 	
 	public function registerAction(){
+		
 		return $this->render('user/registrarse.html.twig',array("menssaje"=>''));
 	}
 	
@@ -30,7 +31,7 @@ class UserController extends Controller
 	 */
 	
 	public function miperfilAction(){
-		return $this->render('user/miiperfil.html.twig',array("menssaje"=>''));
+		return $this->render('user/miiperfil.html.twig',array("menssaje"=>'',"Admin"=>'1'));
 	}
 	
 	
