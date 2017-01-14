@@ -69,8 +69,11 @@ class Administrador
 	 * */
     private $estAdm;
     //1=activo 0=inactivo
-    
-    
+
+    /**
+     * @ORM\OneToMany(targetEntity="Empresa", mappedBy="Administrador")
+     */
+    private $empresas;
     
     /**
      * Get id
@@ -248,5 +251,46 @@ class Administrador
     public function getEstAdm()
     {
         return $this->estAdm;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->empresas = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add empresa
+     *
+     * @param \AppBundle\Entity\Empresa $empresa
+     *
+     * @return Administrador
+     */
+    public function addEmpresa(\AppBundle\Entity\Empresa $empresa)
+    {
+        $this->empresas[] = $empresa;
+
+        return $this;
+    }
+
+    /**
+     * Remove empresa
+     *
+     * @param \AppBundle\Entity\Empresa $empresa
+     */
+    public function removeEmpresa(\AppBundle\Entity\Empresa $empresa)
+    {
+        $this->empresas->removeElement($empresa);
+    }
+
+    /**
+     * Get empresas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEmpresas()
+    {
+        return $this->empresas;
     }
 }
