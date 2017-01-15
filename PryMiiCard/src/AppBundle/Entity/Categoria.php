@@ -29,10 +29,14 @@ class Categoria
     private $desCat;
 	
     /**
-     * @ORM\Column(type="smallint")
+     * @ORM\Column(name="estCat", type="smallint")
      * */
 	private $estado;//1=activo 0=inactivo
-	
+
+    /**
+     * @ORM\OneToMany(targetEntity="Promocion", mappedBy="Categoria")
+     */
+    private $promociones;
     /**
      * Get id
      *
@@ -89,5 +93,46 @@ class Categoria
     public function getEstado()
     {
         return $this->estado;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->promociones = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add promocione
+     *
+     * @param \AppBundle\Entity\Promocion $promocione
+     *
+     * @return Categoria
+     */
+    public function addPromocione(\AppBundle\Entity\Promocion $promocione)
+    {
+        $this->promociones[] = $promocione;
+
+        return $this;
+    }
+
+    /**
+     * Remove promocione
+     *
+     * @param \AppBundle\Entity\Promocion $promocione
+     */
+    public function removePromocione(\AppBundle\Entity\Promocion $promocione)
+    {
+        $this->promociones->removeElement($promocione);
+    }
+
+    /**
+     * Get promociones
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPromociones()
+    {
+        return $this->promociones;
     }
 }

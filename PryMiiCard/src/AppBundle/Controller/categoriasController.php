@@ -2,8 +2,10 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\CategoriaType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Categoria;
 use Symfony\Component\HttpFoundation\Response;
 //use PwMCMainBundle\Form\CategoriaType;
@@ -12,24 +14,29 @@ class categoriasController extends Controller
 {
 	/**
 	 *
-	 * @Route("/sa/categorias/nuevo/{descripcion}",name="catgegoria_add");
+	 * @Route("/sa/categorias/nuevo",name="catgegoria_add");
 	 *
 	 */
-    public function addCatAction($descripcion){
-    	$Categoria= new Categoria();
-    	$Categoria->setDesCat($descripcion);
-    	$Categoria->setEstado(1);
-    	
-    	
-    	$em=$this->getDoctrine()->getManager();
-    	$em->persist($Categoria);
-    	$em->flush();
-    	$categorias= $this->catAll();
+    public function addCatAction(Request $request){
+        $form =$this->createForm(CategoriaType::class);
+        $form->handleRequest($request);
+        $ms='';
+        $categorias= $this->catAll();
+        if ($form->isSubmitted() && $form->isValid()){
+            $Categoria= $form->getData();
+            $Categoria->setEstado(1);
+            $em=$this->getDoctrine()->getManager();
+            $em->persist($Categoria);
+            $em->flush();
+            $categorias= $this->catAll();
+            $ms="La categoria  ha sido ingresada con exito";
+            return $this->render("sa/categorias.html.twig",array("menssaje"=>$ms,"categorias"=>$categorias,"categoria"=>null));
+        }
     	//$form=$this->createForm(new CategoriaType(),$Categoria);
     	//$form->handleRequest($request);
-    	$ms="La categoria ".$descripcion." ha sido ingresada con exito";
-    	//return $this->render("PwMCMainBundle:sa:formCat.html.twig",array("menssaje"=>$ms,"form",$form->createView()));
-    	return $this->render("sa/categorias.html.twig",array("menssaje"=>$ms,"categorias"=>$categorias));
+
+    	return $this->render("sa/formCat.html.twig",array("menssaje"=>$ms,"categorias"=>$categorias,"categoria"=>null,"form"=>$form->createView()));
+    	//return $this->render("sa/categorias.html.twig",array("menssaje"=>$ms,"categorias"=>$categorias));
     }
 
     /**

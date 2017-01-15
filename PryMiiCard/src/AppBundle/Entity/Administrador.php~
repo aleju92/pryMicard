@@ -68,7 +68,12 @@ class Administrador
 	 * @ORM\Column(name="estAdm",type="integer")	 
 	 * */
     private $estAdm;
-    //1=est 0=est
+    //1=activo 0=inactivo
+
+    /**
+     * @ORM\OneToMany(targetEntity="Empresa", mappedBy="Administrador")
+     */
+    private $empresas;
     
     /**
      * Get id
@@ -223,5 +228,28 @@ class Administrador
     {
         return $this->tipAdm;
     }
-}
 
+    /**
+     * Set estAdm
+     *
+     * @param integer $estAdm
+     *
+     * @return Administrador
+     */
+    public function setEstAdm($estAdm)
+    {
+        $this->estAdm = $estAdm;
+
+        return $this;
+    }
+
+    /**
+     * Get estAdm
+     *
+     * @return integer
+     */
+    public function getEstAdm()
+    {
+        return $this->estAdm;
+    }
+}

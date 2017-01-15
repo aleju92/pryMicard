@@ -364,28 +364,4 @@ class Empresa
     {
         return $this->promociones;
     }
-
-    /**
-     * Set admiPromFk
-     *
-     * @param \AppBundle\Entity\Administrador $admiPromFk
-     *
-     * @return Empresa
-     */
-    public function setAdmiPromFk(\AppBundle\Entity\Administrador $admiPromFk = null)
-    {
-        $this->admiPromFk = $admiPromFk;
-
-        return $this;
-    }
-
-    /**
-     * Get admiPromFk
-     *
-     * @return \AppBundle\Entity\Administrador
-     */
-    public function getAdmiPromFk()
-    {
-        return $this->admiPromFk;
-    }
 }

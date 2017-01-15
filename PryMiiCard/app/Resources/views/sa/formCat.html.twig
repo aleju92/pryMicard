@@ -1,11 +1,11 @@
-{% extends "::Admin.html.twig" %}
+{% extends "::admin.html.twig" %}
 {% block title %}Categorias{% endblock %}
 {% block titulo %} Administracion de Categorias{%  endblock %}
 {% block cuerpo %}
 <div id="mensaje">
  	<p>{{ menssaje }}</p>
 </div>
-{{ form }}
+{{ form(form) }}
 <div class ="row">
   <!-- Nav tabs -->
   <ul class="nav nav-tabs" role="tablist">
