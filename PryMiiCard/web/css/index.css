@@ -7,11 +7,20 @@
 	font:  24px/45px Helvetica, Sans-Serif;
 }
 .verde{
-	background-color: green;
+	background-color: #48D1CC;
 }
 
 .azul{
-	background-color: blue;
+	background-color: #00BFFF;
+}
+
+.rojo{
+	background-color: #FF6347;
+}
+
+
+.letrablanca{
+	color: #fff;
 }
 
 .centrar{
