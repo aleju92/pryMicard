@@ -28,7 +28,7 @@ class SAdminController extends Controller
     {
     	switch ($page) {
             case 'categorias':
-                return $this->redirectToRoute('catgegoria_all');
+                return $this->redirectToRoute('catgegoria_add');
                 break;
             case 'admins':
                 return $this->redirectToRoute('administradores_all');
