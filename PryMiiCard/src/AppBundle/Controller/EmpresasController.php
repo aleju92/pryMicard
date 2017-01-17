@@ -2,9 +2,10 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\EmpresaType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Empresa;
 
 class EmpresasController extends Controller
@@ -18,6 +19,16 @@ class EmpresasController extends Controller
         return $this->render('emp/registroe.html.twig');
     }
 
+    /**
+     * @Route("/emp/prempresa", name="registroe")
+     */
+
+    public function addAction(Request $request)
+    {
+        $form = $this->createForm(EmpresaType::class);
+        $form->handleRequest($request);
+        return $this->render("emp/prempresa.html.twig",array("form"=>$form->createView()));
+    }
     /**
      * @Route("/emp/solicitud", name="solicitudemp")
      */
