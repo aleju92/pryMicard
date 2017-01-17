@@ -135,4 +135,5 @@ class Categoria
     {
         return $this->promociones;
     }
+    
 }

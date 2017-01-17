@@ -12,19 +12,27 @@
     <div class="modal fade" id="FormNuevo" tabindex="-1" role="dialog" aria-labelledby="FormNuevo">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
+                <form>
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><a href="{{ path('catgegoria_add') }}">&times;</a></span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="FormNuevo">Nueva Categoría</h4>
                 </div>
-                {{ form_start(form) }}
-                {% form_theme form 'bootstrap_3_layout.html.twig' %}
                 <div class="modal-body">
-                    {{ form_row(form.desCat) }}
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">codigo</label>
+                        <input type="number" class="form-control " id="exampleInputEmail1" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Nombre</label>
+                        <input type="password" class="form-control" id="categoria" placeholder="ingrese un nombre">
+                    </div>
+
                 </div>
                 <div class="modal-footer">
-                    {{ form_row(form.Guardar) }}
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-default">{#<a href="{{ path('pw_mc_main_catadd',{'descripcion':categoria}) }}">#}Guardar{#</a>#}</button>
                 </div>
-                {{ form_end(form) }}
+                </form>
             </div>
         </div>
     </div>
@@ -34,7 +42,7 @@
             <div class="modal-content">
                 <form>
                     <div class="modal-header">
-                        <a class="close" href="{{ path('catgegoria_add') }}"><span aria-hidden="true">&times;</span></a>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <h4 class="modal-title" id="FormNuevo">Detalle Categoría</h4>
                     </div>
                     <div class="modal-body">
@@ -49,7 +57,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <a class="btn btn-default" href="{{ path('catgegoria_add') }}">Cerrar</a>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                         <button type="submit" class="btn btn-default">{#<a href="{{ path('pw_mc_main_catadd',{'descripcion':categoria}) }}">#}Editar{#</a>#}</button>
                         <button type="submit" class="btn btn-default">{#<a href="{{ path('pw_mc_main_catadd',{'descripcion':categoria}) }}">#}Eliminar{#</a>#}</button>
                     </div>
@@ -75,7 +83,6 @@
                     <td>{{ categoria.id }}</td>
                     <td>{{ categoria.desCat }}</td>
                     <td>{% if categoria.estado == 1 %}Activo{% else %}Inactivo{% endif %}</td>
-                    {# <td>{% if categoria.promociones|length == 0 %} sin promociones {% else %} con promociones{% endif %}</td>#}
                     <td><a href="{{ path('get_Categoria',{'id':categoria.id}) }}">Selecionar</a></td>
                 </tr>
             {% endfor %}

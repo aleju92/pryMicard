@@ -20,12 +20,9 @@
         {% form_theme form 'bootstrap_3_layout.html.twig' %}
         <form>
           <div class="form-group">
-            <label for="exampleInputEmail1">codigo</label>
-            {{ form_widget(form) }}
+
+            {{ form_row(form.desCat) }}
           </div>
-
-
-
         </form>
         {{ form_end(form) }}
     </div>

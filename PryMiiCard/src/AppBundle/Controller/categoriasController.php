@@ -14,7 +14,7 @@ class categoriasController extends Controller
 {
 	/**
 	 *
-	 * @Route("/sa/categorias/nuevo",name="catgegoria_add");
+         * @Route("/sa/categorias/nuevo",name="catgegoria_add");
 	 *
 	 */
     public function addCatAction(Request $request){
@@ -30,12 +30,14 @@ class categoriasController extends Controller
             $em->flush();
             $categorias= $this->catAll();
             $ms="La categoria  ha sido ingresada con exito";
-            return $this->render("sa/categorias.html.twig",array("menssaje"=>$ms,"categorias"=>$categorias,"categoria"=>null));
+            //$form="";
+            return $this->render("sa/categorias.html.twig",array("menssaje"=>$ms,"categorias"=>$categorias,"categoria"=>null,"form"=>$form->createView()));
+
         }
     	//$form=$this->createForm(new CategoriaType(),$Categoria);
     	//$form->handleRequest($request);
 
-    	return $this->render("sa/formCat.html.twig",array("menssaje"=>$ms,"categorias"=>$categorias,"categoria"=>null,"form"=>$form->createView()));
+    	return $this->render("sa/categorias.html.twig",array("menssaje"=>$ms,"categorias"=>$categorias,"categoria"=>null,"form"=>$form->createView()));
     	//return $this->render("sa/categorias.html.twig",array("menssaje"=>$ms,"categorias"=>$categorias));
     }
 
@@ -95,6 +97,7 @@ class categoriasController extends Controller
      *
      */
     public function getCatXidAction($id){
+        $form =$this->createForm(CategoriaType::class);
         $categorias= $this->catAll();
     	$em=$this->getDoctrine()->getManager(); 
     	$categoria=$em->find('AppBundle:Categoria',$id);
@@ -103,7 +106,7 @@ class categoriasController extends Controller
         }else{
     	    $ms="";
         }
-        return $this->render("sa/categorias.html.twig",array("menssaje"=>$ms,"categorias"=>$categorias,"categoria"=>$categoria));
+        return $this->render("sa/categorias.html.twig",array("menssaje"=>$ms,"categorias"=>$categorias,"categoria"=>$categoria,"form"=>$form->createView()));
 //        return new Response ($categoria->getId()."=".$categoria->getDesCat()."<br>");
     }
 
