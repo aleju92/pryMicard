@@ -2,9 +2,11 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\UsuarioType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
+use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Entity\Usuario;
 
 class UserController extends Controller
 {
@@ -20,8 +22,21 @@ class UserController extends Controller
 	 * @Route("/registrate", name="user_register")
 	 */
 	
-	public function registerAction(){
-		
+	public function registerAction(Request $request){
+		$form=$this->createForm(UsuarioType::class);
+		$form->handleRequest($request);
+		$ms='';
+		$usuario=$this->usAll();
+		if($form->isSubmitted() && $form->isValid()){
+			$Usuario=$form->getData();
+			$em=$this->getDoctrine()->getManager();
+			$em->persist($Usuario);
+			$em->flush();
+			$usuarios=$this->catAll();
+			$ms="Se ha registrado con éxito";
+			return $this->render("base.html.twig",array("menssaje"=>$ms,"usuarios"=>$usuarios,"usuario"=>null));
+			
+		}
 		return $this->render('user/registrarse.html.twig',array("menssaje"=>''));
 	}
 	
@@ -69,6 +84,12 @@ class UserController extends Controller
 			return  $this->redirect($this->generateUrl("pw_mc_main_userp"));
 		}*/
 		 
+	}
+	
+	private function usAll(){
+		$em=$this->getDoctrine()->getManager();
+		$usuario= $em->getRepository('AppBundle:Usuario')->findAll();
+		return $usuario;
 	}
 	
 	
