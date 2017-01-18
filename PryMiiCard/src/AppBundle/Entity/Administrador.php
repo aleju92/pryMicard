@@ -71,7 +71,7 @@ class Administrador
     //1=activo 0=inactivo
 
     /**
-     * @ORM\OneToMany(targetEntity="Empresa", mappedBy="Administrador")
+     * @ORM\OneToMany(targetEntity="Empresa", mappedBy="admiPromFk")
      */
     private $empresas;
     

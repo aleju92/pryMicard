@@ -85,7 +85,7 @@ class Empresa
     private $estEmp;
 
     /**
-     * @ORM\OneToMany(targetEntity="Promocion", mappedBy="Empresa")
+     * @ORM\OneToMany(targetEntity="Promocion", mappedBy="empPromFk")
      */
     private $promociones;
 

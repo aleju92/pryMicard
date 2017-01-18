@@ -71,12 +71,12 @@ class Usuario
     private $pass;
 
     /**
-     * @ORM\OneToMany(targetEntity="Credito", mappedBy="Usuario")
+     * @ORM\OneToMany(targetEntity="Credito", mappedBy="userCredFk")
      */
     private $creditos;
 
     /**
-     * @ORM\OneToMany(targetEntity="Reserva", mappedBy="Usuario")
+     * @ORM\OneToMany(targetEntity="Reserva", mappedBy="usuResFk")
      */
     private $Reservas;
 

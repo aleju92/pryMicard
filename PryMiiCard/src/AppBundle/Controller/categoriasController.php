@@ -19,6 +19,8 @@ class categoriasController extends Controller
 	 */
     public function addCatAction(Request $request){
         $form =$this->createForm(CategoriaType::class);
+        $form2 =$this->createForm(CategoriaType::class);
+        $form2->handleRequest($request);
         $form->handleRequest($request);
         $ms='';
         $categorias= $this->catAll();
@@ -31,6 +33,7 @@ class categoriasController extends Controller
             $categorias= $this->catAll();
             $ms="La categoria  ha sido ingresada con exito";
             //$form="";
+          //  $ms+=$categorias->getPromociones();
             return $this->render("sa/categorias.html.twig",array("menssaje"=>$ms,"categorias"=>$categorias,"categoria"=>null,"form"=>$form->createView()));
 
         }
@@ -106,7 +109,7 @@ class categoriasController extends Controller
         }else{
     	    $ms="";
         }
-        return $this->render("sa/categorias.html.twig",array("menssaje"=>$ms,"categorias"=>$categorias,"categoria"=>$categoria,"form"=>$form->createView()));
+        return $this->render("sa/categorias.html.twig",array("menssaje"=>$ms,"categorias"=>$categorias,"categoria"=>$categoria));
 //        return new Response ($categoria->getId()."=".$categoria->getDesCat()."<br>");
     }
 

@@ -34,7 +34,7 @@ class Categoria
 	private $estado;//1=activo 0=inactivo
 
     /**
-     * @ORM\OneToMany(targetEntity="Promocion", mappedBy="Categoria")
+     * @ORM\OneToMany(targetEntity="Promocion", mappedBy="catPromFk")
      */
     private $promociones;
     /**

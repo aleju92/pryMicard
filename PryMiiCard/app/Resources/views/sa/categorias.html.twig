@@ -16,20 +16,22 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><a href="{{ path('catgegoria_add') }}">&times;</a></span></button>
                     <h4 class="modal-title" id="FormNuevo">Nueva Categoría</h4>
                 </div>
-                {{ form_start(form) }}
-                {% form_theme form 'bootstrap_3_layout.html.twig' %}
-                <div class="modal-body">
-                    {{ form_row(form.desCat) }}
-                </div>
-                <div class="modal-footer">
-                    {{ form_row(form.Guardar) }}
-                </div>
-                {{ form_end(form) }}
+                {% if form is defined %}
+                    {{ form_start(form) }}
+                    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+                    <div class="modal-body">
+                        {{ form_row(form.desCat) }}
+                    </div>
+                    <div class="modal-footer">
+                        {{ form_row(form.Guardar) }}
+                    </div>
+                    {{ form_end(form) }}
+                {% endif %}
             </div>
         </div>
     </div>
     {% if categoria != null%}
-    <div class="modal fade" id="FormEdit" tabindex="-1" role="dialog" aria-labelledby="FormEdit">
+    <div class="modal fade" id="FormEdit" tabindex="-1" role="dialog" aria-labelledby="FormEdit" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <form>
@@ -69,12 +71,13 @@
                 <th>Nombre</th>
                 <th>Estado</th>
                 <th>Cantidad de Promociones</th>
-            </tr>
-            {% for categoria in categorias %}
+            </tr>form"=
+            {%  for categoria in categorias %}
                 <tr>
-                    <td>{{ categoria.id }}</td>
+                    <td>{{ loop.index }}</td>
                     <td>{{ categoria.desCat }}</td>
                     <td>{% if categoria.estado == 1 %}Activo{% else %}Inactivo{% endif %}</td>
+                    <td>{% if categoria.promociones is empty %}no hay promociones {% else %} si hya promociones {% endif %}</td>
                     {# <td>{% if categoria.promociones|length == 0 %} sin promociones {% else %} con promociones{% endif %}</td>#}
                     <td><a href="{{ path('get_Categoria',{'id':categoria.id}) }}">Selecionar</a></td>
                 </tr>

@@ -91,7 +91,7 @@ class Promocion
     private $estProm;//1=activo 0=inactivo
 
     /**
-     * @ORM\OneToMany(targetEntity="Reserva", mappedBy="Promocion")
+     * @ORM\OneToMany(targetEntity="Reserva", mappedBy="promResFk")
      */
     private $Reservas;
     /**
