@@ -6,6 +6,11 @@
 {% block cuerpo %}
 <div id="mensaje">
  	<p>{{ menssaje }}</p>
+    {% for flash_message in app.session.flashBag.get('success') %}
+        <div class="flash-success">
+            {{ flash_message | upper }}
+        </div>
+    {% endfor %}
 </div>
 <div class ="row">
     <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#FormNuevo"><span class="glyphicon glyphicon-edit" aria-hidden="true">   Nueva</span></button>
@@ -13,13 +18,14 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><a href="{{ path('catgegoria_add') }}">&times;</a></span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><a href="{{ path('catgegoria_index') }}">&times;</a></span></button>
                     <h4 class="modal-title" id="FormNuevo">Nueva Categoría</h4>
                 </div>
                 {% if form is defined %}
                     {{ form_start(form) }}
                     {% form_theme form 'bootstrap_3_layout.html.twig' %}
                     <div class="modal-body">
+                        {{ form_row(form.id) }}
                         {{ form_row(form.desCat) }}
                     </div>
                     <div class="modal-footer">
@@ -30,36 +36,61 @@
             </div>
         </div>
     </div>
-    {% if categoria != null%}
+
     <div class="modal fade" id="FormEdit" tabindex="-1" role="dialog" aria-labelledby="FormEdit" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form>
                     <div class="modal-header">
-                        <a class="close" href="{{ path('catgegoria_add') }}"><span aria-hidden="true">&times;</span></a>
+                        <a class="close" href="{{ path('catgegoria_index') }}"><span aria-hidden="true">&times;</span></a>
                         <h4 class="modal-title" id="FormNuevo">Detalle Categoría</h4>
                     </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">codigo</label>
-                            <input type="number" class="form-control" id="txtCodM" value="{{ categoria.id }}" disabled="true">
+                    {% if form2 is defined %}
+                        {{ form_start(form2) }}
+                        {% form_theme form2 'bootstrap_3_layout.html.twig' %}
+                        <div class="modal-body">
+                            {{ form_row(form2.id) }}
+                            {{ form_row(form2.desCat) }}
                         </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Nombre</label>
-                            <input type="text" class="form-control" id="txtNomM" value="{{ categoria.desCat }}">
+                        <div class="modal-footer">
+                            {{ form_row(form2.Guardar,{ 'attr': {'class': 'btn btn-primary'} }) }}
                         </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <a class="btn btn-default" href="{{ path('catgegoria_add') }}">Cerrar</a>
-                        <button type="submit" class="btn btn-default">{#<a href="{{ path('pw_mc_main_catadd',{'descripcion':categoria}) }}">#}Editar{#</a>#}</button>
-                        <button type="submit" class="btn btn-default">{#<a href="{{ path('pw_mc_main_catadd',{'descripcion':categoria}) }}">#}Eliminar{#</a>#}</button>
-                    </div>
-                </form>
+                        {{ form_end(form2) }}
+                    {% endif %}
             </div>
         </div>
     </div>
-    {% endif %}
+
+    <div class="modal fade" id="FormDelet" tabindex="-1" role="dialog" aria-labelledby="FormDelet" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content alert alert-danger">
+                <div class="modal-header">
+                    <a class="close" href="{{ path('catgegoria_index') }}"><span aria-hidden="true">&times;</span></a>
+                    <h4 class="modal-title" id="FormNuevo"> Desactivar Categoria</h4>
+                </div>
+                {% if form3 is defined %}
+                    {{ form_start(form3) }}
+                    {% form_theme form3 'bootstrap_3_layout.html.twig' %}
+                    <div class="modal-body">
+                        <div class="media">
+                            <div class="media-left">
+                                <span id="dibujo" class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                            </div>
+                            <div class="media-body">
+                                <p id="ms">¿Está seguro que desea desactivar esta categoria?</p>
+                                {{ form_widget(form3.desCat) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="col-md-11"><a id="deleteCat" href="{{ path('catgegoria_index') }}" class="btn btn-primary">No</a></div>
+                        <div class="col-md-1">{{ form_row(form3.Si,{ 'attr': {'class': 'btn btn-danger'} }) }}</div>
+                    </div>
+                    {{ form_end(form3) }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <div class="row">
@@ -71,15 +102,24 @@
                 <th>Nombre</th>
                 <th>Estado</th>
                 <th>Cantidad de Promociones</th>
-            </tr>form"=
+            </tr>
             {%  for categoria in categorias %}
                 <tr>
                     <td>{{ loop.index }}</td>
                     <td>{{ categoria.desCat }}</td>
                     <td>{% if categoria.estado == 1 %}Activo{% else %}Inactivo{% endif %}</td>
                     <td>{% if categoria.promociones is empty %}no hay promociones {% else %} si hya promociones {% endif %}</td>
-                    {# <td>{% if categoria.promociones|length == 0 %} sin promociones {% else %} con promociones{% endif %}</td>#}
-                    <td><a href="{{ path('get_Categoria',{'id':categoria.id}) }}">Selecionar</a></td>
+                    <td>{% if categoria.estado == 1 %}
+                            <a class="btn bg-info" href="{{ path('Categoria_edit',{'id':categoria.id}) }}">Modificar</a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if categoria.estado == 1 %}
+                            <a class="btn btn-danger" href="{{ path('Categoria_delete',{'id':categoria.id}) }}" value="{{ categoria.id }}" >Deshabilitar</a>
+                        {% else %}
+                            <a class="btn btn-success" href="{{ path('Categoria_delete',{'id':categoria.id}) }}" value="{{ categoria.id }}" >&nbsp&nbsp&nbspHabilitar&nbsp&nbsp&nbsp</a>
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
         </table>
@@ -88,10 +128,16 @@
 
 {% endblock %}
 {% block javascripts %}
+    {#<script src="{{ asset('js/catForm.js')}}"></script>#}
     {# <script src="{{ asset('js/menusidebar.min.js')}}"></script> #}
-    {% if categoria != null %}
+    {% if form2 is defined %}
     <script>
         $('#FormEdit').modal('show')
     </script>
+    {% endif %}
+    {% if form3 is defined %}
+        <script>
+            $('#FormDelet').modal('show')
+        </script>
     {% endif %}
 {% endblock %}

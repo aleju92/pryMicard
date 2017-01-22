@@ -15,9 +15,25 @@ class CategoriaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        print_r(isset($options));
         $builder
-        	->add('desCat', TextType::class,array('required'=>true))
-        	->add('Guardar',SubmitType::class);
+            ->add('id',TextType::class,array('label'=>'Codigo:','disabled'=>'true'))
+            ->add('desCat', TextType::class,array('required'=>true,'label'=>'Nombre:'))
+            ->add('Guardar',SubmitType::class);
+        /*
+        if(!isset($options)){
+            $builder
+                ->add('id',TextType::class,array('label'=>'Codigo:','disabled'=>'true'))
+                ->add('desCat', TextType::class,array('required'=>true,'label'=>'Nombre:'))
+                ->add('Modificar',SubmitType::class)
+                ->add('Eliminar',SubmitType::class);
+        }else{
+            $builder
+                ->add('desCat', TextType::class,array('required'=>true,'label'=>'Nombre:'))
+                ->add('Guardar',SubmitType::class);
+        }*/
+
+
     }
     
     /**
