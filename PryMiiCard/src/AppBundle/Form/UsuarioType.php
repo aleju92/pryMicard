@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 
 class UsuarioType extends AbstractType
@@ -19,12 +20,12 @@ class UsuarioType extends AbstractType
         $builder
         ->add('nombre', TextType::class,array('required'=>true))
         ->add('apellido', TextType::class,array('required'=>true))
-        ->add('cedula')
+        ->add('cedula',TextType::class)
         ->add('email',TextType::class,array('required'=>true))
-        ->add('telefono')
+        ->add('telefono',TextType::class)
         ->add('nick')
-        ->add('pass',TextType::class,array('required'=>true))        
-        ->add('Guardar',SubmitType::class);;
+        ->add('pass',PasswordType::class,array('required'=>true))        
+        ->add('Registrar',SubmitType::class);;
     }
     
     /**

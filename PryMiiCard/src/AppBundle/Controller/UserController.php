@@ -26,18 +26,19 @@ class UserController extends Controller
 		$form=$this->createForm(UsuarioType::class);
 		$form->handleRequest($request);
 		$ms='';
-		$usuario=$this->usAll();
+		$usuarios=$this->usAll();
 		if($form->isSubmitted() && $form->isValid()){
 			$Usuario=$form->getData();
 			$em=$this->getDoctrine()->getManager();
 			$em->persist($Usuario);
 			$em->flush();
-			$usuarios=$this->catAll();
+			$usuarios=$this->usAll();
 			$ms="Se ha registrado con éxito";
-			return $this->render("base.html.twig",array("menssaje"=>$ms,"usuarios"=>$usuarios,"usuario"=>null));
+			$this->addFlash('success', $ms);
+			return $this->render("base.html.twig",array("usuarios"=>$usuarios,"usuario"=>null,"form"=>$form->createView()));
 			
 		}
-		return $this->render('user/registrarse.html.twig',array("menssaje"=>''));
+		return $this->render('user/registrarse.html.twig',array("usuarios"=>$usuarios,"usuario"=>null,"form"=>$form->createView()));
 	}
 	
 	

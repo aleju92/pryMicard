@@ -1,16 +1,57 @@
 {% extends "::user.html.twig" %}
 {% block titulo %}Crear una Cuenta{% endblock %}
 {% block cuerpo %}
+
+ <div id="mensaje">
+     {#<p>{{ menssaje }}</p>#}
+     {% for flash_message in app.session.flashBag.get('success') %}
+        <div class="flash-success alert alert-success"  role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ flash_message | upper }}
+        </div>
+    {% endfor %}
+    
+    {% for flash_message in app.session.flashBag.get('error') %}
+        <div class="flash-error alert alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ flash_message | upper }}
+        </div>
+    {% endfor %}
+    
+    {% for flash_message in app.session.flashBag.get('info') %}
+        <div class="flash-info alert alert-info" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ flash_message | upper }}
+        </div>
+    {% endfor %}
+
+   
+ </div>
+      
 <div class="row">
 	<h2>Nombre de Usuario</h2>
-   
-     <div class ="row">
-     <div id="mensaje">
-     	<p>{{ menssaje }}</p>
-     </div>
-      
-      <!-- Tab panes -->
-      <div class="tab-content">
+	{% if form is defined %}
+		{{ form_start(form) }}
+		{% form_theme form 'bootstrap_3_layout.html.twig' %}
+     		{{ form_row(form.nombre) }}
+     		{{ form_row(form.apellido) }}
+     		{{ form_row(form.cedula) }}
+     		{{ form_row(form.email) }}
+     		{{ form_row(form.telefono) }}
+     		{{ form_row(form.nick) }}
+     		{{ form_row(form.pass) }}
+     		{{ form_row(form.Registrar) }}
+     	{{ form_end(form) }}
+     {% endif %}
+     
+     
+     {#<div class="tab-content">
         <div role="tabpanel"  id="ingreso">
         	<form>
               <div class="form-group">
@@ -29,12 +70,9 @@
                 <label >Contraseña</label>
                 <input type="password" class="form-control" id="pass" placeholder="ingrese una contraseña">               
               </div>
-              <button type="submit" class="btn btn-default">Submit</button>
-            </form>
-        </div>
-        <div role="tabpanel" class="tab-pane" id="modificacion">...</div>
-      </div>
-    
-    </div>
+              <button type="submit" class="btn btn-default">Registrar</button>
+            </form>#}
+</div>
+        {#<div role="tabpanel" class="tab-pane" id="modificacion">...</div>#}
 
 {% endblock %}
