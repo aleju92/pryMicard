@@ -127,14 +127,24 @@
           </tr>
           {% for adm in Admins %}
           <tr>
-            <td>{{ adm.id }}</td>
+            <td>{{ loop.index }}</td>
             <td>{{ adm.nomAdm }}</td>
             <td>{{ adm.apeAdm }}</td>
             <td>{{ adm.emAdm }}</td>
             <td>{{ adm.useAdm }}</td>
             <td>{% if adm.tipAdm == 1 %} Adminstador {% else %} SuperAdminstador{% endif %}</td>
             <td>{% if adm.estAdm == 1 %} Activo {% else %} Inactivo {% endif %}</td>
-            <td><a href="{{ path('getAdmin',{'id':adm.id}) }}">Selecionar</a></td>
+            <td>{% if adm.estAdm == 1 %}
+                <a class="btn bg-info" href="">Modificar</a>
+                {% endif %}
+            </td>
+            <td>
+                {% if adm.estAdm == 1 %}
+                  <a class="btn btn-danger" href="" value="{{ adm.id }}" >Deshabilitar</a>
+                {% else %}
+                  <a class="btn btn-success" href="" value="{{ adm.id }}" >&nbsp&nbsp&nbspHabilitar&nbsp&nbsp&nbsp</a>
+                {% endif %}
+            </td>
           </tr>
           {% endfor %}
         </table>

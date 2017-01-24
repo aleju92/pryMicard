@@ -31,9 +31,10 @@ class categoriasController extends Controller
             $em->flush();
             $categorias= $this->catAll();
             $ms="La categoria  ha sido ingresada con exito";
-            return $this->render("sa/categorias.html.twig",array("menssaje"=>$ms,"categorias"=>$categorias,"categoria"=>null,"form"=>$form->createView()));
+            $this->addFlash('success',"$ms");
+            return $this->render("sa/categorias.html.twig",array("categorias"=>$categorias,"categoria"=>null,"form"=>$form->createView()));
         }
-    	return $this->render("sa/categorias.html.twig",array("menssaje"=>$ms,"categorias"=>$categorias,"categoria"=>null,"form"=>$form->createView()));
+    	return $this->render("sa/categorias.html.twig",array("categorias"=>$categorias,"categoria"=>null,"form"=>$form->createView()));
     }
     
      /**
@@ -47,24 +48,29 @@ class categoriasController extends Controller
     	$categoria=$em->find('AppBundle:Categoria',$id);
     	if ($categoria==null){
     	    $ms="La categoria con id=".$id." no EXISTE";
-            $this->addFlash('success',"$ms");
+            $this->addFlash('error',"$ms");
             return $this->redirectToRoute("catgegoria_index");
         }else{
-            $form =$this->createForm(CategoriaType::class, $categoria);
-            $form->handleRequest($request);
-            if ($form->isSubmitted() && $form->isValid()){
+    	    try{
+                $form =$this->createForm(CategoriaType::class, $categoria);
+                $form->handleRequest($request);
+                if ($form->isSubmitted() && $form->isValid()){
                     $em=$this->getDoctrine()->getManager();
                     $em->persist($categoria);
                     $em->flush();
-                $ms="Categoria modificada";
-                $this->addFlash('success',"$ms");
-                return $this->redirectToRoute("catgegoria_index");
-                //return $this->render("sa/categorias.html.twig",array("menssaje"=>$ms,"categorias"=>$categorias,"categoria"=>$categoria,"form"=>$form->createView()));
+                    $ms="Categoria modificada con id ".$id;
+                    $this->addFlash('success',"$ms");
+                    return $this->redirectToRoute("catgegoria_index");
+                    //return $this->render("sa/categorias.html.twig",array("menssaje"=>$ms,"categorias"=>$categorias,"categoria"=>$categoria,"form"=>$form->createView()));
+                }
+            }catch (\PDOException $exception){
+                    $this->addFlash('error',"Error!, no puede haber dos categorias con el mismo nombre");
+                    return $this->redirectToRoute("catgegoria_index");
             }
+
         }
-        $ms="";
         //return $this->render("sa/formCat.html.twig",array("menssaje"=>$ms,"form"=>$form->createView()));
-        return $this->render("sa/categorias.html.twig",array("menssaje"=>$ms,"categorias"=>$categorias,"form2"=>$form->createView()));
+        return $this->render("sa/categorias.html.twig",array("categorias"=>$categorias,"form2"=>$form->createView()));
 //        return new Response ($categoria->getId()."=".$categoria->getDesCat()."<br>");
     }
 
@@ -80,7 +86,7 @@ class categoriasController extends Controller
         $categoria=$em->find('AppBundle:Categoria',$id);
         if(!$categoria){
             $ms="No existe esa categoria con el registro: ".$id;
-            $this->addFlash('success',"$ms");
+            $this->addFlash('error',"$ms");
             return $this->redirectToRoute("catgegoria_index");
         }else{
             $ms="";
@@ -105,7 +111,7 @@ class categoriasController extends Controller
                 return $this->redirectToRoute("catgegoria_index");
             }
         }
-        return $this->render("sa/categorias.html.twig",array("menssaje"=>$ms,"categorias"=>$categorias,"form3"=>$form->createView()));
+        return $this->render("sa/categorias.html.twig",array("categorias"=>$categorias,"form3"=>$form->createView()));
     }
 
     /*public function deleteCatAction($id){
