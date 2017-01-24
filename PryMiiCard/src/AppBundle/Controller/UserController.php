@@ -23,22 +23,28 @@ class UserController extends Controller
 	 */
 	
 	public function registerAction(Request $request){
+		$user=new Usuario();
 		$form=$this->createForm(UsuarioType::class);
 		$form->handleRequest($request);
-		$ms='';
-		$usuarios=$this->usAll();
+		//$ms='';
+		//$usuarios=$this->usAll();
 		if($form->isSubmitted() && $form->isValid()){
-			$Usuario=$form->getData();
+			//ENCODE THE PASSWORD
+			$password=$this->get('security.password_encoder')
+				->encodePassword($user, $user->getPass());
+			$user->setPass($password);
+			//----------------------
+			//$Usuario=$form->getData();
 			$em=$this->getDoctrine()->getManager();
-			$em->persist($Usuario);
+			$em->persist($user);
 			$em->flush();
-			$usuarios=$this->usAll();
-			$ms="Se ha registrado con éxito";
-			$this->addFlash('success', $ms);
-			return $this->render("base.html.twig",array("usuarios"=>$usuarios,"usuario"=>null,"form"=>$form->createView()));
+			//$usuarios=$this->usAll();
+			/*$ms="Se ha registrado con éxito";
+			$this->addFlash('success', $ms);*/
+			return $this->render("default/index.html.twig",array("form"=>$form->createView()));
 			
 		}
-		return $this->render('user/registrarse.html.twig',array("usuarios"=>$usuarios,"usuario"=>null,"form"=>$form->createView()));
+		return $this->render('user/registrarse.html.twig',array("form"=>$form->createView()));
 	}
 	
 	
