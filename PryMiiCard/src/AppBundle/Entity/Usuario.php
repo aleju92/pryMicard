@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Usuario
@@ -10,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="usuario")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UsuarioRepository")
  */
-class Usuario
+class Usuario implements UserInterface
 {
     /**
      * @var int
@@ -62,6 +64,14 @@ class Usuario
      * @ORM\Column(name="nick", type="string", length=50)
      */
     private $nick;
+    
+	/**
+     * @var string
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
 
     /**
      * @var string
@@ -233,7 +243,17 @@ class Usuario
     {
         return $this->nick;
     }
-
+    
+    public function getPlainPassword()
+    {
+    	return $this->plainPassword;
+    }
+    
+    public function setPlainPassword($pass)
+    {
+    	$this->plainPassword = $pass;
+    }
+    
     /**
      * Set pass
      *
@@ -332,5 +352,50 @@ class Usuario
     public function getReservas()
     {
         return $this->Reservas;
-    }
+    }
+	/**
+	 * {@inheritDoc}
+	 * @see \Symfony\Component\Security\Core\User\UserInterface::getRoles()
+	 */
+	public function getRoles() {
+		// TODO: Auto-generated method stub
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see \Symfony\Component\Security\Core\User\UserInterface::getPassword()
+	 */
+	public function getPassword() {
+		// TODO: Auto-generated method stub
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see \Symfony\Component\Security\Core\User\UserInterface::getSalt()
+	 */
+	public function getSalt() {
+		// TODO: Auto-generated method stub
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see \Symfony\Component\Security\Core\User\UserInterface::getUsername()
+	 */
+	public function getUsername() {
+		// TODO: Auto-generated method stub
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see \Symfony\Component\Security\Core\User\UserInterface::eraseCredentials()
+	 */
+	public function eraseCredentials() {
+		// TODO: Auto-generated method stub
+
+	}
+
 }

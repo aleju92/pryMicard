@@ -23,11 +23,12 @@ security:
             form_login:
               login_path: login
               check_path: login
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
-            
-     encoders:
-          AppBundle/Entity/Usuario:
-              algorithm: bcrypt
-              
-             
+            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html    
+    
+    encoders:
+        AppBundle\Entity\Usuario:
+          algorithm: bcrypt    
+        # Symfony\Component\Security\Core\User\User: 
+        #     algorithm: bcrypt
+        #     cost: 12
         

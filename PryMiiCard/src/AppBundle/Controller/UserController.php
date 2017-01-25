@@ -2,13 +2,15 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Usuario;
 use AppBundle\Form\UsuarioType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Entity\Usuario;
 
-class UserController extends Controller
+
+
+class UserController extends Controller 
 {
 	/**
 	 * @Route("/usuario", name="user_index")
@@ -29,12 +31,12 @@ class UserController extends Controller
 		//$ms='';
 		//$usuarios=$this->usAll();
 		if($form->isSubmitted() && $form->isValid()){
+			$user=$form->getData();
 			//ENCODE THE PASSWORD
-			$password=$this->get('security.password_encoder')
-				->encodePassword($user, $user->getPass());
+			$password = $this->get('security.password_encoder')
+				->encodePassword($user, $user->getPlainPassword());
 			$user->setPass($password);
 			//----------------------
-			//$Usuario=$form->getData();
 			$em=$this->getDoctrine()->getManager();
 			$em->persist($user);
 			$em->flush();
