@@ -24,6 +24,13 @@
 }
 
 .centrar{
+	height: 410px;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.centrarTexto{
+	padding-top: 200px;
 	text-align: center;
 	vertical-align: middle;
 }
@@ -42,18 +49,39 @@
 	
 }
 .imagen{
-	filter: blur(6px);
+	/*filter: blur(6px); */
 	width: 100%; /* for IE 6 */
 }
 .image {
 
-	
+
 text-align: center;
 position: relative;
 
 width: 100%; /* for IE 6 */
 
 }
+
+
+.img-contenedor img {
+-webkit-transition:all 1.5s ease; /* Safari y Chrome */
+-moz-transition:all 1.5s ease; /* Firefox */
+-o-transition:all 1.5s ease; /* IE 9 */
+-ms-transition:all 1.5s ease; /* Opera */
+width:100%;
+}
+.img-contenedor:hover img {
+-webkit-transform:scale(1.25);
+-moz-transform:scale(1.25);
+-ms-transform:scale(1.25);
+-o-transform:scale(1.25);
+transform:scale(1.25);
+}
+
+
+
+
+
 
 h2 {
 
