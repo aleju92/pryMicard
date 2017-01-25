@@ -43,7 +43,7 @@ class UserController extends Controller
 			//$usuarios=$this->usAll();
 			/*$ms="Se ha registrado con éxito";
 			$this->addFlash('success', $ms);*/
-			return $this->render("default/index.html.twig",array("form"=>$form->createView()));
+			return $this->render("security/login.html.twig",array("form"=>$form->createView()));
 			
 		}
 		return $this->render('user/registrarse.html.twig',array("form"=>$form->createView()));
