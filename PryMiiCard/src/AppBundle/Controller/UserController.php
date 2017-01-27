@@ -49,7 +49,6 @@ class UserController extends Controller
 		return $this->render('user/registrarse.html.twig',array("form"=>$form->createView()));
 	}
 	
-	
 	/**
 	 * @Route("/usuario/miiperfil", name="user_perfil")
 	 */

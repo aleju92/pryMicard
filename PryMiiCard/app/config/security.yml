@@ -6,6 +6,14 @@ security:
     providers:
         in_memory:
             memory: ~
+        
+        db_provider:
+            entity:
+                class: AppBundle:Usuario
+                property: username 
+                # remove this if you want to access using email or username
+                # if you're using multiple entity managers
+                # manager_name: customer
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -24,6 +32,12 @@ security:
               login_path: login
               check_path: login
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html    
+    
+            logout:
+                path:   /logout
+                target: /
+            
+            provider: db_provider
     
     encoders:
         AppBundle\Entity\Usuario:
