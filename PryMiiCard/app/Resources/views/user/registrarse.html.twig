@@ -9,16 +9,17 @@
 <div class="row">
 	<h2>Nombre de Usuario</h2>
 	{% if form is defined %}
-		{{ form_start(form) }}
-		{% form_theme form 'bootstrap_3_layout.html.twig' %}
-     		{{ form_row(form.nombre) }}
-     		{{ form_row(form.apellido) }}
-     		{{ form_row(form.cedula) }}
-     		{{ form_row(form.email) }}
-     		{{ form_row(form.telefono) }}
-     		{{ form_row(form.nick) }}
-     		{{ form_row(form.plainPassword) }}
-     		{{ form_row(form.Registrar) }}
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    		{% form_theme form 'bootstrap_3_layout.html.twig' %}
+         		{{ form_row(form.nombre) }}
+         		{{ form_row(form.apellido) }}
+         		{{ form_row(form.cedula) }}
+         		{{ form_row(form.email) }}
+         		{{ form_row(form.telefono) }}
+         		{{ form_row(form.nick) }}
+         		{{ form_row(form.plainPassword.first) }}
+         		{{ form_row(form.plainPassword.second) }}
+         		{{ form_row(form.Registrar) }}
      	{{ form_end(form) }}
      {% endif %}
      
