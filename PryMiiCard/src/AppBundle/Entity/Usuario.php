@@ -61,9 +61,9 @@ class Usuario implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="nick", type="string", length=50)
+     * @ORM\Column(name="username", type="string", length=50)
      */
-    private $nick;
+    private $username;
     
 	/**
      * @var string
@@ -76,9 +76,9 @@ class Usuario implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="pass", type="string", length=255)
+     * @ORM\Column(name="password", type="string", length=255)
      */
-    private $pass;
+    private $password;
 
     /**
      * @ORM\OneToMany(targetEntity="Credito", mappedBy="userCredFk")
@@ -221,27 +221,27 @@ class Usuario implements UserInterface
     }
 
     /**
-     * Set nick
+     * Set username
      *
-     * @param string $nick
+     * @param string $username
      *
      * @return Usuario
      */
-    public function setNick($nick)
+    public function setUsername($username)
     {
-        $this->nick = $nick;
+        $this->username = $username;
 
         return $this;
     }
 
     /**
-     * Get nick
+     * Get username
      *
      * @return string
      */
-    public function getNick()
+    public function getUsername()
     {
-        return $this->nick;
+        return $this->username;
     }
     
     public function getPlainPassword()
@@ -249,33 +249,33 @@ class Usuario implements UserInterface
     	return $this->plainPassword;
     }
     
-    public function setPlainPassword($pass)
+    public function setPlainPassword($password)
     {
-    	$this->plainPassword = $pass;
+    	$this->plainPassword = $password;
     }
     
     /**
-     * Set pass
+     * Set password
      *
-     * @param string $pass
+     * @param string $password
      *
      * @return Usuario
      */
-    public function setPass($pass)
+    public function setPassword($password)
     {
-        $this->pass = $pass;
+        $this->password = $password;
 
         return $this;
     }
 
     /**
-     * Get pass
+     * Get password
      *
      * @return string
      */
-    public function getPass()
+    public function getPassword()
     {
-        return $this->pass;
+        return $this->password;
     }
     /**
      * Constructor
@@ -364,15 +364,6 @@ class Usuario implements UserInterface
 
 	/**
 	 * {@inheritDoc}
-	 * @see \Symfony\Component\Security\Core\User\UserInterface::getPassword()
-	 */
-	public function getPassword() {
-		// TODO: Auto-generated method stub
-
-	}
-
-	/**
-	 * {@inheritDoc}
 	 * @see \Symfony\Component\Security\Core\User\UserInterface::getSalt()
 	 */
 	public function getSalt() {
@@ -380,14 +371,6 @@ class Usuario implements UserInterface
 
 	}
 
-	/**
-	 * {@inheritDoc}
-	 * @see \Symfony\Component\Security\Core\User\UserInterface::getUsername()
-	 */
-	public function getUsername() {
-		// TODO: Auto-generated method stub
-
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -397,5 +380,5 @@ class Usuario implements UserInterface
 		// TODO: Auto-generated method stub
 
 	}
-
+	
 }

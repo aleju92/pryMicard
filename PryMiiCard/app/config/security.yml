@@ -9,7 +9,7 @@ security:
         db_provider:
             entity:
                 class: AppBundle:Usuario
-                property: nick 
+                property: username 
                 # remove this if you want to access using email or username
                 # if you're using multiple entity managers
                 # manager_name: customer
@@ -28,15 +28,14 @@ security:
             # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
 
             form_login:
-              login_path: login
-              check_path: login
+                login_path: login
+                check_path: login
             # http://symfony.com/doc/current/cookbook/security/form_login_setup.html    
             logout:
                 path:   /logout
                 target: /
             
             provider: db_provider
-            
     encoders:
         AppBundle\Entity\Usuario:
             algorithm: bcrypt

@@ -35,7 +35,7 @@ class UserController extends Controller
 			//ENCODE THE PASSWORD
 			$password = $this->get('security.password_encoder')
 				->encodePassword($user, $user->getPlainPassword());
-			$user->setPass($password);
+			$user->setPassword($password);
 			//----------------------
 			$em=$this->getDoctrine()->getManager();
 			$em->persist($user);
@@ -43,7 +43,8 @@ class UserController extends Controller
 			//$usuarios=$this->usAll();
 			/*$ms="Se ha registrado con éxito";
 			$this->addFlash('success', $ms);*/
-			return $this->render("security/login.html.twig",array("form"=>$form->createView()));
+			//return $this->render("security/login.html.twig",array("form"=>$form->createView()));
+			return $this->redirectToRoute('login');
 			
 		}
 		return $this->render('user/registrarse.html.twig',array("form"=>$form->createView()));
