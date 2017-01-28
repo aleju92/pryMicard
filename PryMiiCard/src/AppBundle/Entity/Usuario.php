@@ -89,7 +89,8 @@ class Usuario implements UserInterface
      * @ORM\OneToMany(targetEntity="Reserva", mappedBy="usuResFk")
      */
     private $Reservas;
-
+	private $roles;
+    
     /**
      * Get id
      *
@@ -358,7 +359,7 @@ class Usuario implements UserInterface
 	 * @see \Symfony\Component\Security\Core\User\UserInterface::getRoles()
 	 */
 	public function getRoles() {
-		// TODO: Auto-generated method stub
+		return array('ROLE_USER');
 
 	}
 
@@ -367,8 +368,7 @@ class Usuario implements UserInterface
 	 * @see \Symfony\Component\Security\Core\User\UserInterface::getSalt()
 	 */
 	public function getSalt() {
-		// TODO: Auto-generated method stub
-
+		
 	}
 
 
