@@ -4,8 +4,15 @@ security:
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        #in_memory:
-        #   memory: ~
+        in_memory:
+            memory: 
+                 users:
+                     admin:
+                         password: 
+                         roles: 'ROLE_ADMIN'
+                     sadmin:
+                         password: 
+                         roles: 'ROLE_SUPADMIN'
         db_provider:
             entity:
                 class: AppBundle:Usuario

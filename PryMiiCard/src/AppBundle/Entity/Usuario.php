@@ -38,9 +38,9 @@ class Usuario implements UserInterface
     private $apellido;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="cedula", type="integer", length=10)
+     * @ORM\Column(name="cedula", type="string", length=10)
      */
     private $cedula;
 
@@ -52,9 +52,9 @@ class Usuario implements UserInterface
     private $email;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="telefono", type="integer")
+     * @ORM\Column(name="telefono", type="string")
      */
     private $telefono;
 
@@ -359,7 +359,7 @@ class Usuario implements UserInterface
 	 * @see \Symfony\Component\Security\Core\User\UserInterface::getRoles()
 	 */
 	public function getRoles() {
-		return array('ROLE_USER');
+		return array('ROLE_SUPADMIN','ROLE_ADMIN', 'ROLE_USER');
 
 	}
 
