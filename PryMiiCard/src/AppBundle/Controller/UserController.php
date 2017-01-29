@@ -37,6 +37,23 @@ class UserController extends Controller
 				->encodePassword($user, $user->getPlainPassword());
 			$user->setPassword($password);
 			//----------------------
+			//SUBIR ARCHIVO
+			// Recogemos el fichero
+			$img=$form['foto']->getData();
+			
+			// Sacamos la extensión del fichero
+			$ext=$img->guessExtension();
+			
+			// Le ponemos un nombre al fichero
+			$file_name=time().".".$ext;
+			
+			// Guardamos el fichero en el directorio uploads que estará en el directorio /web del framework
+			$img->move("uploads", $file_name);
+			
+			// Establecemos el nombre de fichero en el atributo de la entidad
+			$user->setFoto($file_name);
+			
+			//-----------------------
 			$em=$this->getDoctrine()->getManager();
 			$em->persist($user);
 			$em->flush();
