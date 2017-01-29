@@ -24,14 +24,14 @@ class Administrador implements UserInterface
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="nomAdm", type="string", length=50)
      */
     private $nomAdm;
 
     /**
      * @var string
-     *
+     * @Assert\NotBlank()
      * @ORM\Column(name="apeAdm", type="string", length=50)
      */
     private $apeAdm;
@@ -60,6 +60,7 @@ class Administrador implements UserInterface
 
     /**
      * @var string
+     *@Assert\NotBlank()
      *
      * @ORM\Column(name="useAdm", type="string", length=100, unique=true)
      */
