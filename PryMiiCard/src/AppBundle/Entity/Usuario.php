@@ -36,7 +36,21 @@ class Usuario implements UserInterface
      * @ORM\Column(name="apellido", type="string", length=100)
      */
     private $apellido;
-
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fechanacim", type="datetime", nullable=true)
+     */
+    private $fechanacim;
+	
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="foto", type="string", length=255, nullable=true)
+     */
+    private $foto;
+    
     /**
      * @var string
      *

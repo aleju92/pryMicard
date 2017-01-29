@@ -45,9 +45,10 @@ security:
             
             # provider: db_provider
     access_control:
-        - {path: ^/[login|registrate],roles:IS_AUTHENTICATED_ANONYMOUSLY}
+        - {path: ^/[login|registrate], roles: IS_AUTHENTICATED_ANONYMOUSLY}
         - {path: ^/usuario, roles: ROLE_USER }
         - {path: ^/sa, roles: ROLE_SUPADMIN }
+        #- { path: ^/, roles: IS_AUTHENTICATED_FULLY }
       
     encoders:
         #Esto sirve con los datos db_provider
