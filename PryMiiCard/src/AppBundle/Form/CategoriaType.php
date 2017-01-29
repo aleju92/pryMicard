@@ -19,7 +19,7 @@ class CategoriaType extends AbstractType
         $builder
             ->add('id',TextType::class,array('label'=>'Codigo:','disabled'=>'true'))
             ->add('desCat', TextType::class,array('required'=>true,'label'=>'Nombre:'))
-            ->add('Guardar',SubmitType::class);
+            ->add('Modificar',SubmitType::class);
         /*
         if(!isset($options)){
             $builder

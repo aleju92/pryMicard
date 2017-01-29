@@ -3,7 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * Administrador
  *
@@ -43,11 +44,34 @@ class Administrador
     private $emAdm;
 
     /**
+     * Image file
+     *
+     * @var File
+     *
+     * @Assert\File(
+     *     maxSize = "5M",
+     *     mimeTypes = {"image/jpeg", "image/gif", "image/png"},
+     *     maxSizeMessage = "Lo máximo permitido es 5MB",
+     *     mimeTypesMessage = "Solo se permite los formatos: .jpg .gif .png"
+     * )
+     * @ORM\Column(name="foto", type="string", length=255, nullable=true)
+     */
+    private $photoAdm;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="useAdm", type="string", length=100, unique=true)
      */
     private $useAdm;
+
+    /**
+     * @var string
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
 
     /**
      * @var string
@@ -71,7 +95,7 @@ class Administrador
     //1=activo 0=inactivo
 
     /**
-     * @ORM\OneToMany(targetEntity="Empresa", mappedBy="Administrador")
+     * @ORM\OneToMany(targetEntity="Empresa", mappedBy="admiPromFk")
      */
     private $empresas;
     
@@ -251,5 +275,70 @@ class Administrador
     public function getEstAdm()
     {
         return $this->estAdm;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->empresas = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add empresa
+     *
+     * @param \AppBundle\Entity\Empresa $empresa
+     *
+     * @return Administrador
+     */
+    public function addEmpresa(\AppBundle\Entity\Empresa $empresa)
+    {
+        $this->empresas[] = $empresa;
+
+        return $this;
+    }
+
+    /**
+     * Remove empresa
+     *
+     * @param \AppBundle\Entity\Empresa $empresa
+     */
+    public function removeEmpresa(\AppBundle\Entity\Empresa $empresa)
+    {
+        $this->empresas->removeElement($empresa);
+    }
+
+    /**
+     * Get empresas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getEmpresas()
+    {
+        return $this->empresas;
+    }
+
+    /**
+     * Set photoAdm
+     *
+     * @param string $photoAdm
+     *
+     * @return Administrador
+     */
+    public function setPhotoAdm($photoAdm)
+    {
+        $this->photoAdm = $photoAdm;
+
+        return $this;
+    }
+
+    /**
+     * Get photoAdm
+     *
+     * @return string
+     */
+    public function getPhotoAdm()
+    {
+        return $this->photoAdm;
     }
 }

@@ -3,14 +3,15 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * Administrador
  *
  * @ORM\Table(name="administrador")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AdministradorRepository")
  */
-class Administrador
+class Administrador implements UserInterface
 {
     /**
      * @var int
@@ -43,11 +44,34 @@ class Administrador
     private $emAdm;
 
     /**
+     * Image file
+     *
+     * @var File
+     *
+     * @Assert\File(
+     *     maxSize = "5M",
+     *     mimeTypes = {"image/jpeg", "image/gif", "image/png"},
+     *     maxSizeMessage = "Lo máximo permitido es 5MB",
+     *     mimeTypesMessage = "Solo se permite los formatos: .jpg .gif .png"
+     * )
+     * @ORM\Column(name="foto", type="string", length=255, nullable=true)
+     */
+    private $photoAdm;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="useAdm", type="string", length=100, unique=true)
      */
     private $useAdm;
+
+    /**
+     * @var string
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $PasswordTemp;
 
     /**
      * @var string
@@ -206,6 +230,29 @@ class Administrador
     }
 
     /**
+     * Set passAdm
+     *
+     * @param string $passAdm
+     *
+     * @return Administrador
+     */
+    public function setPasswordTemp($PasswordTemp)
+    {
+        $this->PasswordTemp = $PasswordTemp;
+
+        return $this;
+    }
+
+    /**
+     * Get passAdm
+     *
+     * @return string
+     */
+    public function getPasswordTemp()
+    {
+        return $this->PasswordTemp;
+    }
+    /**
      * Set tipAdm
      *
      * @param integer $tipAdm
@@ -292,5 +339,103 @@ class Administrador
     public function getEmpresas()
     {
         return $this->empresas;
+    }
+
+    /**
+     * Set photoAdm
+     *
+     * @param string $photoAdm
+     *
+     * @return Administrador
+     */
+    public function setPhotoAdm($photoAdm)
+    {
+        $this->photoAdm = $photoAdm;
+
+        return $this;
+    }
+
+    /**
+     * Get photoAdm
+     *
+     * @return string
+     */
+    public function getPhotoAdm()
+    {
+        return $this->photoAdm;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPathPhotoAdm()
+    {
+        return 'AdminPerfil/'.$this->getPhotoAdm();
+    }
+    /**
+     * Returns the roles granted to the user.
+     *
+     * <code>
+     * public function getRoles()
+     * {
+     *     return array('ROLE_USER');
+     * }
+     * </code>
+     *
+     * Alternatively, the roles might be stored on a ``roles`` property,
+     * and populated in any number of different ways when the user object
+     * is created.
+     *
+     * @return (Role|string)[] The user roles
+     */
+    public function getRoles()
+    {
+        return array('ROLE_SUPADMIN');
+    }
+
+    /**
+     * Returns the password used to authenticate the user.
+     *
+     * This should be the encoded password. On authentication, a plain-text
+     * password will be salted, encoded, and then compared to this value.
+     *
+     * @return string The password
+     */
+    public function getPassword()
+    {
+        return $this->getPassAdm();
+    }
+
+    /**
+     * Returns the salt that was originally used to encode the password.
+     *
+     * This can return null if the password was not encoded using a salt.
+     *
+     * @return string|null The salt
+     */
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
+
+    /**
+     * Returns the username used to authenticate the user.
+     *
+     * @return string The username
+     */
+    public function getUsername()
+    {
+        return $this->getUseAdm();
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * This is important if, at any given point, sensitive information like
+     * the plain-text password is stored on this object.
+     */
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
     }
 }

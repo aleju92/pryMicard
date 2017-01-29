@@ -2,53 +2,17 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\AdministradorType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use AppBundle\Entity\Administrador;
 
 class AdminsController extends Controller
 {
-	public function addAdminAction($nom,$ape,$email,$use,$pass){
-    	$admin= new Administrador();
-    	$admin->setNomAdm($nom);
-    	$admin->setApeAdm($ape);
-    	$admin->setEmAdm($email);
-    	$admin->setUseAdm($use);
-    	$admin->setPassAdm($pass);
-    	$admin->setTipAdm(1);
-    	$admin->setEstAdm(1);
-    	
-    	$em=$this->getDoctrine()->getManager();
-    	$em->persist($admin);
-    	$em->flush();
-    	$Admin=$this->AdminAll();
-    	$ms="El usuario (".$nom." ".$ape.") ha sido ingredado con exito";
-    	return $this->render("PwMCMainBundle:sa:admins.html.twig",array("menssaje"=>$ms,"Admin"=>$Admin));	
-    }
-    public function editAdminAction($id,$nom,$ape,$email,$use,$pass){
-    	$em=$this->getDoctrine()->getManager();
-    	$admin=$em->find("PwMCMainBundle", $id);    	
-    	$admin->setNomAdm($nom);
-    	$admin->setApeAdm($ape);
-    	$admin->setEmAdm($email);
-    	$admin->setUseAdm($use);
-    	$admin->setPassAdm($pass); 
-    	$em->flush();
-    	
-    	$Admin=$this->AdminAll();
-    	$ms="El usuario (".$nom." ".$ape.") ha sido modificado con exito";
-    	return $this->render("PwMCMainBundle:sa:admins.html.twig",array("menssaje"=>$ms,"Admin"=>$Admin));
-    }
-    public function deleteAdminAction($id,$estado){
-    	$em=$this->getDoctrine()->getManager();
-    	$admin=$em->find("PwMCMainBundle", $id);
-    	$Admin=$this->AdminAll();
-    	$ms="El usuario (".$admin->getNomAdm()." ".$admin->getApeAdm().") ha sido eliminado con exito";
-    	return $this->render("PwMCMainBundle:sa:admins.html.twig",array("menssaje"=>$ms,"Admin"=>$Admin));
-    }
 
-    /**
+	/**
      * @Route("/sa/admins/all", name="administradores_all")
      */
     public function getAdmisAction(){
@@ -68,16 +32,52 @@ class AdminsController extends Controller
     	    $ms="El usuario administrador con id=".$id."No se encientra registrado";
         }
         return $this->render("sa/admins.html.twig",array("menssaje"=>$ms,"Admins"=>$Admins,"Admin"=>$admin));
-    	//return new Response($admin->getId()."=>".$admin->getUseAdm());
     }
 
     /**
      * @Route("/sa/Mi_Perfil/{idUser}", name="miPerfilSa")
      */
-    public function miPerfil($idUser){
+    public function miPerfil(Request $request, $idUser){
+
         $em=$this->getDoctrine()->getManager();
-        $admin=$em->find("AppBundle:Administrador", $idUser);
-        return $this->render("sa/miperfil.html.twig",array("menssaje"=>" ","Admin"=>$admin));
+        $adminUser=$em->find("AppBundle:Administrador", $idUser);
+        if(!$adminUser){
+            return $this->redirectToRoute('indexSAdmin');
+        }else{
+            $form=$this->createForm(AdministradorType::class, $adminUser);
+            $form->get('path')->setData($adminUser->getPathPhotoAdm());
+            $form->handleRequest($request);
+            if($form->isSubmitted()){
+                if( $form->isValid()){
+                    $adminUser=$form->getData();
+
+                    //encriptacion de passwprd
+                    $password=$this->get('security.password_encoder')
+                        ->encodePassword($adminUser,$adminUser->getPasswordTemp());
+                    $adminUser->setPassAdm($password);
+
+                    //Subir la foto
+                    $img=$form['photoAdm']->getData();
+                    $ext=$img->guessExtension();
+                    $file_name=time().".".$ext;
+                    
+                    //subir la foto al repositorio
+                    $img->move("AdminPerfil",$file_name);
+                    
+                    $adminUser->setPhotoAdm($file_name);
+
+                    $em->persist($adminUser);
+                    $em->flush();
+                    $ms="Sus datos han sido modificado correctamente";
+                    $tms='success';
+                }else{
+                    $ms="Error!!!, los datos son incorrectos ";
+                    $tms='error';
+                }
+                $this->addFlash($tms,$ms);
+            }
+        }
+        return $this->render("sa/miperfil.html.twig",array('Form'=>$form->createView()));
     }
     private function AdminAll(){
     	$em=$this->getDoctrine()->getManager();

@@ -4,8 +4,8 @@
  */
 $(document).ready(
     function () {
-        $('deleteCat').on('click',function (e) {
-           // e.preventDefault();
+        $('.deleteCat').on('click',function (e) {
+            e.preventDefault();
             console.log($(this).attr('value'));
         })
     }
