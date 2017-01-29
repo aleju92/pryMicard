@@ -43,10 +43,18 @@ class Usuario implements UserInterface
      * @ORM\Column(name="fechanacim", type="datetime", nullable=true)
      */
     private $fechanacim;
-	
+
     /**
-     * @var string
+     * Image file
      *
+     * @var File
+     *
+     * @Assert\File(
+     *     maxSize = "5M",
+     *     mimeTypes = {"image/jpeg", "image/gif", "image/png"},
+     *     maxSizeMessage = "The maxmimum allowed file size is 5MB.",
+     *     mimeTypesMessage = "Only the filetypes image are allowed."
+     * )
      * @ORM\Column(name="foto", type="string", length=255, nullable=true)
      */
     private $foto;
@@ -162,7 +170,57 @@ class Usuario implements UserInterface
     {
         return $this->apellido;
     }
-
+	
+    /**
+     * Set fechanacim
+     *
+     * @param \DateTime $fechanacim
+     *
+     * @return Usuario
+     */
+    public function setFechanacim($fechanacim)
+    {
+    	$this->fechanacim = $fechanacim;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get fechanacim
+     *
+     * @return \DateTime
+     */
+    public function getFechanacim()
+    {
+    	return $this->fechanacim;
+    }
+    
+    /**
+     * Set foto
+     *
+     * @param string $foto
+     *
+     * @return Usuario
+     */
+    public function setFoto($foto)
+    {
+    	$this->foto = $foto;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get foto
+     *
+     * @return string
+     */
+    public function getFoto()
+    {
+    	return $this->foto;
+    }
+    
+    
+    
     /**
      * Set cedula
      *

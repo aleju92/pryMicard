@@ -10,6 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 
 class UsuarioType extends AbstractType
@@ -22,6 +24,8 @@ class UsuarioType extends AbstractType
         $builder
         ->add('nombre', TextType::class,array('required'=>true))
         ->add('apellido', TextType::class,array('required'=>true))
+        ->add('fechanacim',DateType::class)
+        ->add('foto',FileType::class)
         ->add('cedula',TextType::class)
         ->add('email',EmailType::class,array('required'=>true))
         ->add('telefono',TextType::class)
