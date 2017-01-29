@@ -4,15 +4,15 @@ security:
 
     # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        in_memory:
-            memory: 
-                 users:
-                     admin:
-                         password: 
-                         roles: 'ROLE_ADMIN'
-                     sadmin:
-                         password: 
-                         roles: 'ROLE_SUPADMIN'
+        #in_memory:
+        #   memory: 
+        #         users:
+        #             admin:
+        #                 password: $2y$13$GdIw.hu0AVaCKc0B0LM2Ne43eVkFWbbl7riHAZMgaH.YBsffujW7O
+        #                 roles: 'ROLE_ADMIN'
+        #             sadmin:
+        #                 password: $2y$13$CT0aMemEO22bK3JC0PkmHOPKwsuFamNiGG92V5DKdYE3YiKxj/xxO 
+        #                 roles: 'ROLE_SUPADMIN'
         db_provider:
             entity:
                 class: AppBundle:Usuario
@@ -43,6 +43,10 @@ security:
                 target: /
             
             provider: db_provider
+    access_control:
+        - {path: ^/[login|registrate],roles:IS_AUTHENTICATED_ANONYMOUSLY}
+        - {path: ^/usuario, roles: ROLE_USER }
+      
     encoders:
         AppBundle\Entity\Usuario:
             algorithm: bcrypt

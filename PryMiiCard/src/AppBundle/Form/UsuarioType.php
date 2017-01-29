@@ -25,7 +25,7 @@ class UsuarioType extends AbstractType
         ->add('cedula',TextType::class)
         ->add('email',EmailType::class,array('required'=>true))
         ->add('telefono',TextType::class)
-        ->add('nick')
+        ->add('username')
         ->add('plainPassword', RepeatedType::class, array(
         		'type' => PasswordType::class,
         		'first_options'=> array('label'=> 'Contraseña'),

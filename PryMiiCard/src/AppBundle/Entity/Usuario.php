@@ -359,7 +359,7 @@ class Usuario implements UserInterface
 	 * @see \Symfony\Component\Security\Core\User\UserInterface::getRoles()
 	 */
 	public function getRoles() {
-		return array('ROLE_SUPADMIN','ROLE_ADMIN', 'ROLE_USER');
+		return array('ROLE_USER');
 
 	}
 
