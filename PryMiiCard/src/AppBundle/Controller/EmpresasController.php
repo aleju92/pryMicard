@@ -14,21 +14,22 @@ class EmpresasController extends Controller
      * @Route("/emp/registro", name="registroemp")
      */
 
-    public function empAction()
-    {
-        return $this->render('emp/registroe.html.twig');
-    }
-
-    /**
-     * @Route("/emp/prempresa", name="registroe")
-     */
-
-    public function addAction(Request $request)
+    public function empAction(Request $request)
     {
         $form = $this->createForm(EmpresaType::class);
         $form->handleRequest($request);
-        return $this->render("emp/prempresa.html.twig",array("form"=>$form->createView()));
+        return $this->render("emp/regempresa.html.twig",array("form"=>$form->createView()));
     }
+
+    /**
+     * @Route("/emp/miiempresa", name="perfilemp")
+     */
+
+    public function indexAction()
+    {
+        return $this->render("emp/miiempresa.html.twig");
+    }
+
     /**
      * @Route("/emp/solicitud", name="solicitudemp")
      */
@@ -38,6 +39,11 @@ class EmpresasController extends Controller
         return $this->render('emp/solicitud.html.twig');
     }
 
+    /**
+     *
+     * @Route("/emp/registro",name="reg_empresa");
+     *
+     */
     public function addEmpAction($nomEmp,$usrEmp,$pasEmp,$rucEmp,$tlfEmp,$pagEmp,$logEmp,$slogEmp){
         $emp= new Empresa();
         $emp->setNomEmp($nomEmp);
@@ -54,12 +60,13 @@ class EmpresasController extends Controller
         $em->flush();
         $Emp=$this->EmpAll();
         $ms="La Empresa (".$nomEmp.") ha sido registrada con exito";
-        return $this->render("PwMCMainBundle:emp:registroe.html.twig",array("menssaje"=>$ms,"Admin"=>$Emp));
+        return $this->render("PwMCMainBundle:emp:registroe.html.twig",array("mensaje"=>$ms,"Admin"=>$Emp));
     }
 
-    public function modEmpAction($nomEmp)
-    {
-
+    private function empAll(){
+        $em=$this->getDoctrine()->getManager();
+        $empresas= $em->getRepository('AppBundle:Empresa')->findAll();
+        return $empresas;
     }
 
 
