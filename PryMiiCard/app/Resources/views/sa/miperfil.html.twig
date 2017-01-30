@@ -1,5 +1,5 @@
 {% extends "::admin.html.twig" %}
-{% block m4%}active {% endblock %}
+{% block m5%}active {% endblock %}
 {% block titulo %}Mi Perfil{% endblock %}
 {% block cuerpo %}
   <div id="mensaje">
@@ -62,12 +62,24 @@
           {{ form_widget(Form.useAdm) }}
           {{ form_errors(Form.useAdm) }}
       </div>
-      <div class="form-group col-md-8">
-          {{ form_row(Form.PasswordTemp) }}
+      <div class="form-group col-md-12">
+        <label for="exampleInputPassword1">Cambio de contraseña</label>
+        <div class="input-group">
+          <input id="txtPass" type="password" class="form-control" placeholder="Ingrese su contraseña actual">
+          <span class="input-group-btn">
+            <button id="btnVet"  class="btn btn-default" type="button">Verificar</button>
+          </span>
+        </div>
       </div>
     </div>
     <div class="row col-md-5 col-xs-4 col-sm-4 col-md-offset-5 col-sm-offset-4 col-xs-offset-3 ">
         {{ form_widget(Form.Guardar) }}
     </div>
     {{ form_end(Form) }}
+    <div id="modal"></div>
+{% endblock %}
+{%block javascripts %}
+  <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+  <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+  <script src="{{ asset('js/verificarPass.js') }}"></script>
 {% endblock %}

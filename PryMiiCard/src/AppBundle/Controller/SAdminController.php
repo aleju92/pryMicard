@@ -2,11 +2,15 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\AdministradorType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-/*use Symfony\Component\HttpFoundation\Response;
-use PwMCMainBundle\Entity\Administrador;*/
-
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Entity\Administrador;
+use Symfony\Component\HttpFoundation\JsonResponse;
 class SAdminController extends Controller
 {
 	/**
@@ -23,7 +27,6 @@ class SAdminController extends Controller
      * @Route("/sa/{page}",name="pageSelect");
      * 
      */
-    
     public function pageselectAction($page)
     {
     	switch ($page) {
@@ -40,6 +43,7 @@ class SAdminController extends Controller
                 return $this->redirectToRoute('indexSAdmin');
         }
     }
+
     /**
      * @Route("/sa/admins/all", name="administradores_all")
      */
@@ -48,6 +52,7 @@ class SAdminController extends Controller
         $ms='';
         return $this->render("sa/admins.html.twig",array("menssaje"=>$ms,"Admins"=>$Admin,"Admin"=>null));
     }
+
     /**
      * @Route("/sa/admins/xid/{id}", name="getAdmin")
      */
@@ -106,6 +111,40 @@ class SAdminController extends Controller
             }
         }
         return $this->render("sa/miperfil.html.twig",array('Form'=>$form->createView()));
+    }
+
+    /**
+     * @Route("/sa/MiiPerfil/PassWord", options={"expose"=true}, name="SaAdmPass")
+     */
+    public function verificarPassword(Request $request){
+        if ($request->isXmlHttpRequest()){
+            $passText=$request->get('passText');
+            $idUser=$request->get('idUser');
+            $em=$this->getDoctrine()->getManager();
+            $adminUser=$em->find("AppBundle:Administrador", $idUser);
+            if($passText==$adminUser->getPassAdm()){
+                $form=$this->createFormBuilder()
+                            ->add('PasswordTemp',RepeatedType::class, array(
+                                'type' => PasswordType::class,
+                                'first_options' => array('label' =>'Nueva Contraseña'),
+                                'second_options' => array('label' => 'Confirme su nueva contraseña')))
+                            ->add('cambiar',SubmitType::class)
+                            ->getForm();
+                $formRende=$this->render("sa/formRender.html.twig",array('Form'=>$form->createView()))->getContent();
+                return new JsonResponse(array('mensaje'=>'Error!, la contraseña no coincide','typems'=>'success','Form'=>$formRende));
+            }else{
+                return new JsonResponse(array('mensaje'=>'Error!, la contraseña no coincide','typems'=>'danger'));
+            }
+        }else{
+            $this->addFlash('error','Error!!,Accion no permitida');
+            return $this->redirectToRoute('miPerfilSa');
+        }
+
+    }
+    public function changePassWord(Request $request){
+        if($request->isXmlHttpRequest()){
+
+        }
     }
     private function AdminAll(){
         $em=$this->getDoctrine()->getManager();

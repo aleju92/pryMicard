@@ -1,0 +1,26 @@
+<!-- Modal -->
+{{ form_start(Form,{'attr': {'novalidate': 'novalidate'}}) }}
+{% form_theme Form 'bootstrap_3_layout.html.twig' %}
+<div class="modal fade" id="modalPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Cambio de Contraseña</h4>
+            </div>
+            <div class="modal-body">
+                {{ form_row(Form.PasswordTemp) }}
+            </div>
+            <div class="modal-footer">
+                {{ form_widget(Form.cambiar) }}
+            </div>
+        </div>
+    </div>
+</div>
+{{ form_end(Form) }}
+<div class="form-control-feedback">
+
+
+
+
+</div>

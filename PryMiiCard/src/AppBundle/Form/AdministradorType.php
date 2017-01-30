@@ -26,10 +26,6 @@ class AdministradorType extends AbstractType
                 ->add('path',HiddenType::class,array('mapped'=>false))
                 ->add('photoAdm',FileType::class,array('label'=>'Foto Personal','data_class' => null))
                 ->add('useAdm',TextType::class,array('label'=>'Nombre de Usuario'))
-                ->add('PasswordTemp',RepeatedType::class, array(
-                    'type' => PasswordType::class,
-                    'first_options' => array('label' =>'Contraseña'),
-                    'second_options' => array('label' => 'Confirme su contraseña')))
                 ->add('Guardar',SubmitType::class);
 
     }

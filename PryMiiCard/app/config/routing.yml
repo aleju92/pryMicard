@@ -3,3 +3,6 @@ app:
     type:     annotation
 logout:
     path: /logout
+#rutas para js ajax
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
