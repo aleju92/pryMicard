@@ -1,6 +1,7 @@
 <!-- Modal -->
-{{ form_start(Form,{'attr': {'novalidate': 'novalidate'}}) }}
-{% form_theme Form 'bootstrap_3_layout.html.twig' %}
+{% if Form1 is defined %}
+{{ form_start(Form1,{'attr': {'novalidate': 'novalidate','id':'Form1'}}) }}
+{% form_theme Form1 'bootstrap_3_layout.html.twig' %}
 <div class="modal fade" id="modalPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -9,18 +10,14 @@
                 <h4 class="modal-title" id="myModalLabel">Cambio de Contraseña</h4>
             </div>
             <div class="modal-body">
-                {{ form_row(Form.PasswordTemp) }}
+                {{ form_row(Form1.PasswordTemp) }}
+                {{ form_errors(Form1.PasswordTemp) }}
             </div>
             <div class="modal-footer">
-                {{ form_widget(Form.cambiar) }}
+                {{ form_widget(Form1.cambiar) }}
             </div>
         </div>
     </div>
 </div>
-{{ form_end(Form) }}
-<div class="form-control-feedback">
-
-
-
-
-</div>
+{{ form_end(Form1) }}
+{% endif %}

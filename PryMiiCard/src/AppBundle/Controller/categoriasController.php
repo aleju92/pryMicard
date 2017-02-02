@@ -28,6 +28,7 @@ class categoriasController extends Controller
                         ->getForm();
         $categorias= $this->catAll();
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()){
             $Categoria->setDesCat($form->get('desCat')->getData());
             $Categoria->setEstado(1);
