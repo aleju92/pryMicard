@@ -1,59 +1,82 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/security.html
 security:
-
-    # http://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-    #chain_provider permite autenticacion tanto con datos in_memory como datos db_provider
-        chain_provider:
-            chain:
-                providers: [in_memory, db_provider]
-        in_memory:
-            memory:
-                users:
-                    admin:
-                      password: $2y$13$GdIw.hu0AVaCKc0B0LM2Ne43eVkFWbbl7riHAZMgaH.YBsffujW7O
-                      roles: 'ROLE_ADMIN' 
-                    sadmin:
-                      password: $2y$13$CT0aMemEO22bK3JC0PkmHOPKwsuFamNiGG92V5DKdYE3YiKxj/xxO 
-                      roles: 'ROLE_SUPADMIN'
-        db_provider:
-            entity:
-                class: AppBundle:Usuario
-                property: username 
+        sadm:
+              name: sadm_security
+              entity: {class: AppBundle:Administrador,
+                       property: useAdm}
+        user:
+              name: user_security
+              entity: {
+                class: AppBundle:Usuario,
+                property: username}
      
     firewalls:
+        sadm:
+            pattern: ^/sa
+            anonymous: ~
+            provider: sadm_security
+            form_login:
+                login_path: loginsa
+                check_path: loginsa
+                default_target_path: /sa
+            logout:
+                path:   /logout
+                target: /
+        user:
+            pattern: ^/usuario
+            anonymous: ~
+            provider: user_security
+            form_login:
+                  login_path: login
+                  check_path: login
+                  default_target_path: /usuario
+            logout:
+                  path:   /logout
+                  target: /
+
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        main:
-            anonymous: ~
+        #main:
+         #   anonymous: ~
             # activate different ways to authenticate
 
             # http_basic: ~
             # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
+          #  form_login:
+           #     login_path: login
+            #    check_path: login
 
-            form_login:
-                login_path: login
-                check_path: login
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html    
-            logout:
-                path:   /logout
-                target: /
-            
+            #logout:
+             #   path:   /logout
+              #  target: /
+
             # provider: db_provider
+<<<<<<< HEAD
     #access_control:
         #- {path: ^/[login|registrate], roles: IS_AUTHENTICATED_ANONYMOUSLY}
         #- {path: ^/usuario, roles: ROLE_USER }
         #- {path: ^/sa, roles: ROLE_SUPADMIN }
+=======
+    access_control:
+        #- {path: ^/[login|registrate], roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - {path: ^/sa/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - {path: ^/sa, roles: ROLE_SUPADMIN }
+        - {path: ^/usuario, roles: ROLE_USER }
+>>>>>>> b9c0b647b32d3c261d98b6cf54354715138a2da4
         #- { path: ^/, roles: IS_AUTHENTICATED_FULLY }
       
     encoders:
         #Esto sirve con los datos db_provider
         AppBundle\Entity\Usuario:
             algorithm: bcrypt
+        #Esto sirve con los datos db_provider
+        AppBundle\Entity\Administrador:
+           algorithm: bcrypt
         #Esto son con los datos de in_memory
         Symfony\Component\Security\Core\User\User: 
              algorithm: bcrypt

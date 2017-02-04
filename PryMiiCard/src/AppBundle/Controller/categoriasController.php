@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use AppBundle\Form\CategoriaType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Categoria;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,12 +20,17 @@ class categoriasController extends Controller
 	 *
 	 */
     public function indexCatAction(Request $request){
-        $form =$this->createForm(CategoriaType::class);
-        $form->handleRequest($request);
-            $ms='';
+        //$form =$this->createForm(CategoriaType::class);
+        $Categoria = new Categoria();
+        $form= $this->createFormBuilder($Categoria)
+                        ->add('desCat',TextType::class,array('label'=>'Nombre:','required'=>true))
+                        ->add('Guardar',SubmitType::class)
+                        ->getForm();
         $categorias= $this->catAll();
+        $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()){
-            $Categoria= $form->getData();
+            $Categoria->setDesCat($form->get('desCat')->getData());
             $Categoria->setEstado(1);
             $em=$this->getDoctrine()->getManager();
             $em->persist($Categoria);
@@ -91,11 +97,13 @@ class categoriasController extends Controller
         }else{
             $ms="";
             $form=$this->createFormBuilder($categoria)
-                        ->add('desCat', TextType::class,array('disabled'=>true))
+                        ->add('desCat', HiddenType::class,array('disabled'=>true))
+                        ->add('estado',HiddenType::class)
                         ->add('Si',SubmitType::class)
                         ->getForm();
+
             $form->handleRequest($request);
-            echo ($categoria->getDesCat());
+            $form->get('estado')->setData($categoria->getEstado());
             if($form->isSubmitted()&& $form->isValid()){
                 $ms="LA CATEGORIA :".$categoria->getDesCat();
                 if($categoria->getEstado()==1){
