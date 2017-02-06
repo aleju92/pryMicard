@@ -38,9 +38,9 @@ class Usuario implements UserInterface
     private $apellido;
     
     /**
-     * @var \DateTime
+     * @var \Date
      *
-     * @ORM\Column(name="fechanacim", type="datetime", nullable=true)
+     * @ORM\Column(name="fechanacim", type="date", nullable=true)
      */
     private $fechanacim;
 
@@ -452,5 +452,8 @@ class Usuario implements UserInterface
 		// TODO: Auto-generated method stub
 
 	}
-	
+
+	public function getPathFoto(){
+		return 'uploads/'.$this->getFoto();
+	}
 }
