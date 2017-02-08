@@ -364,16 +364,14 @@ class SAdminController extends Controller
         if ($request->isXMLHttpRequest()) {
             $id = $request->get('id');
             $passWord=$request->get('passWord');
-
             $em = $this->getDoctrine()->getManager();
             $user = $em->find("AppBundle:Usuario", $id);
 
 
 
-            $user->setPasswordTemp($passWord);
             $password=$this->get('security.password_encoder')
-                ->encodePassWord($user,$user->getPasswordTemp());
-            $user->setPassAdm($password);
+                ->encodePassWord($user,$passWord);
+            $user->setPassword($password);
             $em->flush();
             $ms="la contasña del usuario ".$user->getNombre()." ".$user->getApellido()." ha sido modificadad";
 

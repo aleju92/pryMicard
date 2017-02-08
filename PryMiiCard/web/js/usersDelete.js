@@ -30,10 +30,13 @@ $(document).ready(function () {
             }
         });
     });
-
+    $(document).on('click','#btnEditar',function (e) {
+       $('#btnPass').attr('value',$(this).attr('value'));
+    });
     $(document).on('click','#btnPass',function (e) {
         e.preventDefault();
         var pass=$('#txtPassw').val();
+        console.log($(this).attr('value'));
         if(pass.length>5 || pass.match(/[A-z]/) || pass.match(/\d/) || pass.match(/[A-Z]/) ){
             $.ajax({
                 method:"POST",
@@ -49,8 +52,7 @@ $(document).ready(function () {
                         ms+=data.mensaje;
                         ms+="</div>";
                         $('#mensaje').html(ms);
-                        $('#tablediv').html(data.userlist_html); // presento el mensaje
-                        console.log(data.passw);
+                        $('#FormNuevo').modal('hide');
                     }
                 },
                 error: function (jqXHR,exception)

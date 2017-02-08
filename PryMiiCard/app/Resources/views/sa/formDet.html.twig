@@ -27,7 +27,7 @@
                         <td>{% if user.reservas is empty %}no tiene Promciones reservadas {% else %} {{ user.reservas|length }}{% endif %}</td>
                         <td>{% if user.estado == 1 %} Activo {% else %} Inactivo {% endif %}</td>
                         <td>{% if user.estado == 1 %}
-                                 <a  class="btn bg-info" data-toggle="modal" data-target="#FormNuevo" value="{{ user.id }}">Modificar</a>
+                                 <a id="btnEditar" class="btn bg-info" data-toggle="modal" data-target="#FormNuevo" value="{{ user.id }}">Modificar</a>
                         {% endif %}
                         </td>
                         <td>
