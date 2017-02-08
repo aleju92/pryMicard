@@ -1,0 +1,45 @@
+    <div class="row">
+        <h2>Lista de userinistradores</h2>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <tr>
+                    <th>Codigo</th>
+                    <th>Cedula</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>UserName</th>
+                    <th>Fecha de Nacimiento</th>
+                    <th>Email</th>
+                    <th>Telefono</th>
+                    <th>Promociones</th>
+                    <th>Estado</th>
+                </tr>
+                {% for user in Users %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ user.cedula }}</td>
+                        <td>{{ user.nombre }}</td>
+                        <td>{{ user.apellido }}</td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.fechanacim|date("m/d/Y") }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.telefono }}</td>
+                        <td>{% if user.reservas is empty %}no tiene Promciones reservadas {% else %} {{ user.reservas|length }}{% endif %}</td>
+                        <td>{% if user.estado == 1 %} Activo {% else %} Inactivo {% endif %}</td>
+                        <td>{% if user.estado == 1 %}
+                                 <a  class="btn bg-info" data-toggle="modal" data-target="#FormNuevo">Modificar</a>
+                        {% endif %}
+                        </td>
+                        <td>
+                        {% if user.estado == 1 %}
+                             <a id="btndelete" class="btn btn-danger" href="" value="{{ user.id }}" >Deshabilitar</a>
+                        {% else %}
+                            <a id="btndelete" class="btn btn-success" href="" value="{{ user.id }}" >&nbsp&nbsp&nbspHabilitar&nbsp&nbsp&nbsp</a>
+                        {% endif %}
+                        </td>
+                    </tr>
+
+                {% endfor %}
+            </table>
+        </div>
+    </div>

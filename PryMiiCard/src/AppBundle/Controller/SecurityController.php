@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 class SecurityController extends Controller
 {
 	/**
-	 * @Route("/login", name="login")
+	 * @Route("/usuario/login", name="login")
 	 */
 	public function loginAction(Request $request)
 	{
@@ -40,7 +40,8 @@ class SecurityController extends Controller
 
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
-
+        print_r($error);
+//        die;
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 

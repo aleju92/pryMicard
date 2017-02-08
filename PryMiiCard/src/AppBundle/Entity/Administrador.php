@@ -24,21 +24,22 @@ class Administrador implements UserInterface
 
     /**
      * @var string
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="*Campo Nombre es requerido")
      * @ORM\Column(name="nomAdm", type="string", length=50)
      */
     private $nomAdm;
 
     /**
      * @var string
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="*Campo Apellido es requerido")
      * @ORM\Column(name="apeAdm", type="string", length=50)
      */
     private $apeAdm;
 
     /**
      * @var string
-     *
+     *@Assert\Email(
+     *     message = "El Email '{{ value }}' no es valido")
      * @ORM\Column(name="emAdm", type="string", length=100, nullable=true)
      */
     private $emAdm;
@@ -391,7 +392,12 @@ class Administrador implements UserInterface
      */
     public function getRoles()
     {
-        return array('ROLE_SUPADMIN');
+        if($this->tipAdm ==1 ){
+            return array('ROLE_ADMIN');
+        }else{
+            return array('ROLE_SUPADMIN');
+        }
+
     }
 
     /**

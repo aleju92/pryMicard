@@ -20,7 +20,7 @@ security:
             form_login:
                 login_path: loginsa
                 check_path: loginsa
-                default_target_path: /sa
+                default_target_path: indexSAdmin
             logout:
                 path:   /logout
                 target: /
@@ -58,8 +58,9 @@ security:
             # provider: db_provider
     access_control:
         #- {path: ^/[login|registrate], roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - {path: ^/usuario/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
         - {path: ^/sa/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-        - {path: ^/sa, roles: ROLE_SUPADMIN }
+   #     - {path: ^/sa, roles: ROLE_SUPADMIN }
         - {path: ^/usuario, roles: ROLE_USER }
         #- { path: ^/, roles: IS_AUTHENTICATED_FULLY }
       

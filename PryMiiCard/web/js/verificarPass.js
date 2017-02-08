@@ -10,7 +10,7 @@ $(document).ready(function () {
         $.ajax({
             method:"POST",
             url:Routing.generate('SaAdmPass'),
-            data:{idUser:3,passText:$('#txtPass').val()},
+            data:{idUser:5,passText:$('#txtPass').val()},
             dataType:'json',
             success: function (data,jqXHR)
             {
@@ -21,6 +21,7 @@ $(document).ready(function () {
                     ms+=data.mensaje;
                     ms+="</div>";
                     $('#mensaje').html(ms); // presento el mensaje
+                    console.log(data.passw);
                 }else{
                             $('#modal').html(data.Form);
                              $('#modalPassword').modal('show');
