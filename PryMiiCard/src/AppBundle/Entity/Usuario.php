@@ -458,9 +458,6 @@ class Usuario implements UserInterface
 		// TODO: Auto-generated method stub
 
 	}
-<<<<<<< HEAD
-	
-
     /**
      * Set estado
      *
@@ -484,10 +481,9 @@ class Usuario implements UserInterface
     {
         return $this->estado;
     }
-=======
 
 	public function getPathFoto(){
 		return 'uploads/'.$this->getFoto();
 	}
->>>>>>> 5845d16ceee46d659df5b03c9c4ee65a097b0090
+
 }

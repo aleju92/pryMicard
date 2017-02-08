@@ -345,8 +345,42 @@ class SAdminController extends Controller
             // Enviar la respuesta codificada como json
             return new JsonResponse(array(
                     'tymes'=>'success',
-                    'mensaje' => 'Usuario Deshabilitado!',
+                    'mensaje' => $ms,
                     'userlist_html' => $userslist_html
+                )
+            );
+        }else{
+            $this->addFlash('error','Acion no permitida');
+            return $this->redirectToRoute('Users_index');
+        }
+    }
+
+    /**
+     * @Route("/sa/users/editpassword", options={"expose"=true}, name="passedit_User")
+     */
+    public function editpassUserAction(Request $request)
+    {
+        // verificar que solo se puede acceder a este controlador mediante una llamada ajax
+        if ($request->isXMLHttpRequest()) {
+            $id = $request->get('id');
+            $passWord=$request->get('passWord');
+
+            $em = $this->getDoctrine()->getManager();
+            $user = $em->find("AppBundle:Usuario", $id);
+
+
+
+            $user->setPasswordTemp($passWord);
+            $password=$this->get('security.password_encoder')
+                ->encodePassWord($user,$user->getPasswordTemp());
+            $user->setPassAdm($password);
+            $em->flush();
+            $ms="la contasña del usuario ".$user->getNombre()." ".$user->getApellido()." ha sido modificadad";
+
+            // Enviar la respuesta codificada como json
+            return new JsonResponse(array(
+                    'tymes'=>'success',
+                    'mensaje' => $ms
                 )
             );
         }else{

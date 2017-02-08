@@ -2,6 +2,9 @@
 # http://symfony.com/doc/current/security.html
 security:
     providers:
+        chain_provider:
+          chain:
+            providers: [sadm_security,user_security]
         sadm:
               name: sadm_security
               entity: {class: AppBundle:Administrador,
@@ -18,8 +21,8 @@ security:
             anonymous: ~
             provider: sadm_security
             form_login:
-                login_path: loginsa
-                check_path: loginsa
+                login_path: login
+                check_path: login
                 default_target_path: indexSAdmin
             logout:
                 path:   /logout
@@ -41,21 +44,21 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        #main:
-         #   anonymous: ~
+    #    main:
+     #      anonymous: ~
             # activate different ways to authenticate
 
             # http_basic: ~
             # http://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
-          #  form_login:
-           #     login_path: login
-            #    check_path: login
+            #form_login:
+              # login_path: login
+              #  check_path: login
 
             #logout:
              #   path:   /logout
               #  target: /
 
-            # provider: db_provider
+             #provider: db_provider
 
     access_control:
         #- {path: ^/[login|registrate], roles: IS_AUTHENTICATED_ANONYMOUSLY}

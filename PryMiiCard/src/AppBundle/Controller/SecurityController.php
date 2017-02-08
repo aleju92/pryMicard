@@ -12,10 +12,27 @@ use Symfony\Component\HttpFoundation\Request;
 
 class SecurityController extends Controller
 {
+    /**
+     * @Route("/login", name="login")
+     */
+    public function loginAction(Request $request)
+    {
+        $authenticationUtils = $this->get('security.authentication_utils');
+
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
+        return $this->render('security/login.html.twig', array(
+            'last_username' => $lastUsername,
+            'error'         => $error,
+        ));
+    }
 	/**
-	 * @Route("/usuario/login", name="login")
+	 * @Route("/usuario/login", name="logina")
 	 */
-	public function loginAction(Request $request)
+	public function loginuserAction(Request $request)
 	{
 		$authenticationUtils = $this->get('security.authentication_utils');
 		
@@ -24,21 +41,12 @@ class SecurityController extends Controller
 		
 		// last username entered by the user
 		$lastUsername = $authenticationUtils->getLastUsername();
-<<<<<<< HEAD
-				
-=======
-
-
->>>>>>> b9c0b647b32d3c261d98b6cf54354715138a2da4
 		return $this->render('security/login.html.twig', array(
 				'last_username' => $lastUsername,
 				'error'         => $error,
 		));
 	}
-<<<<<<< HEAD
-	
-=======
-    /**
+   /**
      * @Route("/sa/login", name="loginsa")
      */
     public function loginSAAction(Request $request)
@@ -65,6 +73,6 @@ class SecurityController extends Controller
     public function logutAction(){
 
     }
->>>>>>> b9c0b647b32d3c261d98b6cf54354715138a2da4
+
 }
 
