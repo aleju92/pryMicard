@@ -38,7 +38,7 @@ $(document).ready(function () {
         }else{
             $('#formpass').addClass('has-error has-feedback');
             $('#txtPassw').attr('for','inputError2');
-            
+
         }
 
     })
