@@ -12,7 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+
 
 class UserController extends Controller 
 {
@@ -72,25 +72,22 @@ class UserController extends Controller
 	
 	public function miperfilAction(Request $request){
 		$user=$this->getUser();
-		
 		$form = $this->createFormBuilder($user)
-		->add('nombre', TextType::class,array('required'=>true,'disabled'=>'disabled'))
-		->add('apellido', TextType::class,array('required'=>true))
-		->add('fechanacim',DateType::class)
-		->add('foto',FileType::class)
-		->add('path',Hiddentype::class,array('mapped'=>false))
-		->add('cedula',TextType::class)
-		->add('email',EmailType::class,array('required'=>true))
-		->add('telefono',TextType::class)
-		->add('Guardar',SubmitType::class)
-		->getForm();
+			->add('nombre', TextType::class,array('required'=>true,'disabled'=>'disabled'))
+			->add('apellido', TextType::class,array('required'=>true))
+			->add('fechanacim',DateType::class)
+			//->add('foto',FileType::class)
+			//->add('path',HiddenType,array('mapped'=>false))
+			->add('cedula',TextType::class)
+			->add('email',EmailType::class,array('required'=>true))
+			->add('telefono',TextType::class)
+			->add('Guardar',SubmitType::class)
+			->getForm();
 
 		$form->handleRequest($request);
-		
 		if($form->isSubmitted() && $form->isValid()){
 			$user=$form->getData();
-			dump($user);
-			die();
+			
 			$em=$this->getDoctrine()->getManager();
 			$em->persist($user);
 			$em->flush();

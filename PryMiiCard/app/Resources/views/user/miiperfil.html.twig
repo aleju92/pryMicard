@@ -12,13 +12,13 @@
      
      {{ form_start(form) }}
      {% form_theme form 'bootstrap_3_layout.html.twig' %}
-         {% if form.path.vars.value =='uploads/' %}
+     {#{% if form.path.vars.value =='uploads/' %}
          	<img src="vacio" width="200" height="200" class="img-responsive">
          {% else %}
          	<img src="{{ asset(form.path.vars.value) }}" width="200" height="200" class="img-responsive">
-         {% endif %}
+         {% endif %}#}
      {{ form_widget(form)}}
-     {{ form_widget(form.foto) }}
+     {#{{ form_widget(form.foto) }}#}
      {{ form_end(form) }}
      
 {% endblock %}
