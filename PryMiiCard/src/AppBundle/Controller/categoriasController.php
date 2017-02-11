@@ -103,7 +103,7 @@ class categoriasController extends Controller
                         ->getForm();
 
             $form->handleRequest($request);
-            $form->get('estado')->setData($categoria->getEstado());
+            //$form->get('estado')->setData($categoria->getEstado());
             if($form->isSubmitted()&& $form->isValid()){
                 $ms="LA CATEGORIA :".$categoria->getDesCat();
                 if($categoria->getEstado()==1){

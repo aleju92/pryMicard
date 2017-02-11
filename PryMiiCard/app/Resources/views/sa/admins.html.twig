@@ -29,112 +29,105 @@
       {% endfor %}
   </div>
   <div class="row">
-      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#FormNuevo"><span class="glyphicon glyphicon-edit" aria-hidden="true">   Nuevo</span></button>
+      <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#FormNuevo"><span class="glyphicon glyphicon-edit" aria-hidden="true">Nuevo</span></button>
+      {% if form is defined %}
       <div class="modal fade" id="FormNuevo" tabindex="-1" role="dialog" aria-labelledby="FormNuevo">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
-            <form>
+              {{ form_start(form,{'attr': {'novalidate': 'novalidate'}}) }}
+              {% form_theme form 'bootstrap_3_layout.html.twig' %}
               <div class="modal-header">
+
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="FormNuevo">Nuevo Usuario Administador</h4>
               </div>
               <div class="modal-body">
-                <div class="form-group">
-                  <label for="exampleInputEmail1">codigo</label>
-                  <input type="number" class="form-control col-xs-6" id="exampleInputEmail1" disabled="true">
-                </div>
-                <div class="form-group col-xs-12 col-md-6">
-                  <label for="exampleInputPassword1">Nombre</label>
-                  <input type="text" class="form-control" id="categoria" placeholder=" ex: Pepito">
-                </div>
-                <div class="col-xs-12 col-md-6">
-                  <div class="form-group">
-                    <label for="exampleInputPassword1">Apellido</label>
-                    <input type="text" class="form-control" id="categoria" placeholder="ex: Fernadez">
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword1">email</label>
-                  <input type="text" class="form-control" id="categoria" placeholder="ex: pepe@email.com">
-                </div>
-                <hr>
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Nombre de usuario</label>
-                  <input type="text" class="form-control" id="categoria" placeholder="ex: pepito123">
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Contraseña</label>
-                  <input type="password" class="form-control" id="categoria" placeholder="**********">
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Confirme su contraseña</label>
-                  <input type="password" class="form-control" id="categoria" placeholder="**********">
-                </div>
+                  {{ form_row(form.nomAdm) }}
+                  {{ form_row(form.apeAdm) }}
+                  {{ form_row(form.emAdm) }}
+                  {{ form_row(form.photoAdm) }}
+                  {{ form_row(form.useAdm) }}
+                  {{ form_row(form.PasswordTemp) }}
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                <button type="submit" class="btn btn-default">{#<a href="{{ path('pw_mc_main_catadd',{'descripcion':categoria}) }}">#}Guardar{#</a>#}</button>
+                  {{ form_row(form.Guardar) }}
               </div>
-            </form>
+              {{ form_end(form) }}
           </div>
         </div>
       </div>
-      {% if Admin != null %}
-          <div class="modal fade" id="Formdet" tabindex="-1" role="dialog" aria-labelledby="Formdet">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <form>
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title" id="FormNuevo">Nuevo Usuario Administador</h4>
-            </div>
-            <div class="modal-body">
-              <div class="form-group">
-                <label for="exampleInputEmail1">codigo</label>
-                <input type="number" class="form-control col-xs-6" id="exampleInputEmail1" disabled="true" value="{{ Admin.id }}">
-              </div>
-              <div class="form-group col-xs-12 col-md-6">
-                <label for="exampleInputPassword1">Nombre</label>
-                <input type="text" class="form-control" id="categoria" value="{{ Admin.nomAdm }}">
-              </div>
-              <div class="col-xs-12 col-md-6">
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Apellido</label>
-                  <input type="text" class="form-control" id="categoria" value="{{ Admin.apeAdm }}">
-                </div>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">email</label>
-                <input type="text" class="form-control" id="categoria" value="{{ Admin.emAdm }}">
-              </div>
-              <hr>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Nombre de usuario</label>
-                <input type="text" class="form-control" id="categoria" value="{{ Admin.useAdm }}">
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Contraseña</label>
-                <input type="password" class="form-control" id="categoria" placeholder="**********">
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Nueva Contraseña</label>
-                <input type="password" class="form-control" id="categoria" placeholder="**********">
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Confirme su contraseña</label>
-                <input type="password" class="form-control" id="categoria" placeholder="**********">
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-              <button type="submit" class="btn btn-default">{#<a href="{{ path('pw_mc_main_catadd',{'descripcion':categoria}) }}">#}Guardar{#</a>#}</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
       {% endif %}
   </div>
+    {% if Form is  defined %}
+        {{ form_start(Form,{'attr': {'novalidate': 'novalidate'}}) }}
+        {% form_theme Form 'bootstrap_3_layout.html.twig' %}
+        <div class="modal fade" id="Formedit" tabindex="-1" role="dialog" aria-labelledby="FormEdit" data-backdrop="static" data-keyboard="false">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <a class="close" href="{{ path('administradores_index') }}"><span aria-hidden="true">&times;</span></a>
+                        <h4 class="modal-title" id="FormNuevo">Editar un Ejecutivo de ventas</h4>
+                    </div>
+                    <div class="modal-body">
+                        <P><strong>Usuario </strong> {{ Form.nomAdm.vars.value }} {{ Form.apeAdm.vars.value }} </P><br>
+                        {{ form_row(Form.PasswordTemp) }}
+                    </div>
+                    <div class="modal-footer">
+                        {{ form_row(Form.Guardar,{'attr':{'label':'Modificar','class':'btn btn-primary'}}) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_end(Form) }}
+    {% endif %}
+    {% if form3 is defined %}
+        {{ form_start(form3,{'attr': {'novalidate': 'novalidate'}}) }}
+        {% form_theme form3 'bootstrap_3_layout.html.twig' %}
+    <div class="modal fade" id="FormDelet" tabindex="-1" role="dialog" aria-labelledby="FormDelet" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            {% if form3.estAdm.vars.value  == '1' %}
+            <div class="modal-content alert alert-danger">
+            {% else %}
+                <div class="modal-content alert alert-success">
+             {% endif %}
+                <div class="modal-header">
+                    <a class="close" href="{{ path('administradores_index') }}"><span aria-hidden="true">&times;</span></a>
+                    {% if form3.estAdm.vars.value  == '1' %}
+                    <h4 class="modal-title" id="FormNuevo"> Desactivar Ejecutivo de Venta</h4>
+                    {% else %}
+                    <h4 class="modal-title" id="FormNuevo"> Activar Ejecutivo de Venta</h4>
+                    {% endif %}
+                </div>
+                    <div class="modal-body">
+                        <div class="media">
+                            <div class="media-left">
+                                <span id="dibujo" class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                            </div>
+                            <div class="media-body">
+                                <p id="ms">
+                                {% if form3.estAdm.vars.value  == '1' %}
+                                ¿Está seguro que desea desactivar al Ejecutivo: {{ form3.nomAdm.vars.value }}  {{ form3.apeAdm.vars.value }}?
+                                {% else %}
+                                ¿Está seguro que desea activar al Ejecutivo: {{ form3.nomAdm.vars.value }}  {{ form3.apeAdm.vars.value }}?
+                                {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="col-md-11"><a href="{{ path('administradores_index') }}" class="btn btn-primary">No</a></div>
+                        {% if form3.estAdm.vars.value  == '1' %}
+                        <div class="col-md-1">{{ form_row(form3.Si,{ 'attr': {'class': 'btn btn-danger'} }) }}</div>
+                        {% else %}
+                        <div class="col-md-1">{{ form_row(form3.Si,{ 'attr': {'class': 'btn btn-success'} }) }}</div>
+                        {% endif %}
+                    </div>
+                    {{ form_end(form3) }}
+
+            </div>
+        </div>
+    </div>
+    {% endif %}
   <div class="row">
       <h2>Lista de Administradores</h2>
       <div class="table-responsive">
@@ -145,39 +138,54 @@
             <th>Apellido</th>
             <th>Email</th>
             <th>Nombre de Usuario</th>
-            <th>Privilegios</th>
+            <th>Empresas asociadas</th>
             <th>Estado</th>
           </tr>
           {% for adm in Admins %}
+              {% if adm.tipAdm == 1%}
           <tr>
             <td>{{ loop.index }}</td>
             <td>{{ adm.nomAdm }}</td>
             <td>{{ adm.apeAdm }}</td>
             <td>{{ adm.emAdm }}</td>
             <td>{{ adm.useAdm }}</td>
-            <td>{% if adm.tipAdm == 1 %} Adminstador {% else %} SuperAdminstador{% endif %}</td>
+            <td>{% if adm.empresas is empty %}no tiene Empresas {% else %} {{ adm.empresas|length }}{% endif %}</td>
             <td>{% if adm.estAdm == 1 %} Activo {% else %} Inactivo {% endif %}</td>
             <td>{% if adm.estAdm == 1 %}
-                <a class="btn bg-info" href="">Modificar</a>
+                <a  class="btn bg-info" href="{{ path('getAdmin',{'id':adm.id}) }}">Modificar</a>
                 {% endif %}
             </td>
             <td>
                 {% if adm.estAdm == 1 %}
-                  <a class="btn btn-danger" href="" value="{{ adm.id }}" >Deshabilitar</a>
+                  <a class="btn btn-danger" href="{{ path('deleteAdmin',{'id':adm.id}) }}" value="{{ adm.id }}" >Deshabilitar</a>
                 {% else %}
-                  <a class="btn btn-success" href="" value="{{ adm.id }}" >&nbsp&nbsp&nbspHabilitar&nbsp&nbsp&nbsp</a>
+                  <a class="btn btn-success" href="{{ path('deleteAdmin',{'id':adm.id}) }}" value="{{ adm.id }}" >&nbsp&nbsp&nbspHabilitar&nbsp&nbsp&nbsp</a>
                 {% endif %}
             </td>
           </tr>
+            {% endif %}
           {% endfor %}
         </table>
       </div>
   </div>
+
 {% endblock %}
 {% block javascripts %}
-    {% if Admin != null %}
+    {% if form is defined %}
+    {% if form.vars.valid == false %}
+        <script>
+            $('#FormNuevo').modal('show')
+        </script>
+    {% endif %}
+        {% endif %}
+    {% if Form is defined %}
       <script>
-          $('#Formdet').modal('show')
+          $('#Formedit').modal('show')
+      </script>
+    {% endif %}
+    {% if form3 is defined %}
+      <script>
+          $('#FormDelet').modal('show')
       </script>
     {% endif %}
 {% endblock %}

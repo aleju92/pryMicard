@@ -1,0 +1,73 @@
+{% extends "::admin.html.twig" %}
+{% block m4%}active {% endblock %}
+{% block titulo %}Administracion de Usuarios{% endblock %}
+{% block cuerpo %}
+  <div id="mensaje">
+      {% for flash_message in app.session.flashBag.get('success') %}
+        <div class="flash-success alert alert-success"  role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            {{ flash_message | upper }}
+        </div>
+      {% endfor %}
+      {% for flash_message in app.session.flashBag.get('error') %}
+        <div class="flash-error alert alert-danger" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            {{ flash_message | upper }}
+        </div>
+      {% endfor %}
+      {% for flash_message in app.session.flashBag.get('info') %}
+        <div class="flash-info alert alert-info" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            {{ flash_message | upper }}
+        </div>
+      {% endfor %}
+  </div>
+  <div class="row">
+
+  </div>
+    <div id="tablediv">
+        {% include 'sa/formDet.html.twig' %}
+    </div>
+    <div class="modal fade" id="FormNuevo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Cambio de Contraseña</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="formpass" class="form-group">
+                        <label for="exampleInputPassword1">Nueva Contraseña</label>
+                        <input id="txtPassw" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        <div id="error" ></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button id="btnPass" type="button" class="btn btn-primary">Guardar Contraseña</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script src="{{ asset('js/usersDelete.js') }}"></script>
+    {% if Form is defined %}
+      <script>
+          $('#Formedit').modal('show')
+      </script>
+    {% endif %}
+    {% if form3 is defined %}
+      <script>
+          $('#FormDelet').modal('show')
+      </script>
+    {% endif %}
+{% endblock %}

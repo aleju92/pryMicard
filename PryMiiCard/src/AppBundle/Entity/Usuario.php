@@ -110,7 +110,12 @@ class Usuario implements UserInterface
     /**
      * @ORM\OneToMany(targetEntity="Reserva", mappedBy="usuResFk")
      */
-    private $Reservas;
+    private $reservas;
+
+    /**
+     * @ORM\Column(name="estCat", type="smallint")
+     * */
+    private $estado;//1=activo 0=inactivo
 	private $roles;
     
     /**
@@ -356,7 +361,7 @@ class Usuario implements UserInterface
     public function __construct()
     {
         $this->creditos = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Reservas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->reservas = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -402,7 +407,7 @@ class Usuario implements UserInterface
      */
     public function addReserva(\AppBundle\Entity\Reserva $reserva)
     {
-        $this->Reservas[] = $reserva;
+        $this->reservas[] = $reserva;
 
         return $this;
     }
@@ -414,7 +419,7 @@ class Usuario implements UserInterface
      */
     public function removeReserva(\AppBundle\Entity\Reserva $reserva)
     {
-        $this->Reservas->removeElement($reserva);
+        $this->reservas->removeElement($reserva);
     }
 
     /**
@@ -424,8 +429,9 @@ class Usuario implements UserInterface
      */
     public function getReservas()
     {
-        return $this->Reservas;
-    }
+        return $this->reservas;
+    }
+
 	/**
 	 * {@inheritDoc}
 	 * @see \Symfony\Component\Security\Core\User\UserInterface::getRoles()
@@ -452,8 +458,32 @@ class Usuario implements UserInterface
 		// TODO: Auto-generated method stub
 
 	}
+    /**
+     * Set estado
+     *
+     * @param integer $estado
+     *
+     * @return Usuario
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return integer
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
 
 	public function getPathFoto(){
 		return 'uploads/'.$this->getFoto();
 	}
+
 }
