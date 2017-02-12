@@ -52,6 +52,13 @@ class SAdminController extends Controller
     }*/
 
     /**
+     * @Route("/sa/logout", name="sa_logout")
+     */
+    public function logutAction(){
+    
+    }
+    
+    /**
      * @Route("/sa/admins/index", name="administradores_index")
      */
     public function indexAdmisAction(Request $request){

@@ -25,21 +25,21 @@ class Usuario implements UserInterface
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="nombre", type="string", length=100)
+     * @Assert\NotBlank(message="*Campo Nombre es requerido")
+     * @ORM\Column(name="nombre", type="string", length=50)
      */
     private $nombre;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="apellido", type="string", length=100)
+     * @Assert\NotBlank(message="*Campo Apellido es requerido")
+     * @ORM\Column(name="apellido", type="string", length=50)
      */
     private $apellido;
     
     /**
      * @var \Date
-     *
+     * @Assert\NotBlank(message="*Campo Fecha es requerido")
      * @ORM\Column(name="fechanacim", type="date", nullable=true)
      */
     private $fechanacim;
@@ -52,8 +52,8 @@ class Usuario implements UserInterface
      * @Assert\File(
      *     maxSize = "5M",
      *     mimeTypes = {"image/jpeg", "image/gif", "image/png"},
-     *     maxSizeMessage = "The maxmimum allowed file size is 5MB.",
-     *     mimeTypesMessage = "Only the filetypes image are allowed."
+     *     maxSizeMessage = "Lo máximo permitido es 5MB",
+     *     mimeTypesMessage = "Solo se permite los formatos: .jpg .gif .png"
      * )
      * @ORM\Column(name="foto", type="string", length=255, nullable=true)
      */
@@ -61,21 +61,22 @@ class Usuario implements UserInterface
     
     /**
      * @var string
-     *
-     * @ORM\Column(name="cedula", type="string", length=10)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=10)
+     * @ORM\Column(name="cedula", type="string", length=10, unique=true)
      */
     private $cedula;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=100)
+     * @Assert\NotBlank()
+     * @ORM\Column(name="email", type="string", length=100, unique=true)
      */
     private $email;
 
     /**
      * @var string
-     *
+     * @Assert\Length(max=10)
      * @ORM\Column(name="telefono", type="string")
      */
     private $telefono;
@@ -83,7 +84,7 @@ class Usuario implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=50)
+     * @ORM\Column(name="username", type="string", length=50, unique=true)
      */
     private $username;
     
