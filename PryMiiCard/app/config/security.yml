@@ -56,19 +56,13 @@ security:
               #  target: /
 
             # provider: db_provider
-<<<<<<< HEAD
-    #access_control:
-        #- {path: ^/[login|registrate], roles: IS_AUTHENTICATED_ANONYMOUSLY}
-        #- {path: ^/usuario, roles: ROLE_USER }
-        #- {path: ^/sa, roles: ROLE_SUPADMIN }
-=======
     access_control:
-        #- {path: ^/[login|registrate], roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - {path: ^/[login|registrate], roles: IS_AUTHENTICATED_ANONYMOUSLY}
+        - {path: ^/usuario/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
         - {path: ^/sa/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
         - {path: ^/sa, roles: ROLE_SUPADMIN }
         - {path: ^/usuario, roles: ROLE_USER }
->>>>>>> b9c0b647b32d3c261d98b6cf54354715138a2da4
-        #- { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
       
     encoders:
         #Esto sirve con los datos db_provider

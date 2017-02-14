@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class EmpresaType extends AbstractType
 {
@@ -14,14 +15,15 @@ class EmpresaType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nomEmp',TextType::class)
-                ->add('usuEmp',TextType::class)
-                ->add('pasEmp',TextType::class)
-                ->add('rucEmp',TextType::class)
-                ->add('tlfEmp',TextType::class)
-                ->add('webEmp',TextType::class)
-                ->add('logEmp',TextType::class)
-                ->add('slgEmp',TextType::class);
+        $builder->add('nomEmp',TextType::class,array('label'=>'Nombre'))
+                ->add('usuEmp',TextType::class,array('label'=>'Usuario'))
+                ->add('pasEmp',TextType::class,array('label'=>'Password'))
+                ->add('rucEmp',TextType::class,array('label'=>'RUC'))
+                ->add('tlfEmp',TextType::class,array('label'=>'Telefono'))
+                ->add('webEmp',TextType::class,array('label'=>'Pagina Web'))
+                ->add('logEmp',TextType::class,array('label'=>'Logo'))
+                ->add('slgEmp',TextType::class,array('label'=>'Eslogan'))
+                ->add('registrar',SubmitType::class,array('label'=>'REGISTRAR'));
     }
     
     /**

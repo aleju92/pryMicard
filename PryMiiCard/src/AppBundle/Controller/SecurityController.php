@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 class SecurityController extends Controller
 {
 	/**
-	 * @Route("/login", name="login")
+	 * @Route("/usuario/login", name="login")
 	 */
 	public function loginAction(Request $request)
 	{
@@ -24,20 +24,12 @@ class SecurityController extends Controller
 		
 		// last username entered by the user
 		$lastUsername = $authenticationUtils->getLastUsername();
-<<<<<<< HEAD
-				
-=======
-
-
->>>>>>> b9c0b647b32d3c261d98b6cf54354715138a2da4
 		return $this->render('security/login.html.twig', array(
 				'last_username' => $lastUsername,
 				'error'         => $error,
 		));
 	}
-<<<<<<< HEAD
-	
-=======
+
     /**
      * @Route("/sa/login", name="loginsa")
      */
@@ -64,6 +56,5 @@ class SecurityController extends Controller
     public function logutAction(){
 
     }
->>>>>>> b9c0b647b32d3c261d98b6cf54354715138a2da4
 }
 

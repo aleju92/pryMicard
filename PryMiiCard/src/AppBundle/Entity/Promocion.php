@@ -74,7 +74,7 @@ class Promocion
      * @var int
      *
      * @ORM\ManyToOne(targetEntity="Categoria", inversedBy="Promocion")
-     * @ORM\JoinColumn(name="catPromFk", referencedColumnName="id")     *
+     * @ORM\JoinColumn(name="catPromFk", referencedColumnName="id")
      */
     private $catPromFk;
 

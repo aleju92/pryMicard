@@ -10,8 +10,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class PromocionesController extends Controller
 {
-
-
     /**
      * @Route("/emp/promociones", name="promociones")
      */
@@ -28,44 +26,109 @@ class PromocionesController extends Controller
     {
         $form = $this->createForm(PromocionType::class);
         $form->handleRequest($request);
-        if($form->isSubmitted()&& $form->isValid())
+        if($form->isSubmitted())
         {
-            $promocion=$form->getData();
+            //mp($form);
             $em=$this->getDoctrine()->getManager();
-            $em->persist($promocion);
-            $em->flush();
-            $ms = "Promocion registrada con exito";
-            $this->addFlash('success',"$ms");
-            return $this->redirectToRoute("regpromo");
+            $empresa=$em->find('AppBundle:Empresa', 1);
+            if($form->isValid()){
+                $promocion=$form->getData();
+                $promocion->setEstProm(1);
+                $promocion->setEmpPromFk($empresa);
+                $em=$this->getDoctrine()->getManager();
+                $em->persist($promocion);
+                $em->flush();
+                
+                $ms = "Promocion registrada con exito";
+                $this->addFlash('success',"$ms");
+                return $this->render("emp/regpromocion.html.twig",array("form"=>$form->createView()));
+            }else{
+                $ms = "error";
+                $this->addFlash('error',"$ms");
+                return $this->render("emp/regpromocion.html.twig",array("form"=>$form->createView()));
+            }
         }
-        $promocion=$form->getData();
-        return $this->render("emp/regpromocion.html.twig",array("promociones"=>$promocion,"promocion"=>null,"form"=>$form->createView()));
+        $ms = "submit pero no valido";
+        $this->addFlash('error',"$ms");
+        return $this->render("emp/regpromocion.html.twig",array("form"=>$form->createView()));
+    }
+
+    /**
+     * @Route("/emp/promociones/listar", name="listpromo")
+     */
+    public function listPromoAction(Request $request)
+    {
+        $promociones=$this->promAll();
+        $categorias=$this->cargarCat();
+        return $this->render('emp/promociones.html.twig',array('categorias'=>$categorias,'promociones'=>$promociones));
+    }
+
+    /**
+     * @Route("/emp/promociones/modificar", name="modifpromo")
+     */
+    public function modPromAction(Request $request,$id)
+    {
+        $promocion=$this->promAll();
+        $em=$this->getDoctrine()->getManager();
+        $promociones=$em->find('AppBundle:Promocion',$id);
+        if ($promocion==null)
+        {
+            $ms="La promocion no existe";
+            $this->addFlash('error',"$ms");
+            return $this->redirectToRoute("listpromo");
+        }else{
+            try{
+                $form=$this->createForm(PromocionType::class,$promocion);
+                $form->handleRequest($request);
+                if($form->isSubmitted() && $form->isValid())
+                {
+                    $em=$this->getDoctrine()->getManager();
+                    $em->persist($promocion);
+                    $em->flush();
+                    $ms="Promocion Modificada";
+                    $this->addFlash('succes',"$ms");
+                    return $this->redirectToRoute("listarpromo");
+                }
+            }catch(\PDOException $exception){
+                $this->addFlash('error',"Ya existe una promocion con el mismo nombre");
+                return $this->redirectToRoute('listarpromo');
+            }
+
+        }
+        return $this->redirect('emp/promociones.html.twig',array("promociones"=>$promociones,"form2"=>$form->createView()));
+    }
+
+    /**
+     * @Route("/emp/promociones/eliminar", name="elimpromo")
+     */
+
+    public function delPromoAction(Request $request,$id)
+    {
+        $em=$this->getDoctrine()->getManager();
+        $promociones=$this->promAll();
+        $promocion=$em->find('AppBundle:Promocion',$id);
+        if ($promocion==null)
+        {
+            $ms="La promocion no existe";
+            $this->addFlash('error',"$ms");
+            return $this->redirectToRoute("listpromo");
+        }else{
+            $form=$this->createForm($promocion);
+            $form->handleRequest($request);
+            $form->get('estado')->setData($promocion->getEstado());
+        }
     }
 
 
-
-    /**
-     *
-     * @Route("/emp/promociones/all",name="listpromo");
-     *
-     */
-    /**public function listarAction(Request $request){
-        $form =$this->createForm(PromocionType::class);
-        $form->handleRequest($request);
-        $ms='';
-        //$promociones= $this->promAll();
-        if ($form->isSubmitted() && $form->isValid()){
-            $promocion= $form->getData();
-            $promocion->setEstado(1);
-            $em=$this->getDoctrine()->getManager();
-            $em->persist($promocion);
-            $em->flush();
-            //$promociones= $this->promAll();
-            $ms="La promocion  ha sido ingresada con exito";
-            $this->addFlash('success',"$ms");
-            //return $this->render("sa/promociones.html.twig",array("promociones"=>$promociones,"promocion"=>null,"form"=>$form->createView()));
-        }
-        //return $this->render("emp/regpromocion.html.twig",array("promociones"=>$promociones,"promocion"=>null,"form"=>$form->createView()));
-
-    }  **/
+    private function cargarCat()
+    {
+        $em=$this->getDoctrine()->getManager();
+        $categorias= $em->getRepository('AppBundle:Categoria')->findAll();
+        return $categorias;
+    }
+    private function promAll(){
+        $em=$this->getDoctrine()->getManager();
+        $promociones= $em->getRepository('AppBundle:Promocion')->findAll();
+        return $promociones;
+    }
 }
