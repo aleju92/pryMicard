@@ -1,0 +1,107 @@
+{% extends "::empresas.html.twig" %}
+{% block m1%}active {% endblock %}
+{% block titulo %}MiiPerfil{% endblock %}
+{% block cuerpo %}
+<div class="row">
+	<h2>Empresa</h2>
+    <div class ="row">
+
+     <div class="col-xs-12 col-sm-12  col-md-6 placeholder">
+    	<img src="{{asset('images/perfil.jpg') }}" width="200" height="200" class="img-responsive" alt="Generic placeholder thumbnail">
+  	 </div>
+
+  	 <form>
+      <div class="form-group col-xs-12 col-md-6">
+        <label for="exampleInputPassword1">Nombre</label>
+        <input type="text" class="form-control" id="usuario1" disabled="true" value="Empresa">
+      </div>
+      <div class="col-xs-12 col-md-6">
+        <div class="form-group">
+          <label for="exampleInputPassword1">Usuario</label>
+          <input type="text" class="form-control" id="usuario" disabled="true" value="miiUsuario">
+        </div>
+      </div>
+      <div class="form-group col-md-12">
+        <label for="exampleInputPassword1">Contraseña</label>
+        <input type="text" class="form-control" id="usuario" disabled="true"  value="**************">
+      </div>
+       <div class="form-group col-md-6">
+        <label for="exampleInputPassword1">RUC</label>
+        <input type="text" class="form-control" id="usuario" disabled="true"  value="miiRUC">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="exampleInputPassword1">Telefono</label>
+        <input type="text" class="form-control" id="usuario" disabled="true" value="miiTelefono">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="exampleInputPassword1">Pagina Web</label>
+        <input type="text" class="form-control" id="usuario" disabled="true"  value="www.miiempresa.com">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="exampleInputPassword1">Eslogan</label>
+        <input type="password" class="form-control" id="usuario" disabled="true" value="miiSlogan">
+      </div>
+    </div>
+    <div class ="row">
+    	<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#FormNuevo"><span class="glyphicon glyphicon-edit" aria-hidden="true">   Editar</span></button>
+    	<div class="modal fade" id="FormNuevo" tabindex="-1" role="dialog" aria-labelledby="FormNuevo">
+
+  </form>
+  <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="FormNuevo">Editar Usuario</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                    	<div class="form-group col-xs-12 col-md-6" style="position:relative">
+                             <label for="exampleInputPassword1">Nombre</label>
+            				 <input type="text" class="form-control" id="FormNuevo"  value="miiEmpresa">
+                    	</div>
+                        <div class="form-group col-xs-12 col-md-6">
+                              <label for="exampleInputPassword1">Usuario</label>
+                              <input type="text" class="form-control" id="FormNuevo" value="miiUsuario">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <label for="exampleInputPassword1">Contraseña</label>
+                            <input type="text" class="form-control" id="FormNuevo"   value="***********">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputPassword1">RUC</label>
+                            <input type="text" class="form-control" id="FormNuevo"   value="miiRUC">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputPassword1">Pagina Web</label>
+                            <input type="text" class="form-control" id="FormNuevo"  value="miiTelefono">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputPassword1">Eslogan</label>
+                            <input type="text" class="form-control" id="FormNuevo"  value="TatyMaybeth">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="exampleInputPassword1">logo</label>
+                            <input type="file">
+                        </div>
+                      </div>
+                 </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-default">Guardar</button>
+                </div>
+            </form>
+
+            </div>
+        </div>
+
+{% endblock %}
+{% block javascripts %}
+      <script>
+      function habilitar(){
+    	  $('#usuario1').removeAttr(disabled');
+      }
+      </script>
+
+{% endblock %}

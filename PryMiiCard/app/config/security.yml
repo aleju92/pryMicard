@@ -66,6 +66,6 @@ security:
         AppBundle\Entity\Usuario:
             algorithm: bcrypt
         #Esto son con los datos de in_memory
-        #Symfony\Component\Security\Core\User\User: 
+        #Symfony\Component\Security\Core\User\User:
         #     algorithm: bcrypt
         #     cost: 12

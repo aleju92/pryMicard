@@ -1,0 +1,206 @@
+{% extends "::promociones.html.twig" %}
+{% block m2%}active {% endblock %}
+{% block title %}Promociones{% endblock %}
+{% block titulo %} Administracion de Promociones{%  endblock %}
+{% block cuerpo %}
+<div id="mensaje">
+    {% for flash_message in app.session.flashBag.get('success') %}
+        <div class="flash-success alert alert-success"  role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ flash_message | upper }}
+        </div>
+    {% endfor %}
+    {% for flash_message in app.session.flashBag.get('error') %}
+        <div class="flash-error alert alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ flash_message | upper }}
+        </div>
+    {% endfor %}
+    {% for flash_message in app.session.flashBag.get('info') %}
+        <div class="flash-info alert alert-info" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ flash_message | upper }}
+        </div>
+    {% endfor %}
+
+</div>
+<div class ="row">
+    <div class="modal fade" id="FormNuevo" tabindex="-1" role="dialog" aria-labelledby="FormNuevo">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><a href="{{ path('catgegoria_index') }}">&times;</a></span></button>
+                    <h4 class="modal-title" id="FormNuevo">Nueva Promocion</h4>
+                </div>
+                {% if form is defined %}
+                    {{ form_start(form) }}
+                    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+                    <div class="modal-body">
+                        {{ form_row(form.titProm) }}
+                    </div>
+                    <div class="modal-body">
+                        {{ form_row(form.detProm) }}
+                    </div>
+                    <div class="modal-footer">
+                        {{ form_row(form.tipProm) }}
+                    </div>
+                    <div class="modal-footer">
+                        {{ form_row(form.numProm) }}
+                    </div>
+                    <div class="modal-footer">
+                        {{ form_row(form.preProm) }}
+                    </div>
+                    <div class="modal-footer">
+                        {{ form_row(form.fechInProm) }}
+                    </div>
+                    <div class="modal-footer">
+                        {{ form_row(form.fechFinProm) }}
+                    </div>
+                    <div class="modal-footer">
+                        {{ form_row(form.catPromFk) }}
+                    </div>
+                    {{ form_end(form) }}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="FormEdit" tabindex="-1" role="dialog" aria-labelledby="FormEdit" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                    <div class="modal-header">
+                        <a class="close" href="{{ path('catgegoria_index') }}"><span aria-hidden="true">&times;</span></a>
+                        <h4 class="modal-title" id="FormNuevo">Detalle Promocion</h4>
+                    </div>
+                    {% if form2 is defined %}
+                        {{ form_start(form2) }}
+                        {% form_theme form2 'bootstrap_3_layout.html.twig' %}
+                        <div class="modal-body">
+                            {{ form_row(form.titProm) }}
+                            {{ form_row(form.detProm) }}
+                        </div>
+                        <div class="modal-footer">
+                            {{ form_row(form2.Modificar,{ 'attr': {'class': 'btn btn-primary'} }) }}
+                        </div>
+                        {{ form_end(form2) }}
+                    {% endif %}
+            </div>
+        </div>
+    </div>
+    {% if form3 is defined %}
+        {{ form_start(form3) }}
+        {% form_theme form3 'bootstrap_3_layout.html.twig' %}
+    <div class="modal fade" id="FormDelet" tabindex="-1" role="dialog" aria-labelledby="FormDelet" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" role="document">
+            {% if form3.estado.vars.value  == '1' %}
+            <div class="modal-content alert alert-danger">
+            {% else %}
+                <div class="modal-content alert alert-success">
+             {% endif %}
+                <div class="modal-header">
+                    <a class="close" href="{{ path('catgegoria_index') }}"><span aria-hidden="true">&times;</span></a>
+                    {% if form3.estado.vars.value  == '1' %}
+                    <h4 class="modal-title" id="FormNuevo"> Desactivar Promocion</h4>
+                    {% else %}
+                    <h4 class="modal-title" id="FormNuevo"> Activar Promocion</h4>
+                    {% endif %}
+                </div>
+                    <div class="modal-body">
+                        <div class="media">
+                            <div class="media-left">
+                                <span id="dibujo" class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                            </div>
+                            <div class="media-body">
+                                <p id="ms">
+                                {% if form3.estado.vars.value  == '1' %}
+                                ¿Está seguro que desea desactivar la promocion: {{ form3.titProm.vars.value }}?
+                                {% else %}
+                                ¿Está seguro que desea activar la promocion: {{ form3.titProm.vars.value }}?
+                                {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="col-md-11"><a href="{{ path('regpromo') }}" class="btn btn-primary">No</a></div>
+                        {% if form3.estado.vars.value  == '1' %}
+                        <div class="col-md-1">{{ form_row(form3.Si,{ 'attr': {'class': 'btn btn-danger'} }) }}</div>
+                        {% else %}
+                        <div class="col-md-1">{{ form_row(form3.Si,{ 'attr': {'class': 'btn btn-success'} }) }}</div>
+                        {% endif %}
+                    </div>
+                    {{ form_end(form3) }}
+
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<div class="row">
+	<h2>Lista de Promociones</h2>
+    <div class="table-responsive">
+        <table id="#PromocionesTable" class="table table-striped">
+            <tr>
+                <th>Titulo</th>
+                <th>Detalle</th>
+                <th>Tipo</th>
+                <th>Cantidad de Promociones</th>
+                <th>Precio</th>
+                <th>Inicio</th>
+                <th>Fin</th>
+                <th>Categoria</th>
+            </tr>
+
+            {%  for promo in promociones %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ promo.titProm }}</td>
+                    <td>{{ promo.detProm }}</td>
+                    <td>{{ promo.tipProm }}</td>
+                    <td>{{ promo.numProm }}</td>
+                    <td>{{ promo.preProm }}</td>
+                    <td>{{ promo.fechInProm|date('Y-m-d') }}</td>
+                    <td>{{ promo.fechFinProm|date('Y-m-d') }}</td>
+
+                    {% for cat in categorias %}
+                        {% if promo.catPromFk.id == cat.id %}
+                    <td>{{ cat.desCat }}</td>
+                        {% endif %}
+                    {% endfor %}
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+{% block javascripts %}
+    {#<script src="{{ asset('js/catForm.js')}}"></script>#}
+    {# <script src="{{ asset('js/menusidebar.min.js')}}"></script> #}
+    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js" ></script>
+    <script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.1.1/js/responsive.bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#CategoriasTable').DataTable();
+            console.log('hola');
+        } );
+    </script>
+    {% if form2 is defined %}
+    <script>
+        $('#FormEdit').modal('show')
+    </script>
+    {% endif %}
+    {% if form3 is defined %}
+        <script>
+            $('#FormDelet').modal('show')
+        </script>
+    {% endif %}
+{% endblock %}
