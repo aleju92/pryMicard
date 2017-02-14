@@ -23,9 +23,9 @@ class UserController extends Controller
 	 */
 	public function indexAction()
 	{	
-		/*$categorias=$this->catAll();
-		return $this->render('user/index.html.twig',array('categorias'=>$categorias));*/
-		return $this->render('user/index.html.twig');
+		$categorias=$this->catAll();
+		return $this->render('user/index.html.twig',array('categorias'=>$categorias));
+		//return $this->render('user/index.html.twig');
 	}
 	
 	/**
@@ -34,23 +34,24 @@ class UserController extends Controller
 	public function promAction(Request $request)
 	{	
 		if ($request->isXMLHttpRequest()){
-			$id = $request->get('id');
+			//$id = $request->get('id');
 			$em = $this->getDoctrine()->getManager();
-			$categorias=$em->find("AppBundle:Categoria",$id);
+			$categorias=$em->find("AppBundle:Categoria",2);
 			
-			$promos = $em->getRepository('AppBundle:Categoria')->findBy(
+			$promos = $em->getRepository('AppBundle:C')->findBy(
 					array(
-							'author' => 'John Doe',
-							'category' => 'Symfony'
+							//'author' => 'John Doe',
+							'categorias' => $categorias
 					)
 					);
-			
+			dump($promos);
+			die();
 			$em = $this->getDoctrine()->getManager();
 			$em->flush();
 			
 			//$categorias=$this->catAll();
 			$categorias_html=$this->render('user/formProm.html.twig',array(
-	                'categorias'=> $categorias
+	                'promos'=> $promos
 	            ))->getContent();
 			
 			return new JsonResponse(array('categorias_html' => $categorias_html));
