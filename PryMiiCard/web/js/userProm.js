@@ -22,7 +22,7 @@ $(document).ready(function () {
                      $('#mensaje').html(ms);*/
             	
             		//$('#tablediv').html(data.userlist_html); // presento el mensaje
-                    console.log(data.categorias_html);
+                    console.log(data.promos_html);
                  //}
             },
             error: function (jqXHR,exception)

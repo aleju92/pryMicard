@@ -37,25 +37,22 @@ class UserController extends Controller
 			$id = $request->get('id');
 			$em = $this->getDoctrine()->getManager();
 			$categorias=$em->find("AppBundle:Categoria",$id);
-			dump($categorias);
-			die();
+			
 			$promos = $em->getRepository('AppBundle:Promocion')->findBy(
 					array(
-							//'author' => 'John Doe',
 							'catPromFk' => $categorias
 					)
 					);
-			dump($promos);
-			die();
+			
 			$em = $this->getDoctrine()->getManager();
 			$em->flush();
 			
 			//$categorias=$this->catAll();
-			$categorias_html=$this->render('user/formProm.html.twig',array(
+			$promos_html=$this->render('user/formProm.html.twig',array(
 	                'promos'=> $promos
 	            ))->getContent();
 			
-			return new JsonResponse(array('categorias_html' => $categorias_html));
+			return new JsonResponse(array('categorias_html' => $promos_html));
 		}else{
 			return $this->redirectToRoute('prom_index');
 		}

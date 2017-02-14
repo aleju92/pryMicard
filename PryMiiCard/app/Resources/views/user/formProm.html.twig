@@ -6,12 +6,13 @@
                     <th>Codigo</th>
                     <th>Cedula</th>
                 </tr>
-                {#{% for promo in promos %}
+                {% for promo in promos %}
                 	<tr>
-                		<td>{{ categ.desCat }}</td>
-                    	<td>{% if categ.estado == 1 %}Activo{% else %}Inactivo{% endif %}</td>
+                		<td>{{ promo.titProm }}</td>
+                		<td>{{ promo.detProm }}</td>
+                    	{#<td>{% if categ.estado == 1 %}Activo{% else %}Inactivo{% endif %}</td>#}
                 	</tr>
-                {% endfor %}#}
+                {% endfor %}
             </table>
         </div>
     </div>
