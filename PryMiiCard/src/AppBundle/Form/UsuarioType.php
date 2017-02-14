@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 
 class UsuarioType extends AbstractType
@@ -22,10 +23,12 @@ class UsuarioType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->add('nombre', TextType::class,array('required'=>true))
+        ->add('nombre', TextType::class,array(
+        		'required'=>true))
         ->add('apellido', TextType::class,array('required'=>true))
         ->add('fechanacim',DateType::class)
-        ->add('foto',FileType::class)
+        ->add('path',HiddenType::class,array('mapped'=>false))
+        ->add('foto',FileType::class, array('label'=>'Tu Foto','data_class' => null))
         ->add('cedula',TextType::class)
         ->add('email',EmailType::class,array('required'=>true))
         ->add('telefono',TextType::class)
