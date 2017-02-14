@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Lista de Empresas Registradas</h1>
+    <div class="row">
+    <div class="col-md-2">
+        <ul class="nav nav-pills nav-stacked">
+          <li role="Empresas" class="active"><a href="#">Empresas</a></li>
+          <li role="Estadisticas"><a href="#">Estadisticas</a></li>
+          <li role="Solicitudes"><a href="#">Solicitudes</a></li>
+          <li role="Perfil"><a href="#">Perfil</a></li>
+        </ul>
+    </div>
+    <div class="col-md-10">
+    <table class="table table-hover">
+        <thead>
+            <tr style="background-color: ">
+                <th>Id</th>
+                <th>Empresa</th>
+                <th>Usuario</th>
+                <!-- <th>Password</th> -->
+                <th>Ruc</th>
+                <th>Telefono</th>
+                <th>Pagina Web</th>
+                <th>Logo</th>
+                <th>Solagan</th>
+                <th>Estado</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for empresa in empresas %}
+            <tr class="{% if empresa.estEmp == 1 %}
+                    active
+                    {% else %}
+                    Inactivo
+                    {% endif %}" >
+                <td><a href="{{ path('empresa_show', { 'id': empresa.id }) }}">{{ empresa.id }}</a></td>
+                <td>{{ empresa.nomEmp }}</td>
+                <td>{{ empresa.usuEmp }}</td>
+                <!-- <td>{{ empresa.pasEmp }}</td> -->
+                <td>{{ empresa.rucEmp }}</td>
+                <td>{{ empresa.tlfEmp }}</td>
+                <td>{{ empresa.webEmp }}</td>
+
+                <td><img style="max-width: 100px" class=" img-thumbnail" src="{{ empresa.logEmp }}"></td>
+                <td>{{ empresa.slgEmp }}</td>
+
+                <td>
+
+                    {% if empresa.estEmp == 1 %}
+                    Activo
+                    {% else %}
+                    Inactivo
+                    {% endif %}
+
+                </td>
+                <td>
+                    <a class="{% if empresa.estEmp == 1 %}
+                    btn btn-primary
+                    {% else %}
+                    btn btn-danger 
+                    {% endif %}" href="{{ path('empresa_show', { 'id': empresa.id }) }}">{% if empresa.estEmp == 1 %}
+                    Mostrar
+                    {% else %}
+                    ----------
+                    {% endif %}</a> 
+                    <a class="btn btn-primary" href="{{ path('empresa_edit', { 'id': empresa.id }) }}">Editar</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a class="btn btn-info" href="{{ path('empresa_new') }}">Crear nueva empresa</a>
+        </li>
+    </ul>
+
+    </div>
+    </div>
+{% endblock %}
