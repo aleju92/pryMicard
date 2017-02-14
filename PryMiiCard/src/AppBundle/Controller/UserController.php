@@ -34,14 +34,15 @@ class UserController extends Controller
 	public function promAction(Request $request)
 	{	
 		if ($request->isXMLHttpRequest()){
-			//$id = $request->get('id');
+			$id = $request->get('id');
 			$em = $this->getDoctrine()->getManager();
-			$categorias=$em->find("AppBundle:Categoria",2);
-			
-			$promos = $em->getRepository('AppBundle:C')->findBy(
+			$categorias=$em->find("AppBundle:Categoria",$id);
+			dump($categorias);
+			die();
+			$promos = $em->getRepository('AppBundle:Promocion')->findBy(
 					array(
 							//'author' => 'John Doe',
-							'categorias' => $categorias
+							'catPromFk' => $categorias
 					)
 					);
 			dump($promos);
