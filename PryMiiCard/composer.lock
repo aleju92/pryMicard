@@ -4,7 +4,11 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "hash": "0201757cc75b00be2c21e4e734e579ef",
+=======
+    "hash": "57d745b8e253dc3317d400279f269cf1",
+>>>>>>> 5acba37f2caa573abfc432cd0695f6b0bc978ea2
     "content-hash": "3a48f58d57fb776b3e9553988c1d6862",
     "packages": [
         {
@@ -286,6 +290,7 @@
         },
         {
             "name": "doctrine/dbal",
+<<<<<<< HEAD
             "version": "v2.5.12",
             "source": {
                 "type": "git",
@@ -296,6 +301,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/doctrine/dbal/zipball/7b9e911f9d8b30d43b96853dab26898c710d8f44",
                 "reference": "7b9e911f9d8b30d43b96853dab26898c710d8f44",
+=======
+            "version": "v2.5.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/doctrine/dbal.git",
+                "reference": "1b1effbddbdc0f40d1c8f849f44bcddac4f52a48"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/doctrine/dbal/zipball/1b1effbddbdc0f40d1c8f849f44bcddac4f52a48",
+                "reference": "1b1effbddbdc0f40d1c8f849f44bcddac4f52a48",
+>>>>>>> 5acba37f2caa573abfc432cd0695f6b0bc978ea2
                 "shasum": ""
             },
             "require": {
@@ -353,7 +370,11 @@
                 "persistence",
                 "queryobject"
             ],
+<<<<<<< HEAD
             "time": "2017-02-08 12:53:47"
+=======
+            "time": "2017-02-04 21:20:13"
+>>>>>>> 5acba37f2caa573abfc432cd0695f6b0bc978ea2
         },
         {
             "name": "doctrine/doctrine-bundle",

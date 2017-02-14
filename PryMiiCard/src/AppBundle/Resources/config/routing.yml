@@ -1,0 +1,4 @@
+app_empresa:
+    resource: "@AppBundle/Resources/config/routing/empresa.yml"
+    prefix:   /empresa
+

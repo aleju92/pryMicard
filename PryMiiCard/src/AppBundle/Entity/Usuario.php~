@@ -3,6 +3,8 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Usuario
@@ -10,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="usuario")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UsuarioRepository")
  */
-class Usuario
+class Usuario implements UserInterface
 {
     /**
      * @var int
@@ -34,11 +36,33 @@ class Usuario
      * @ORM\Column(name="apellido", type="string", length=100)
      */
     private $apellido;
+    
+    /**
+     * @var \Date
+     *
+     * @ORM\Column(name="fechanacim", type="date", nullable=true)
+     */
+    private $fechanacim;
 
     /**
-     * @var int
+     * Image file
      *
-     * @ORM\Column(name="cedula", type="integer", length=10)
+     * @var File
+     *
+     * @Assert\File(
+     *     maxSize = "5M",
+     *     mimeTypes = {"image/jpeg", "image/gif", "image/png"},
+     *     maxSizeMessage = "The maxmimum allowed file size is 5MB.",
+     *     mimeTypesMessage = "Only the filetypes image are allowed."
+     * )
+     * @ORM\Column(name="foto", type="string", length=255, nullable=true)
+     */
+    private $foto;
+    
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="cedula", type="string", length=10)
      */
     private $cedula;
 
@@ -50,36 +74,50 @@ class Usuario
     private $email;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="telefono", type="integer")
+     * @ORM\Column(name="telefono", type="string")
      */
     private $telefono;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="nick", type="string", length=50)
+     * @ORM\Column(name="username", type="string", length=50)
      */
-    private $nick;
+    private $username;
+    
+	/**
+     * @var string
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
+     */
+    private $plainPassword;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="pass", type="string", length=255)
+     * @ORM\Column(name="password", type="string", length=255)
      */
-    private $pass;
+    private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity="Credito", mappedBy="Usuario")
+     * @ORM\OneToMany(targetEntity="Credito", mappedBy="userCredFk")
      */
     private $creditos;
 
     /**
-     * @ORM\OneToMany(targetEntity="Reserva", mappedBy="Usuario")
+     * @ORM\OneToMany(targetEntity="Reserva", mappedBy="usuResFk")
      */
-    private $Reservas;
+    private $reservas;
 
+    /**
+     * @ORM\Column(name="estCat", type="smallint")
+     * */
+    private $estado;//1=activo 0=inactivo
+	private $roles;
+    
     /**
      * Get id
      *
@@ -137,7 +175,57 @@ class Usuario
     {
         return $this->apellido;
     }
-
+	
+    /**
+     * Set fechanacim
+     *
+     * @param \DateTime $fechanacim
+     *
+     * @return Usuario
+     */
+    public function setFechanacim($fechanacim)
+    {
+    	$this->fechanacim = $fechanacim;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get fechanacim
+     *
+     * @return \DateTime
+     */
+    public function getFechanacim()
+    {
+    	return $this->fechanacim;
+    }
+    
+    /**
+     * Set foto
+     *
+     * @param string $foto
+     *
+     * @return Usuario
+     */
+    public function setFoto($foto)
+    {
+    	$this->foto = $foto;
+    
+    	return $this;
+    }
+    
+    /**
+     * Get foto
+     *
+     * @return string
+     */
+    public function getFoto()
+    {
+    	return $this->foto;
+    }
+    
+    
+    
     /**
      * Set cedula
      *
@@ -211,50 +299,191 @@ class Usuario
     }
 
     /**
-     * Set nick
+     * Set username
      *
-     * @param string $nick
+     * @param string $username
      *
      * @return Usuario
      */
-    public function setNick($nick)
+    public function setUsername($username)
     {
-        $this->nick = $nick;
+        $this->username = $username;
 
         return $this;
     }
 
     /**
-     * Get nick
+     * Get username
      *
      * @return string
      */
-    public function getNick()
+    public function getUsername()
     {
-        return $this->nick;
+        return $this->username;
     }
-
+    
+    public function getPlainPassword()
+    {
+    	return $this->plainPassword;
+    }
+    
+    public function setPlainPassword($password)
+    {
+    	$this->plainPassword = $password;
+    }
+    
     /**
-     * Set pass
+     * Set password
      *
-     * @param string $pass
+     * @param string $password
      *
      * @return Usuario
      */
-    public function setPass($pass)
+    public function setPassword($password)
     {
-        $this->pass = $pass;
+        $this->password = $password;
 
         return $this;
     }
 
     /**
-     * Get pass
+     * Get password
      *
      * @return string
      */
-    public function getPass()
+    public function getPassword()
     {
-        return $this->pass;
+        return $this->password;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->creditos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->reservas = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add credito
+     *
+     * @param \AppBundle\Entity\Credito $credito
+     *
+     * @return Usuario
+     */
+    public function addCredito(\AppBundle\Entity\Credito $credito)
+    {
+        $this->creditos[] = $credito;
+
+        return $this;
+    }
+
+    /**
+     * Remove credito
+     *
+     * @param \AppBundle\Entity\Credito $credito
+     */
+    public function removeCredito(\AppBundle\Entity\Credito $credito)
+    {
+        $this->creditos->removeElement($credito);
+    }
+
+    /**
+     * Get creditos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCreditos()
+    {
+        return $this->creditos;
+    }
+
+    /**
+     * Add reserva
+     *
+     * @param \AppBundle\Entity\Reserva $reserva
+     *
+     * @return Usuario
+     */
+    public function addReserva(\AppBundle\Entity\Reserva $reserva)
+    {
+        $this->reservas[] = $reserva;
+
+        return $this;
+    }
+
+    /**
+     * Remove reserva
+     *
+     * @param \AppBundle\Entity\Reserva $reserva
+     */
+    public function removeReserva(\AppBundle\Entity\Reserva $reserva)
+    {
+        $this->reservas->removeElement($reserva);
+    }
+
+    /**
+     * Get reservas
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReservas()
+    {
+        return $this->reservas;
+    }
+
+	/**
+	 * {@inheritDoc}
+	 * @see \Symfony\Component\Security\Core\User\UserInterface::getRoles()
+	 */
+	public function getRoles() {
+		return array('ROLE_USER');
+
+	}
+
+	/**
+	 * {@inheritDoc}
+	 * @see \Symfony\Component\Security\Core\User\UserInterface::getSalt()
+	 */
+	public function getSalt() {
+		
+	}
+
+
+	/**
+	 * {@inheritDoc}
+	 * @see \Symfony\Component\Security\Core\User\UserInterface::eraseCredentials()
+	 */
+	public function eraseCredentials() {
+		// TODO: Auto-generated method stub
+
+	}
+    /**
+     * Set estado
+     *
+     * @param integer $estado
+     *
+     * @return Usuario
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return integer
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+
+	public function getPathFoto(){
+		return 'uploads/'.$this->getFoto();
+	}
+
 }

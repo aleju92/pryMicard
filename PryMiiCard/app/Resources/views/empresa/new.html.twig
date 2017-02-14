@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+{%block head %}
+<style>
+    .form-control{
+        max-width: 40%;
+    }
+</style>
+{% endblock %}
+{% block body %}
+    <h1>Registrar Nueva Empresa</h1>
+    <div style="width: 40%">
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input class="btn btn-success"  type="submit" value="Crear Empresa" />
+    {{ form_end(form) }}
+    </div>
+    <br>
+            <a class="btn btn-info" href="{{ path('empresa_index') }}">Regresar a la lista </a>
+
+    <br>
+{% endblock %}

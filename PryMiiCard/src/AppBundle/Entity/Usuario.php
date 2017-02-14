@@ -25,21 +25,21 @@ class Usuario implements UserInterface
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="nombre", type="string", length=100)
+     * @Assert\NotBlank(message="*Campo Nombre es requerido")
+     * @ORM\Column(name="nombre", type="string", length=50)
      */
     private $nombre;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="apellido", type="string", length=100)
+     * @Assert\NotBlank(message="*Campo Apellido es requerido")
+     * @ORM\Column(name="apellido", type="string", length=50)
      */
     private $apellido;
     
     /**
      * @var \Date
-     *
+     * @Assert\NotBlank(message="*Campo Fecha es requerido")
      * @ORM\Column(name="fechanacim", type="date", nullable=true)
      */
     private $fechanacim;
@@ -52,8 +52,8 @@ class Usuario implements UserInterface
      * @Assert\File(
      *     maxSize = "5M",
      *     mimeTypes = {"image/jpeg", "image/gif", "image/png"},
-     *     maxSizeMessage = "The maxmimum allowed file size is 5MB.",
-     *     mimeTypesMessage = "Only the filetypes image are allowed."
+     *     maxSizeMessage = "Lo máximo permitido es 5MB",
+     *     mimeTypesMessage = "Solo se permite los formatos: .jpg .gif .png"
      * )
      * @ORM\Column(name="foto", type="string", length=255, nullable=true)
      */
@@ -61,21 +61,22 @@ class Usuario implements UserInterface
     
     /**
      * @var string
-     *
-     * @ORM\Column(name="cedula", type="string", length=10)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=10)
+     * @ORM\Column(name="cedula", type="string", length=10, unique=true)
      */
     private $cedula;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=100)
+     * @Assert\NotBlank()
+     * @ORM\Column(name="email", type="string", length=100, unique=true)
      */
     private $email;
 
     /**
      * @var string
-     *
+     * @Assert\Length(max=10)
      * @ORM\Column(name="telefono", type="string")
      */
     private $telefono;
@@ -83,7 +84,7 @@ class Usuario implements UserInterface
     /**
      * @var string
      *
-     * @ORM\Column(name="username", type="string", length=50)
+     * @ORM\Column(name="username", type="string", length=50, unique=true)
      */
     private $username;
     
@@ -110,7 +111,12 @@ class Usuario implements UserInterface
     /**
      * @ORM\OneToMany(targetEntity="Reserva", mappedBy="usuResFk")
      */
-    private $Reservas;
+    private $reservas;
+
+    /**
+     * @ORM\Column(name="estCat", type="smallint")
+     * */
+    private $estado;//1=activo 0=inactivo
 	private $roles;
     
     /**
@@ -356,7 +362,7 @@ class Usuario implements UserInterface
     public function __construct()
     {
         $this->creditos = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->Reservas = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->reservas = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -402,7 +408,7 @@ class Usuario implements UserInterface
      */
     public function addReserva(\AppBundle\Entity\Reserva $reserva)
     {
-        $this->Reservas[] = $reserva;
+        $this->reservas[] = $reserva;
 
         return $this;
     }
@@ -414,7 +420,7 @@ class Usuario implements UserInterface
      */
     public function removeReserva(\AppBundle\Entity\Reserva $reserva)
     {
-        $this->Reservas->removeElement($reserva);
+        $this->reservas->removeElement($reserva);
     }
 
     /**
@@ -424,8 +430,9 @@ class Usuario implements UserInterface
      */
     public function getReservas()
     {
-        return $this->Reservas;
-    }
+        return $this->reservas;
+    }
+
 	/**
 	 * {@inheritDoc}
 	 * @see \Symfony\Component\Security\Core\User\UserInterface::getRoles()
@@ -452,8 +459,32 @@ class Usuario implements UserInterface
 		// TODO: Auto-generated method stub
 
 	}
+    /**
+     * Set estado
+     *
+     * @param integer $estado
+     *
+     * @return Usuario
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return integer
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
 
 	public function getPathFoto(){
 		return 'uploads/'.$this->getFoto();
 	}
+
 }

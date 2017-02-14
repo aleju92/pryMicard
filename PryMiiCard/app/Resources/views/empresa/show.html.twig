@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {% for flashMessage in app.session.flashbag.get('mensaje') %}
+        <div class="alert alert-warning alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>{{flashMessage}}</strong>
+        </div>
+    {% endfor %}
+    <DIV style="width: 40%">
+    <h1>Datos de la Empresa {{ empresa.nomEmp }}</h1>
+
+    <table class="table table-hover">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ empresa.id }}</td>
+            </tr>
+            <tr>
+                <th>Nomemp</th>
+                <td>{{ empresa.nomEmp }}</td>
+            </tr>
+            <tr>
+                <th>Usuemp</th>
+                <td>{{ empresa.usuEmp }}</td>
+            </tr>
+            <tr>
+                <th>Pasemp</th>
+                <td>{{ empresa.pasEmp }}</td>
+            </tr>
+            <tr>
+                <th>Rucemp</th>
+                <td>{{ empresa.rucEmp }}</td>
+            </tr>
+            <tr>
+                <th>Tlfemp</th>
+                <td>{{ empresa.tlfEmp }}</td>
+            </tr>
+            <tr>
+                <th>Webemp</th>
+                <td>{{ empresa.webEmp }}</td>
+            </tr>
+            <tr>
+                <th>Logemp</th>
+                <td><img style="max-width: 100px" class=" img-thumbnail" src="{{ empresa.logEmp }}" alt="logoEmp"></td>
+            </tr>
+            <tr>
+                <th>Slgemp</th>
+                <td>{{ empresa.slgEmp }}</td>
+            </tr>
+            <tr>
+                <th>Estemp</th>
+                <td>{% if empresa.estEmp == 1 %}
+                    Activo
+                    {% else %}
+                    Inactivo
+                    {% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    <ul>
+        <li>
+            <a class="btn btn-default"  href="{{ path('empresa_index') }}">Regresar a la lista</a><br>
+        </li>
+        <br>
+        <li>
+            <a  class="btn btn-primary" href="{{ path('empresa_edit', { 'id': empresa.id }) }}">Editar Empresa</a><br>
+        </li>
+        <br>
+        <li>
+            {{ form_start(delete_form) }}
+                <input class="btn btn-danger" type="submit" value="Borrar">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}
