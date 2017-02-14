@@ -4,13 +4,13 @@
 {% block titulo %}Promociones{% endblock %}
 	{% block cuerpo %}
 	
-	<div class="menu">
+	{#<div class="menu">
     	<ul class="nav nav-pills">
     		{% for cate in categorias %}
-      			<li role="presentation"><a href="{{ path('prom_index') }}"id="categoria" value={{ cate.id }}>{{ cate.desCat }}</a></li>
+      			<li role="presentation" ><a href="{{ path('prom_index') }}" id="categoria" value={{ cate.id }}>{{ cate.desCat }}</a></li>
       		{% endfor %}
     	</ul>
-    </div>
+    </div>#}
  
 	<div class="row1">
 	<h2><small>Estadisticas</small></h2>
@@ -79,7 +79,7 @@
     
 </div>
 
-{% include 'user/formProm.html.twig' %}
+    {#{% include 'user/formProm.html.twig' %}#}
 
 {% endblock %}
 {% block javascripts %}

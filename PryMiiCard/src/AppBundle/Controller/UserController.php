@@ -23,8 +23,9 @@ class UserController extends Controller
 	 */
 	public function indexAction()
 	{	
-		$categorias=$this->catAll();
-		return $this->render('user/index.html.twig',array('categorias'=>$categorias));
+		/*$categorias=$this->catAll();
+		return $this->render('user/index.html.twig',array('categorias'=>$categorias));*/
+		return $this->render('user/index.html.twig');
 	}
 	
 	/**
@@ -36,7 +37,14 @@ class UserController extends Controller
 			$id = $request->get('id');
 			$em = $this->getDoctrine()->getManager();
 			$categorias=$em->find("AppBundle:Categoria",$id);
-		
+			
+			$promos = $em->getRepository('AppBundle:Categoria')->findBy(
+					array(
+							'author' => 'John Doe',
+							'category' => 'Symfony'
+					)
+					);
+			
 			$em = $this->getDoctrine()->getManager();
 			$em->flush();
 			
