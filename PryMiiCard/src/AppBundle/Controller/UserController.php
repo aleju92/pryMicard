@@ -24,7 +24,8 @@ class UserController extends Controller
 	public function indexAction()
 	{	
 		$categorias=$this->catAll();
-		return $this->render('user/index.html.twig',array('categorias'=>$categorias));
+		$promos=$this->promAll();
+		return $this->render('user/index.html.twig',array('categorias'=>$categorias,'promos'=>$promos));
 		//return $this->render('user/index.html.twig');
 	}
 	
@@ -39,11 +40,8 @@ class UserController extends Controller
 			$categorias=$em->find("AppBundle:Categoria",$id);
 			
 			$promos = $em->getRepository('AppBundle:Promocion')->findBy(
-					array(
-							'catPromFk' => $categorias
-					)
-					);
-			
+					array('catPromFk' => $categorias));
+		
 			$em = $this->getDoctrine()->getManager();
 			$em->flush();
 			
@@ -52,7 +50,7 @@ class UserController extends Controller
 	                'promos'=> $promos
 	            ))->getContent();
 			
-			return new JsonResponse(array('categorias_html' => $promos_html));
+			return new JsonResponse(array('promos_html' => $promos_html));
 		}else{
 			return $this->redirectToRoute('prom_index');
 		}
@@ -86,6 +84,7 @@ class UserController extends Controller
 				$user->setPassword($password);
 				$user->setEstado(1);
 				//----------------------
+				
 				//SUBIR ARCHIVO
 					// Recogemos el fichero
 					$img=$form['foto']->getData();
@@ -122,7 +121,7 @@ class UserController extends Controller
 	
 	public function miperfilAction(Request $request){
 		$user=$this->getUser();
-		//if($user->getEstado()== 1){
+		if($user->getEstado()== 1){
 			$em=$this->getDoctrine()->getManager();
 			$form = $this->createForm(UsuarioType::class,$user);
 			
@@ -133,21 +132,29 @@ class UserController extends Controller
 			if($form->isSubmitted()){
 				if($form->isValid()){
 					//$user=$form->getData();
-			
+					
 					$user->setPassword($pass);
 					//Subir la foto
-					$img=$form['foto']->getData();
-					$ext=$img->guessExtension();
-					$file_name=time().".".$ext;
+					//dump($form);
+					//die();
+					if($form['foto']->getData() != null){
+						$img=$form['foto']->getData();
+						$ext=$img->guessExtension();
+						$file_name=time().".".$ext;
 						
-					//subir la foto al repositorio
-					$img->move("uploads",$file_name);
+						//subir la foto al repositorio
+						$img->move("uploads",$file_name);
 						
-					$user->setFoto($file_name);
-								
+						$user->setFoto($file_name);
+					}else{
+						$ruta=$form->get('path')->getData();
+						$nombre=substr($ruta,8);
+						$user->setFoto($nombre);
+						$em->persist($user);
+						$em->flush();
+							
+					}
 					
-					$em->persist($user);
-					$em->flush();
 					
 					$ms="Sus datos han sido modificado correctamente";
 					$tms='success';
@@ -162,9 +169,10 @@ class UserController extends Controller
 			}		
 				return $this->render("user/miiperfil.html.twig",array("user"=>$user,
 						"form"=>$form->createView()));
-		/*}else{
-			throw new AccessDeniedException();
-		}*/
+		}else{
+			//throw new AccessDeniedException();
+			return $this->redirectToRoute("user_logout");
+		}
 			
 	}
 	
@@ -213,6 +221,11 @@ class UserController extends Controller
 		$em=$this->getDoctrine()->getManager();
 		$categorias= $em->getRepository('AppBundle:Categoria')->findAll();
 		return $categorias;
+	}
+	private function promAll(){
+		$em=$this->getDoctrine()->getManager();
+		$prom= $em->getRepository('AppBundle:Promocion')->findAll();
+		return $prom;
 	}
 	
 	
