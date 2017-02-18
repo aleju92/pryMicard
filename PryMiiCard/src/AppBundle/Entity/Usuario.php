@@ -438,9 +438,12 @@ class Usuario implements UserInterface
 	 * @see \Symfony\Component\Security\Core\User\UserInterface::getRoles()
 	 */
 	public function getRoles() {
-		//if($this->getEstado()==1)
-		return array('ROLE_USER');
-	
+
+	    if($this->getEstado()==1)
+		    return array('ROLE_USER');
+	    else
+	        return array('ROLE_ANONYMOUS');
+
 	}
 
 	/**

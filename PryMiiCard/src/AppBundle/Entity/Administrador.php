@@ -49,6 +49,7 @@ class Administrador implements UserInterface
      *
      * @var File
      *
+
      * @Assert\File(
      *     maxSize = "5M",
      *     mimeTypes = {"image/jpeg", "image/gif", "image/png"},

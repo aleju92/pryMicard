@@ -1,22 +1,17 @@
 {% extends "::basenull.html.twig" %}
-{% block title %}Usuario-Login!{% endblock %}
+{% block title %}Ejecutivo-Login!{% endblock %}
 {% block body %}
         <div class="page-header">
             <h1>Inicio de Sesion</h1>
-            <h2>Usuario</h2>
+            <h2>Ejecutivo de Ventas</h2>
         </div>
         {% if error %}
-            <div class="alert alert-danger">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                {{ error.message | trans}}
-                {{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
 
-        <form action="{{ path('login') }}" method="post" novalidate="novalidate">
+        <form action="{{ path('adminlogin') }}" method="post" novalidate="novalidate">
             <div class="form-group">
-                <label for="username"><i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>Usuario:</label>
+                <label for="username"><i class="fa fa-user-circle fa-2x" aria-hidden="true"></i>  Usuario:</label>
                 {% if value is defined%}
                     <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}"/>
                 {% elseif value is not defined %}
@@ -27,7 +22,6 @@
                 <label for="password"><i class="fa fa-key fa-2x" aria-hidden="true"></i>  Contraseña:</label>
                 <input class="form-control" type="password" id="password" name="_password" />
             </div>
-            <button type="submit" class="btn btn-primary">Ingresar</button>
-            <a href="{{ path('user_register') }}">Registrarme</a>
+            <button type="submit" class="btn btn-primary btn-lg">Ingresar</button>
         </form>
 {% endblock %}

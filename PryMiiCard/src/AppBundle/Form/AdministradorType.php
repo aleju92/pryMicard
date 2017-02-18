@@ -24,7 +24,7 @@ class AdministradorType extends AbstractType
                 ->add('apeAdm',TextType::class,array('label'=>'Apellido','required'=>true))
                 ->add('emAdm',EmailType::class,array('label'=>'Email Personal'))
                 ->add('path',HiddenType::class,array('mapped'=>false))
-                ->add('photoAdm',FileType::class,array('label'=>'Foto Personal','data_class' => null))
+                ->add('photoAdm',FileType::class,array('label'=>'Foto Personal','data_class' => null,'mapped'=>false))
                 ->add('useAdm',TextType::class,array('label'=>'Nombre de Usuario'))
                 ->add('PasswordTemp',PasswordType::class,array('label'=>'Contraseña Temporal'))
                 ->add('Guardar',SubmitType::class);

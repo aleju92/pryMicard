@@ -32,7 +32,7 @@
     {% form_theme Form 'bootstrap_3_layout.html.twig' %}
   <div class="col-xs-12 col-sm-12  col-md-6 placeholder">
     {% if Form.path.vars.value == 'AdminPerfil/' %}
-        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="200" height="200" class="img-responsive" alt="Sin foto"><br><br><br>
+        <img src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" width="300px" height="300px" class="img-responsive" alt="Sin foto"><br><br><br>
     {% else %}
       <img src="{{  asset(Form.path.vars.value) }}" width="200" height="200" class="img-responsive" alt="Sin foto"><br><br><br>
     {% endif %}
