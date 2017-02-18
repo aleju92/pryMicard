@@ -1,7 +1,10 @@
-{% extends "::user.html.twig" %}
-{% block titulo %}Crear una Cuenta{% endblock %}
-{% block cuerpo %}
+{% extends "::basenull.html.twig" %}
+{% block title %}Crear una Cuenta{% endblock %}
+{% block body %}
+	<div class="page-header">
+		<h1>Crear una Cuenta</h1>
 
+	</div>
  <div id="mensaje">
  {% for flash_message in app.session.flashBag.get('error') %}
         <div class="flash-error alert alert-danger" role="alert">

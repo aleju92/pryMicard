@@ -23,7 +23,8 @@ security:
         user_security:
             entity:
                 class: AppBundle:Usuario
-                property: username  
+                property: username
+
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:

@@ -1,6 +1,14 @@
 
 {% extends "::base.html.twig" %}
 {% block stylesheets %}{% endblock %}
+{% block menuser %}
+	{% if app.user.getPathFoto  =='uploads/' %}
+	<l1><a><i class="fa fa-user-circle-o fa-3x" aria-hidden="true"></i></a></l1>
+		{% else %}
+	<l1 class="placeholder" ><a><img src="{{ asset(app.user.getPathFoto) }}" width="50px" height="50px"  ></a></l1>
+	{% endif %}
+	<li><a>{{ app.user.username }}</a></li>
+{% endblock %}
 {% block title %}Usuario{% endblock %}
 {% block usert %}Usuario{% endblock %}
 {% block body %}
@@ -11,6 +19,10 @@
 					<li class="{% block m1%} {% endblock %}"><a href="{{ path('user_index') }}">Inicio</a></li>
         			<li class="{% block m2%} {% endblock %}"><a href="{{ path('user_perfil')}}">Perfil de Usuario</a></li>
             		<li class="{% block m3%} {% endblock %}"><a href="{{ path('user_coin') }}">Adminsitracion de MiiCard</a></li>
+					<li>
+						<a href="{{ path('sa_logout') }}">
+							<i class="fa fa-sign-out fa-4x fa-fw" aria-hidden="true"></i>
+							Salir</a></li>
         </ul>
 	</div>
 	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

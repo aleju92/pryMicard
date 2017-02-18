@@ -65,7 +65,7 @@ class EmpresaController extends Controller
     /**
      * Finds and displays a empresa entity.
      *
-     * @Route("/{id}", name="empresa_show")
+     * @Route("/getEmp/{id}", name="empresa_show")
      * @Method("GET")
      */
     public function showAction(Empresa $empresa)
