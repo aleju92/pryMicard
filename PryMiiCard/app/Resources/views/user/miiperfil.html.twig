@@ -78,12 +78,18 @@
   	<div class="row col-md-5 col-xs-4 col-sm-4 col-md-offset-5 col-sm-offset-4 col-xs-offset-3 ">
   		<a id="editar" class="btn bg-info" >Editar</a>
     </div>
+    <di>
+    {% if app.user.estado == 1 %}
+                  <a class="btn btn-danger" href="{{ path('user_delete') }}" >Deshabilitar</a>
+                {% else %}
+                  <a class="btn btn-success" disabled='true'>&nbsp&nbsp&nbspHabilitar&nbsp&nbsp&nbsp</a>
+                {% endif %}
+    </di>
     <div class="row col-md-5 col-xs-4 col-sm-4 col-md-offset-5 col-sm-offset-4 col-xs-offset-3 ">
-        {{ form_widget(form.Guardar) }}
+        {{ form_widget(form.Registrar) }}
     </div>
         
-        {{ form_end(form) }}          	
-        
+        {{ form_end(form) }}          	  
 {% endblock %}
 {% block javascripts %}
       <script>
@@ -95,5 +101,5 @@
 
           });
       </script>
-    
+  
 {% endblock %}

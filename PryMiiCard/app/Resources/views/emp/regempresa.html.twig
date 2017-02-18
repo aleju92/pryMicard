@@ -1,0 +1,78 @@
+{% extends "::empresas.html.twig"%}
+{% block title %}Registro Empresas{% endblock %}
+{% block titulo %} Registro de Empresas{%  endblock %}
+{% block cuerpo %}
+
+    {% for flash_message in app.session.flashBag.get('success') %}
+        <div class="flash-success alert alert-success"  role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ flash_message | upper }}
+        </div>
+    {% endfor %}
+    {% for flash_message in app.session.flashBag.get('error') %}
+        <div class="flash-error alert alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ flash_message | upper }}
+        </div>
+    {% endfor %}
+    {% for flash_message in app.session.flashBag.get('info') %}
+        <div class="flash-info alert alert-info" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ flash_message | upper }}
+        </div>
+    {% endfor %}
+
+    <div class ="row">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active"><a href="#ingreso" aria-controls="ingreso" role="tab" data-toggle="tab">Registro</a></li>
+        </ul>
+
+        <style>
+            #div1 {background-color: #f4f4f4; margin: 2px; width: 1000px; height: 40px;}
+        </style>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active" id="ingreso">
+                {{ form_start(form,{'attr':{'no validate':'no validate'}}) }}
+                {% form_theme form 'bootstrap_3_horizontal_layout.html.twig' %}
+                <form>
+                    <div class="form-group" id="div1">
+                        {{ form_row(form.nomEmp) }}
+                    </div>
+                    <div class="form-group" id="div1">
+                        {{ form_row(form.usuEmp) }}
+                    </div>
+                    <div class="form-group" id="div1">
+                        {{ form_row(form.pasEmp) }}
+                    </div>
+                    <div class="form-group" id="div1">
+                        {{ form_row(form.rucEmp) }}
+                    </div>
+                    <div class="form-group" id="div1">
+                        {{ form_row(form.tlfEmp) }}
+                    </div>
+                    <div class="form-group" id="div1">
+                        {{ form_row(form.webEmp) }}
+                    </div>
+                    <div class="form-group" id="div1">
+                        {{ form_row(form.logEmp) }}
+                    </div>
+                    <div class="form-group" id="div1">
+                        {{ form_row(form.slgEmp) }}
+                    </div>
+                </form>
+                {{ form_end(form) }}
+            </div>
+            <div role="tabpanel" class="tab-pane" id="modificacion">...</div>
+        </div>
+    </div>
+
+{% endblock %}
