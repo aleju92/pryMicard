@@ -221,6 +221,7 @@ class SAdminController extends Controller
                     $password=$this->get('security.password_encoder')
                         ->encodePassword($adminUser,$adminUser->getPasswordTemp());
                     $adminUser->setPassAdm($password);
+                    
                     if(! $form->get('photoAdm')->isEmpty()) {
                         //Subir la foto
                         $img = $form['photoAdm']->getData();

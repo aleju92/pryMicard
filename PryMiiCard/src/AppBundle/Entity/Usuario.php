@@ -48,7 +48,6 @@ class Usuario implements UserInterface
      * Image file
      *
      * @var File
-     *
      * @Assert\File(
      *     maxSize = "5M",
      *     mimeTypes = {"image/jpeg", "image/gif", "image/png"},
@@ -490,5 +489,5 @@ class Usuario implements UserInterface
 	public function getPathFoto(){
 		return 'uploads/'.$this->getFoto();
 	}
-
+	
 }
