@@ -1,28 +1,49 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>INICIO SESION</title>
 
-{% block body %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    <link href="{{ asset('css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/dashboard.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('iconos/css/font-awesome.min.css')}}">
+</head>
+<body>
+<div class="container">
+    <div class="page-header">
+        <h1>Inicio de Sesion</h1>
+        <h2>Adminsitrador</h2>
+    </div>
    {% if error %}
-        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
     
     <form action="{{ path('sadmnlogin') }}" method="post" novalidate="novalidate">
-        <label for="username">Username:</label>
+        <div class="form-group">
+        <label for="username"><i class="fa fa-user-circle" aria-hidden="true"></i>  Usuario:</label>
          {% if value is defined%}
-         	<input type="text" id="username" name="_username" value="{{ last_username }}"/>
+         	<input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}"/>
          {% elseif value is not defined %}
-         	<input type="text" id="username" name="_username" />
+         	<input class="form-control"  type="text" id="username" name="_username" />
          {% endif %}
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="_password" />
-    
+        </div>
+        <div class="form-group">
+            <label for="password"><i class="fa fa-key" aria-hidden="true"></i>  Contraseña:</label>
+            <input class="form-control" type="password" id="password" name="_password" />
+        </div>
         {#
             If you want to control the URL the user
             is redirected to on success (more details below)
             <input type="hidden" name="_target_path" value="/account" />
         #}
     
-        <button type="submit">login</button>
+        <button class="btn btn-primary" type="submit">Ingresar</button>
     </form>
 
-    <a href="{{ path('administradores_index') }}">Registrarme</a>
-{% endblock %}
+</div>
+</body>
+</html>
+

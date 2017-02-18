@@ -6,13 +6,14 @@
 {% block body %}
 	<div class="container-fluid">
 		<div class="row ">
-			<div class="col-sm-3 col-md-2 sidebar">
+			<div class="col-sm-3 col-md-2 sidebar" id="menulist">
 				<ul class="nav nav-sidebar">
-					<li class="{% block m1%} {% endblock %}"><a href="{{ path('indexSAdmin') }}">Inicio</a></li>
-					<li class="{% block m2%} {% endblock %}"><a href="{{ path('catgegoria_index') }}" >Administracion de Categorias</a></li>
-					<li class="{% block m3%} {% endblock %}"><a href="{{ path('administradores_index') }}" >Adminsitracion de Ejecutivos</a></li>
-					<li class="{% block m4%} {% endblock %}"><a href="{{ path('Users_index') }}" >Adminsitracion de usuarios</a></li>
-					<li class="{% block m5%} {% endblock %}"><a href="{{ path('miPerfilSa',{'idUser':1 }) }}">Mi Perfil</a></li>
+					<li class="{% block m1%} {% endblock %}"><a href="{{ path('indexSAdmin') }}"><i class="fa fa-home" aria-hidden="true"></i>Inicio</a></li>
+					<li class="{% block m2%} {% endblock %}"><a href="{{ path('catgegoria_index') }}" >
+							<i class="fa fa-th" aria-hidden="true"></i>Administracion de Categorias</a></li>
+					<li class="{% block m3%} {% endblock %}"><a href="{{ path('administradores_index') }}" ><i class="fa fa-user-secret" aria-hidden="true"></i>Adminsitracion de Ejecutivos</a></li>
+					<li class="{% block m4%} {% endblock %}"><a href="{{ path('Users_index') }}" ><i class="fa fa-users" aria-hidden="true"></i>Adminsitracion de usuarios</a></li>
+					<li class="{% block m5%} {% endblock %}"><a href="{{ path('miPerfilSa') }}"><i class="fa fa-user" aria-hidden="true"></i>Mi Perfil</a></li>
 				</ul>
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

@@ -38,7 +38,7 @@ security:
                 check_path: sadmnlogin
                 default_target_path: indexSAdmin
             logout:
-                path:   sa_logout
+                path:  sa_logout
                 target: /     
         user:
             anonymous: ~
@@ -55,7 +55,7 @@ security:
        - {path: ^/registrate, roles: IS_AUTHENTICATED_ANONYMOUSLY}
        - {path: ^/usuario/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
        - {path: ^/sa/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-       - {path: ^/sa, roles: [ROLE_ADMIN,ROLE_SUPADMIN] }
+       - {path: ^/sa, roles: ROLE_SUPADMIN }
        - {path: ^/usuario, roles: ROLE_USER }
        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
     encoders:

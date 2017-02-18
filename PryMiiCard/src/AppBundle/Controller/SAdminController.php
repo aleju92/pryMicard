@@ -5,12 +5,14 @@ namespace AppBundle\Controller;
 use AppBundle\Form\AdministradorType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Administrador;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -108,42 +110,30 @@ class SAdminController extends Controller
             return $this->redirectToRoute('administradores_index');
             }
         else{
-            $form = $this->createFormBuilder($admin)
-                        ->add('nomAdm',HiddenType::class)
-                        ->add('apeAdm',HiddenType::class)
-                        //->add('photoAdm',FileType::class,array('data_class' => null,'mapped' => false))
-                        ->add('PasswordTemp',PasswordType::class,array('label'=>'Contraseña nueva'))
+            $form = $this->createFormBuilder()
+                        ->add('nomAdm',HiddenType::class,array('data'=>$admin->getNomAdm()))
+                        ->add('apeAdm',HiddenType::class,array('data'=>$admin->getApeAdm()))
+                        ->add('PasswordTemp',PasswordType::class,array('label'=>'Contraseña nueva','data'=>$admin->getPasswordTemp()))
                         ->add('Guardar',SubmitType::class)
                         ->getForm();
+            //$form->get('nomAdm')->setData($admin->getNomAdm());
+            //$form->get('apeAdm')->setData($admin->getApeAdm());
 
+            dump($form);
             $form->handleRequest($request);
-            if($form->isSubmitted()){
-                if($form->isValid()){
+            if($form->isSubmitted() && $form->isValid()){
                     //encriptacion
+                    //dump($form);
+                    //die();
+
                     $admin->setPasswordTemp($form->get('PasswordTemp')->getData());
                     $password=$this->get('security.password_encoder')
                         ->encodePassWord($admin,$admin->getPasswordTemp());
                     $admin->setPassAdm($password);
-                    //Dar formato a la  Foto
-                    /*$img=$form['photoAdm']->getData();
-                    $ext=$img->guessExtension();
-                    $file_name =time().".".$ext;
-                    //Subir la foto al servidor
-                    $img->move("AdminPerfil",$file_name);
-
-                    //Datos adicionales del administrador
-                    $admin->setPhotoAdm($file_name);*/
-                    dump($admin);
-                    die();
                     $em=$this->getDoctrine()->getManager();
-                    //$em->persist($admin);
                     $em->flush();
                     $this->addFlash('success','Cambios del Ejecutivo de ventas  ingresados');
                     return $this->redirectToRoute('administradores_index');
-                }else{
-                    //dump($form);
-                    //die();
-                }
 
             }
             return $this->render("sa/admins.html.twig",array("Admins"=>$Admins,"Form"=>$form->createView()));
@@ -164,29 +154,37 @@ class SAdminController extends Controller
             return $this->redirectToRoute('administradores_index');
         }
         else{
-            $admin->setPasswordTemp('sin pass');
-            $form = $this->createFormBuilder($admin)
+            $form = $this->createFormBuilder()
                 ->add('nomAdm',HiddenType::class)
                 ->add('apeAdm',HiddenType::class)
                 ->add('estAdm',HiddenType::class)
-                ->add('photoAdm',HiddenType::class,array('data_class' => null))
                 ->add('Si',SubmitType::class)
                 ->getForm();
+
+            $form->get('nomAdm')->setData($admin->getNomAdm());
+            $form->get('apeAdm')->setData($admin->getApeAdm());
+            $form->get('estAdm')->setData($admin->getEstAdm());
+
             $form->handleRequest($request);
-            if($form->isSubmitted() && $form->isValid()){
-                $ms="EL Ejecutivo ".$admin->getNomAdm()." ".$admin->getApeAdm();
-                if($admin->getEstAdm()==1){
-                    $admin->setEstAdm(0);
-                    $ms.=" fue Deshabilitadao";
+            if($form->isSubmitted()){
+                if($form->isValid()){
+                    $ms="EL Ejecutivo ".$admin->getNomAdm()." ".$admin->getApeAdm();
+                    if($admin->getEstAdm()==1){
+                        $admin->setEstAdm(0);
+                        $ms.=" fue Deshabilitadao";
+                    }else{
+                        $admin->setEstAdm(1);
+                        $ms.="fue Habilitadao";
+                    }
+                    $em=$this->getDoctrine()->getManager();
+                    //$em->persist($admin);
+                    $em->flush();
+                    $this->addFlash('success',$ms);
+                    return $this->redirectToRoute('administradores_index');
                 }else{
-                    $admin->setEstAdm(1);
-                    $ms.="fue Habilitadao";
+                    dump($admin,$form);
+                    die();
                 }
-                $em=$this->getDoctrine()->getManager();
-                //$em->persist($admin);
-                $em->flush();
-                $this->addFlash('success',$ms);
-                return $this->redirectToRoute('administradores_index');
             }
             return $this->render("sa/admins.html.twig",array("Admins"=>$Admins,"form3"=>$form->createView()));
         }
@@ -195,16 +193,24 @@ class SAdminController extends Controller
 
 
     /**
-     * @Route("/sa/Mi_Perfil/{idUser}", name="miPerfilSa")
+     * @Route("/sa/Mi_Perfil", name="miPerfilSa")
      */
-    public function miPerfil(Request $request, $idUser){
-        //$this->getUser();
+    public function miPerfil(Request $request){
+        $adminUser=$this->getUser();
         $em=$this->getDoctrine()->getManager();
-        $adminUser=$em->find("AppBundle:Administrador", $idUser);
-        if(!$adminUser){
-            return $this->redirectToRoute('indexSAdmin');
-        }else{
-            $form=$this->createForm(AdministradorType::class, $adminUser);
+        //$adminUser=$em->find("AppBundle:Administrador", $idUser);
+            //$form=$this->createForm(AdministradorType::class, $adminUser);
+            $form=$this->createFormBuilder($adminUser)
+                    ->add('nomAdm',TextType::class,array('label'=>'Nombres','required'=>true))
+                    ->add('apeAdm',TextType::class,array('label'=>'Apellido','required'=>true))
+                    ->add('emAdm',EmailType::class,array('label'=>'Email Personal'))
+                    ->add('PasswordTemp',HiddenType::class)
+                    ->add('path',HiddenType::class,array('mapped'=>false))
+                    ->add('photoAdm',FileType::class,array('label'=>'Foto Personal','data_class' => null))
+                    ->add('useAdm',TextType::class,array('label'=>'Nombre de Usuario'))
+                    ->add('Guardar',SubmitType::class)
+                    ->getForm();
+            $form->get('PasswordTemp')->setData('pass');
             $form->get('path')->setData($adminUser->getPathPhotoAdm());
             $form->handleRequest($request);
             if($form->isSubmitted()){
@@ -215,16 +221,17 @@ class SAdminController extends Controller
                     $password=$this->get('security.password_encoder')
                         ->encodePassword($adminUser,$adminUser->getPasswordTemp());
                     $adminUser->setPassAdm($password);
+                    if(! $form->get('photoAdm')->isEmpty()) {
+                        //Subir la foto
+                        $img = $form['photoAdm']->getData();
+                        $ext = $img->guessExtension();
+                        $file_name = time() . "." . $ext;
 
-                    //Subir la foto
-                    $img=$form['photoAdm']->getData();
-                    $ext=$img->guessExtension();
-                    $file_name=time().".".$ext;
+                        //subir la foto al repositorio
+                        $img->move("AdminPerfil", $file_name);
 
-                    //subir la foto al repositorio
-                    $img->move("AdminPerfil",$file_name);
-
-                    $adminUser->setPhotoAdm($file_name);
+                        $adminUser->setPhotoAdm($file_name);
+                    }
 
                     $em->persist($adminUser);
                     $em->flush();
@@ -236,7 +243,7 @@ class SAdminController extends Controller
                 }
                 $this->addFlash($tms,$ms);
             }
-        }
+
         return $this->render("sa/miperfil.html.twig",array('Form'=>$form->createView()));
     }
 
