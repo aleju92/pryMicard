@@ -4,6 +4,15 @@
 {% block titulo %}Promociones{% endblock %}
 	{% block cuerpo %}
 	
+	{% for flash_message in app.session.flashBag.get('error') %}
+        <div class="flash-error alert alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ flash_message | upper }}
+        </div>
+    {% endfor %}
+    
 	<div class="menu">
     	<ul class="nav nav-pills">
     		{% for cate in categorias %}
@@ -12,7 +21,7 @@
     	</ul>
     </div>
     
-     {% include 'user/formProm.html.twig' %}
+     {% include 'user/formProm1.html.twig' %}
  
 	{#<div class="row1">
 	<h2><small>Estadisticas</small></h2>

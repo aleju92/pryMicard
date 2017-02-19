@@ -31,6 +31,26 @@ class UserController extends Controller
 	}
 	
 	/**
+	 * @Route("/usuario/promociones/detalle/{id}", name="det_prom")
+	 */
+	public function detAction(Request $request,$id)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$promos = $em->find('AppBundle:Promocion',$id); 
+		
+		
+		if ($promos==null){
+			$ms="La promocion con id=".$id." no EXISTE";
+			$this->addFlash('error',"$ms");
+			return $this->redirectToRoute("user_index");
+		}
+		
+		return $this->render('user/Detalle.html.twig',array('promos'=>$promos));
+	}
+	
+	
+	
+	/**
 	 * @Route("/usuario/promociones", options={"expose"=true}, name="prom_index")
 	 */
 	public function promAction(Request $request)

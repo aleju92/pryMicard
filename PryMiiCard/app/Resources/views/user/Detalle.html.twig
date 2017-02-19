@@ -1,0 +1,22 @@
+{% extends "::user.html.twig" %}
+{% block m1%}active {% endblock %}
+{% block titulo %}Detalle {{ promos.titProm }} {% endblock %}
+{% block cuerpo %}
+<div class="form-group col-xs-12 col-md-6">
+	<img src="{{ asset('images/perfil.jpg') }}" width="171px" height="180px"  alt="...">
+</div>
+<div class="col-xs-12 col-md-6">
+   	<h2>Descripcion</h2>
+   	<p>{{ promos.detProm }}</p>
+   	<p>Te proponemos aprovechar el gran poder viral de Facebook para promocionar tus vídeos en tu página de Facebook.
+   	Hay muchas formas de presentar un vídeo en las promociones de Easypromos y dependerá de los objetivos que te plantees, 
+   	pero en este post queremos darte algunas ideas para que veas de forma práctica cómo utilizar los vídeos para presentar 
+   	tus campañas y, al final, te damos una guía de cuál es el método recomendado para ti según tus objetivos. 
+   	</p>
+
+</div>
+
+<a class="btn btn-primary" href="{{ path('user_index') }}" role="button">Atras</a>
+
+{% endblock %}
+      		
