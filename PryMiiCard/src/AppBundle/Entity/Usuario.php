@@ -48,7 +48,6 @@ class Usuario implements UserInterface
      * Image file
      *
      * @var File
-     *
      * @Assert\File(
      *     maxSize = "5M",
      *     mimeTypes = {"image/jpeg", "image/gif", "image/png"},
@@ -438,6 +437,7 @@ class Usuario implements UserInterface
 	 * @see \Symfony\Component\Security\Core\User\UserInterface::getRoles()
 	 */
 	public function getRoles() {
+
 	    if($this->getEstado()==1)
 		    return array('ROLE_USER');
 	    else
@@ -489,5 +489,5 @@ class Usuario implements UserInterface
 	public function getPathFoto(){
 		return 'uploads/'.$this->getFoto();
 	}
-
+	
 }

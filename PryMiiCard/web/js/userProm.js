@@ -21,7 +21,7 @@ $(document).ready(function () {
                      ms+="</div>";
                      $('#mensaje').html(ms);*/
             	
-            		//$('#tablediv').html(data.userlist_html); // presento el mensaje
+            		$('#tablediv').html(data.promos_html); // presento el mensaje
                     console.log(data.promos_html);
                  //}
             },

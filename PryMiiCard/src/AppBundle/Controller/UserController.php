@@ -7,14 +7,15 @@ use AppBundle\Form\UsuarioType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+//use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\JsonResponse;
-/*use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+//use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;*/
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class UserController extends Controller 
 {
@@ -24,9 +25,30 @@ class UserController extends Controller
 	public function indexAction()
 	{	
 		$categorias=$this->catAll();
-		return $this->render('user/index.html.twig',array('categorias'=>$categorias));
+		$promos=$this->promAll();
+		return $this->render('user/index.html.twig',array('categorias'=>$categorias,'promos'=>$promos));
 		//return $this->render('user/index.html.twig');
 	}
+	
+	/**
+	 * @Route("/usuario/promociones/detalle/{id}", name="det_prom")
+	 */
+	public function detAction(Request $request,$id)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$promos = $em->find('AppBundle:Promocion',$id); 
+		
+		
+		if ($promos==null){
+			$ms="La promocion con id=".$id." no EXISTE";
+			$this->addFlash('error',"$ms");
+			return $this->redirectToRoute("user_index");
+		}
+		
+		return $this->render('user/Detalle.html.twig',array('promos'=>$promos));
+	}
+	
+	
 	
 	/**
 	 * @Route("/usuario/promociones", options={"expose"=true}, name="prom_index")
@@ -39,20 +61,17 @@ class UserController extends Controller
 			$categorias=$em->find("AppBundle:Categoria",$id);
 			
 			$promos = $em->getRepository('AppBundle:Promocion')->findBy(
-					array(
-							'catPromFk' => $categorias
-					)
-					);
-			
+					array('catPromFk' => $categorias));
+		
 			$em = $this->getDoctrine()->getManager();
 			$em->flush();
 			
 			//$categorias=$this->catAll();
-			$promos_html=$this->render('user/formProm.html.twig',array(
+			$promos_html=$this->render('user/formProm1.html.twig',array(
 	                'promos'=> $promos
 	            ))->getContent();
 			
-			return new JsonResponse(array('categorias_html' => $promos_html));
+			return new JsonResponse(array('promos_html' => $promos_html));
 		}else{
 			return $this->redirectToRoute('prom_index');
 		}
@@ -86,17 +105,19 @@ class UserController extends Controller
 				$user->setPassword($password);
 				$user->setEstado(1);
 				//----------------------
+				
 				//SUBIR ARCHIVO
-					// Recogemos el fichero
-					$img=$form['foto']->getData();
-					// Sacamos la extensión del fichero
-					$ext=$img->guessExtension();
-					// Le ponemos un nombre al fichero
-					$file_name=time().".".$ext;
-					// Guardamos el fichero en el directorio uploads que estará en el directorio /web del framework
-					$img->move("uploads", $file_name);
-					// Establecemos el nombre de fichero en el atributo de la entidad
-					$user->setFoto($file_name);
+				// Recogemos el fichero
+				$img=$form['foto']->getData();
+				// Sacamos la extensión del fichero
+				$ext=$img->guessExtension();
+				// Le ponemos un nombre al fichero
+				$file_name=time().".".$ext;
+				// Guardamos el fichero en el directorio uploads que estará en el directorio /web del framework
+				$img->move("uploads", $file_name);
+				// Establecemos el nombre de fichero en el atributo de la entidad
+				$user->setFoto($file_name);
+				
 				//-----------------------
 				$em=$this->getDoctrine()->getManager();
 				$em->persist($user);
@@ -122,50 +143,69 @@ class UserController extends Controller
 	
 	public function miperfilAction(Request $request){
 		$user=$this->getUser();
-		//if($user->getEstado()== 1){
-			$em=$this->getDoctrine()->getManager();
-			$form = $this->createForm(UsuarioType::class,$user);
+		$em=$this->getDoctrine()->getManager();
+		if($user->getEstado()== 1){
 			
+			$form = $this->createFormBuilder($user)
+			->add('nombre', TextType::class,array(
+					'required'=>true))
+					->add('apellido', TextType::class,array('required'=>true))
+					->add('fechanacim',DateType::class)
+					->add('path',HiddenType::class,array('mapped'=>false))
+					->add('foto',FileType::class, array('label'=>'Tu Foto','data_class' => null))
+					->add('cedula',TextType::class)
+					->add('email',EmailType::class,array('required'=>true))
+					->add('telefono',TextType::class)
+					->add('plainPassword',HiddenType::class)
+					->add('Modificar',SubmitType::class)
+					->getForm();
+						
+			
+			//$form = $this->createForm(UsuarioType::class,$user);
+			$form->get('plainPassword')->setData('pass');
 			$form->get('path')->setData($user->getPathFoto());
+					
 			$form->handleRequest($request);
-			$pass=$user->getPassword();
 			
 			if($form->isSubmitted()){
 				if($form->isValid()){
-					//$user=$form->getData();
-			
-					$user->setPassword($pass);
+					//encriptacion password
+					$password = $this->get('security.password_encoder')
+					->encodePassword($user, $user->getPlainPassword());
+					$user->setPassword($password);
+						
 					//Subir la foto
-					$img=$form['foto']->getData();
-					$ext=$img->guessExtension();
-					$file_name=time().".".$ext;
-						
-					//subir la foto al repositorio
-					$img->move("uploads",$file_name);
-						
-					$user->setFoto($file_name);
-								
+					if($form['foto']->getData() != null){
+						$img=$form['foto']->getData();
+						$ext=$img->guessExtension();
+						$file_name=time().".".$ext;
 					
-					$em->persist($user);
-					$em->flush();
+						//subir la foto al repositorio
+						$img->move("uploads",$file_name);
 					
+						$user->setFoto($file_name);
+						$em->persist($user);
+						$em->flush();
+					}else{
+						$ruta=$form->get('path')->getData();
+						$nombre=substr($ruta,8);
+						$user->setFoto($nombre);
+							
+						$em->persist($user);
+						$em->flush();
+					}
+					//return $this->redirectToRoute('user_perfil');
 					$ms="Sus datos han sido modificado correctamente";
 					$tms='success';
-					return $this->redirectToRoute('user_perfil');
-					
 				}else{
 					$ms="Error!!!, los datos son incorrectos ";
 					$tms='error';
 				}
-				
 				$this->addFlash($tms,$ms);
-			}		
-				return $this->render("user/miiperfil.html.twig",array("user"=>$user,
-						"form"=>$form->createView()));
-		/*}else{
-			throw new AccessDeniedException();
-		}*/
+			}	
 			
+			return $this->render("user/miiperfil.html.twig",array("user"=>$user,"form"=>$form->createView()));
+		}
 	}
 	
 	/**
@@ -213,6 +253,11 @@ class UserController extends Controller
 		$em=$this->getDoctrine()->getManager();
 		$categorias= $em->getRepository('AppBundle:Categoria')->findAll();
 		return $categorias;
+	}
+	private function promAll(){
+		$em=$this->getDoctrine()->getManager();
+		$prom= $em->getRepository('AppBundle:Promocion')->findAll();
+		return $prom;
 	}
 	
 	
