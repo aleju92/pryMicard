@@ -5,7 +5,22 @@
  */
 
 $(document).ready(function () {
-    $(document).on('click','#btnVet',function (e) {
+        $('#formV').submit(function (e) {
+            e.preventDefault();
+            $.ajax({
+                method:"POST",
+                url:Routing.generate('SaAdmPass'),
+                data:$('#formV').serialize(),
+                dataType:'json',
+                success: function (data) {
+                    console.log(data.form);
+                },
+                error: function () {
+
+                }
+            });
+        });
+ /*   $(document).on('click','#btnVet',function (e) {
         e.preventDefault();
         $.ajax({
             method:"POST",
@@ -38,7 +53,7 @@ $(document).ready(function () {
                 $('#mensaje').html(ms); // presento el mensaje
             }
         });
-    });
+    });*/
 
     $(document).on('click','#form_cambiar',function (e) {
         e.preventDefault();

@@ -101,7 +101,7 @@ class Administrador implements UserInterface
      * @ORM\OneToMany(targetEntity="Empresa", mappedBy="admiPromFk")
      */
     private $empresas;
-    
+
     /**
      * Get id
      *

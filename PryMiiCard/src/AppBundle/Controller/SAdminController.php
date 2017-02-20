@@ -212,6 +212,10 @@ class SAdminController extends Controller
                     ->getForm();
             $form->get('PasswordTemp')->setData('pass');
             $form->get('path')->setData($adminUser->getPathPhotoAdm());
+            $formV=$this->createFormBuilder($adminUser)
+                ->add('PasswordTemp',PasswordType::class)
+                ->add('Verificar',SubmitType::class)
+                ->getForm();
             $form->handleRequest($request);
             if($form->isSubmitted()){
                 if( $form->isValid()){
@@ -241,15 +245,36 @@ class SAdminController extends Controller
                     $ms="Error!!!, los datos son incorrectos ";
                     $tms='error';
                 }
-                $this->addFlash($tms,$ms);
+                 $this->addFlash($tms,$ms);
             }
 
-        return $this->render("sa/miperfil.html.twig",array('Form'=>$form->createView()));
+        return $this->render("sa/miperfil.html.twig",array('Form'=>$form->createView(),'FormV'=>$formV->createView()));
     }
+
+
 
     /**
      * @Route("/sa/MiiPerfil/PassWord", options={"expose"=true}, name="SaAdmPass")
      */
+    public function verificarPassword(Request $request){
+        if ($request->isXmlHttpRequest()){
+            $adminUser=$this->getUser();
+            $form=$this->createFormBuilder()
+                ->add('PasswordTemp')
+                ->getForm();
+            dump($request->request);
+
+            $form->handleRequest($request);
+            dump($form);
+            return new JsonResponse(array('form'=>$form->get('PasswordTemp')->getData(),'user'=>$adminUser->getId()));
+
+        }else{
+            $this->addFlash('error','Error!!,Accion no permitida');
+            return $this->redirectToRoute('miPerfilSa');
+        }
+
+    }
+    /*
     public function verificarPassword(Request $request){
         if ($request->isXmlHttpRequest()){
             $passText=$request->get('passText');
@@ -277,7 +302,7 @@ class SAdminController extends Controller
             return $this->redirectToRoute('miPerfilSa');
         }
 
-    }
+    }*/
     /**
      * @Route("/sa/MiiPerfil/PassWordEdit", options={"expose"=true}, name="SaAdmPassEdit")
      */
@@ -307,6 +332,8 @@ class SAdminController extends Controller
             return $this->redirectToRoute('miPerfilSa');
         }
     }
+
+
     private function AdminAll(){
         $em=$this->getDoctrine()->getManager();
         $Administadores= $em->getRepository('AppBundle:Administrador')->findAll();
