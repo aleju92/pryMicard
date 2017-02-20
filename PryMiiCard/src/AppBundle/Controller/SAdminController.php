@@ -205,13 +205,12 @@ class SAdminController extends Controller
                     ->add('apeAdm',TextType::class,array('label'=>'Apellido','required'=>true))
                     ->add('emAdm',EmailType::class,array('label'=>'Email Personal'))
                     ->add('PasswordTemp',HiddenType::class)
-                    ->add('path',HiddenType::class,array('mapped'=>false))
                     ->add('photoAdm',FileType::class,array('label'=>'Foto Personal','data_class' => null))
                     ->add('useAdm',TextType::class,array('label'=>'Nombre de Usuario'))
                     ->add('Guardar',SubmitType::class)
                     ->getForm();
             $form->get('PasswordTemp')->setData('pass');
-            $form->get('path')->setData($adminUser->getPathPhotoAdm());
+            $path=$adminUser->getPathPhotoAdm();
             $formV=$this->createFormBuilder($adminUser)
                 ->add('PasswordTemp',PasswordType::class)
                 ->add('Verificar',SubmitType::class)
@@ -236,6 +235,7 @@ class SAdminController extends Controller
                         $img->move("AdminPerfil", $file_name);
 
                         $adminUser->setPhotoAdm($file_name);
+                        $path=$adminUser->getPathPhotoAdm();
                     }
 
                     $em->persist($adminUser);
@@ -249,7 +249,7 @@ class SAdminController extends Controller
                  $this->addFlash($tms,$ms);
             }
 
-        return $this->render("sa/miperfil.html.twig",array('Form'=>$form->createView(),'FormV'=>$formV->createView()));
+        return $this->render("sa/miperfil.html.twig",array('Form'=>$form->createView(),'FormV'=>$formV->createView(),'pathfoto'=>$path));
     }
 
 
