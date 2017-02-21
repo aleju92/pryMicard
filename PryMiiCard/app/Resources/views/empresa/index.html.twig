@@ -1,85 +1,330 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Lista de Empresas Registradas</h1>
-    <div class="row">
-    <div class="col-md-2">
-        <ul class="nav nav-pills nav-stacked">
-          <li role="Empresas" class="active"><a href="#">Empresas</a></li>
-          <li role="Estadisticas"><a href="#">Estadisticas</a></li>
-          <li role="Solicitudes"><a href="#">Solicitudes</a></li>
-          <li role="Perfil"><a href="#">Perfil</a></li>
-        </ul>
-    </div>
-    <div class="col-md-10">
-    <table class="table table-hover">
-        <thead>
-            <tr style="background-color: ">
-                <th>Id</th>
-                <th>Empresa</th>
-                <th>Usuario</th>
-                <!-- <th>Password</th> -->
-                <th>Ruc</th>
-                <th>Telefono</th>
-                <th>Pagina Web</th>
-                <th>Logo</th>
-                <th>Solagan</th>
-                <th>Estado</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for empresa in empresas %}
-            <tr class="{% if empresa.estEmp == 1 %}
-                    active
-                    {% else %}
-                    Inactivo
-                    {% endif %}" >
-                <td><a href="{{ path('empresa_show', { 'id': empresa.id }) }}">{{ empresa.id }}</a></td>
-                <td>{{ empresa.nomEmp }}</td>
-                <td>{{ empresa.usuEmp }}</td>
-                <!-- <td>{{ empresa.pasEmp }}</td> -->
-                <td>{{ empresa.rucEmp }}</td>
-                <td>{{ empresa.tlfEmp }}</td>
-                <td>{{ empresa.webEmp }}</td>
-
-                <td><img style="max-width: 100px" class=" img-thumbnail" src="{{ empresa.logEmp }}"></td>
-                <td>{{ empresa.slgEmp }}</td>
-
-                <td>
-
-                    {% if empresa.estEmp == 1 %}
-                    Activo
-                    {% else %}
-                    Inactivo
-                    {% endif %}
-
-                </td>
-                <td>
-                    <a class="{% if empresa.estEmp == 1 %}
-                    btn btn-primary
-                    {% else %}
-                    btn btn-danger 
-                    {% endif %}" href="{{ path('empresa_show', { 'id': empresa.id }) }}">{% if empresa.estEmp == 1 %}
-                    Mostrar
-                    {% else %}
-                    ----------
-                    {% endif %}</a> 
-                    <a class="btn btn-primary" href="{{ path('empresa_edit', { 'id': empresa.id }) }}">Editar</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a class="btn btn-info" href="{{ path('empresa_new') }}">Crear nueva empresa</a>
+    
+    <div style="padding-left: 20px;" class="row " style="opacity: 0.8;">
+        <div class="col-md-12">
+        <h1>Administración de Empresas</h1>
+        <hr>
+        </div>
+        <div class="col-xs-1 col-md-3" > <!-- required for floating -->
+          <!-- Nav tabs -->
+          <center><img style="width: 100px" src="http://icons.iconarchive.com/icons/icons8/ios7/512/Users-Administrator-icon.png"></center>
+          <ul style="width: 300px" class="nav nav-pills nav-stacked">
+              <li class="active"><a data-toggle="tab" href="#empresas"><i class="fa fa-binoculars" aria-hidden="true"></i> Empresas</a></li>
+              <li><a  data-toggle="tab" href="#activos" > <i class="fa fa-check-circle-o" aria-hidden="true"></i> Activos</a></li>
+              <li><a  data-toggle="tab" href="#inactivos"><i class="fa fa-times" aria-hidden="true"></i> Inactivos</a></li>
+              <li><a  data-toggle="tab" href="#solicitudes"> <i class="fa fa-hourglass-o" aria-hidden="true"></i>  Solicitudes</a></li>
+              <li>
+            <a class="" href="{{ path('empresa_new') }}"> <i class="fa fa-plus-square-o" aria-hidden="true"></i> Crear nueva empresa</a>
         </li>
-    </ul>
+            </ul>
+        </div>
 
+        <div class="col-xs-9">
+
+            <div class="tab-content">
+              <div id="empresas" class="tab-pane fade in active">
+                <h3>Todas las Empresas</h3>
+                    <table class="table table-hover table-condensed">
+                    <thead>
+                        <tr style="background-color: ">
+                            <th>Id</th>
+                            <th>Empresa</th>
+                            <th>Usuario</th>
+                            <th>Ruc</th>
+                            <th>Telefono</th>
+                            <!-- <th>Pagina Web</th> -->
+                            <th>Logo</th>
+                            <!-- <th>Solagan</th> -->
+                            <th>Estado</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for empresa in empresas %}
+
+                    {% if empresa.estEmp >0 %}
+
+                        <tr class="{% if empresa.estEmp == 1 %}
+                                active
+                                {% else %}
+                                Inactivo
+                                {% endif %}" >
+                            <td><a href="{{ path('empresa_show', { 'id': empresa.id }) }}">{{ empresa.id }}</a></td>
+                            <td>{{ empresa.nomEmp }}</td>
+                            <td>{{ empresa.usuEmp }}</td>
+                            <!-- <td>{{ empresa.pasEmp }}</td> -->
+                            <td>{{ empresa.rucEmp }}</td>
+                            <td>{{ empresa.tlfEmp }}</td>
+                            <!-- <td>{{ empresa.webEmp }}</td> -->
+
+                            <td><img style="max-width: 100px; max-height: 50px;" class=" img-thumbnail" src="{{ empresa.logEmp }}"></td>
+                            <!-- <td>{{ empresa.slgEmp }}</td> -->
+
+                            <td>
+
+                                {% if empresa.estEmp == 1 %}
+                                Activo
+                                {% endif %}
+                                {% if empresa.estEmp == 2 %}
+                                Inactivo
+                                {% endif %}
+                                {% if empresa.estEmp == 0 %}
+                                Solicitante
+                                {% else %}
+                                 
+                                {% endif %}
+
+                            </td>
+                            <td>
+                                <a class="{% if empresa.estEmp == 1 %}
+                                btn btn-primary
+                                {% else %}
+                                btn btn-danger 
+                                {% endif %}" href="{{ path('empresa_show', { 'id': empresa.id }) }}">{% if empresa.estEmp == 1 %}
+                                Mostrar
+                                {% else %}
+                                ----------
+                                {% endif %}</a> 
+                                <a class="btn btn-success" href="{{ path('empresa_edit', { 'id': empresa.id }) }}">Editar</a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+              </div>
+              <div id="activos" class="tab-pane fade">
+                <h3>Activas</h3>
+                <table class="table table-hover">
+                    <thead>
+                        <tr style="background-color: ">
+                            <th>Id</th>
+                            <th>Empresa</th>
+                            <th>Usuario</th>
+                            <th>Ruc</th>
+                            <th>Telefono</th>
+                            <!-- <th>Pagina Web</th> -->
+                            <th>Logo</th>
+                            <!-- <th>Solagan</th> -->
+                            <th>Estado</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for empresa in empresas %}
+
+                    {% if empresa.estEmp ==1 %}
+
+                        <tr class="{% if empresa.estEmp == 1 %}
+                                active
+                                {% else %}
+                                Inactivo
+                                {% endif %}" >
+                            <td><a href="{{ path('empresa_show', { 'id': empresa.id }) }}">{{ empresa.id }}</a></td>
+                            <td>{{ empresa.nomEmp }}</td>
+                            <td>{{ empresa.usuEmp }}</td>
+                            <!-- <td>{{ empresa.pasEmp }}</td> -->
+                            <td>{{ empresa.rucEmp }}</td>
+                            <td>{{ empresa.tlfEmp }}</td>
+                            <!-- <td>{{ empresa.webEmp }}</td> -->
+
+                            <td><img style="max-width: 100px; max-height: 50px;" class=" img-thumbnail" src="{{ empresa.logEmp }}"></td>
+                            <!-- <td>{{ empresa.slgEmp }}</td> -->
+
+                            <td>
+
+                                {% if empresa.estEmp == 1 %}
+                                Activo
+                                {% endif %}
+                                {% if empresa.estEmp == 2 %}
+                                Inactivo
+                                {% endif %}
+                                {% if empresa.estEmp == 0 %}
+                                Solicitante
+                                {% else %}
+                                 
+                                {% endif %}
+
+                            </td>
+                            <td>
+                                <a class="{% if empresa.estEmp == 1 %}
+                                btn btn-primary
+                                {% else %}
+                                btn btn-danger 
+                                {% endif %}" href="{{ path('empresa_show', { 'id': empresa.id }) }}">{% if empresa.estEmp == 1 %}
+                                Mostrar
+                                {% else %}
+                                ----------
+                                {% endif %}</a> 
+                                <a class="btn btn-success" href="{{ path('empresa_edit', { 'id': empresa.id }) }}">Editar</a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+              </div>
+               <div id="inactivos" class="tab-pane fade">
+                <h3>Inactivas</h3>
+                <table class="table table-hover">
+                    <thead>
+                        <tr style="background-color: ">
+                            <th>Id</th>
+                            <th>Empresa</th>
+                            <th>Usuario</th>
+                            <th>Ruc</th>
+                            <th>Telefono</th>
+                            <!-- <th>Pagina Web</th> -->
+                            <th>Logo</th>
+                            <!-- <th>Solagan</th> -->
+                            <th>Estado</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for empresa in empresas %}
+
+                    {% if empresa.estEmp ==2 %}
+
+                        <tr class="{% if empresa.estEmp == 1 %}
+                                active
+                                {% else %}
+                                Inactivo
+                                {% endif %}" >
+                            <td><a href="{{ path('empresa_show', { 'id': empresa.id }) }}">{{ empresa.id }}</a></td>
+                            <td>{{ empresa.nomEmp }}</td>
+                            <td>{{ empresa.usuEmp }}</td>
+                            <!-- <td>{{ empresa.pasEmp }}</td> -->
+                            <td>{{ empresa.rucEmp }}</td>
+                            <td>{{ empresa.tlfEmp }}</td>
+                            <!-- <td>{{ empresa.webEmp }}</td> -->
+
+                            <td><img style="max-width: 100px; max-height: 50px;" class=" img-thumbnail" src="{{ empresa.logEmp }}"></td>
+                            <!-- <td>{{ empresa.slgEmp }}</td> -->
+
+                            <td>
+
+                                {% if empresa.estEmp == 1 %}
+                                Activo
+                                {% endif %}
+                                {% if empresa.estEmp == 2 %}
+                                Inactivo
+                                {% endif %}
+                                {% if empresa.estEmp == 0 %}
+                                Solicitante
+                                {% else %}
+                                 
+                                {% endif %}
+
+                            </td>
+                            <td>
+                                <a class="{% if empresa.estEmp == 1 %}
+                                btn btn-primary
+                                {% else %}
+                                btn btn-danger 
+                                {% endif %}" href="{{ path('empresa_show', { 'id': empresa.id }) }}">{% if empresa.estEmp == 1 %}
+                                Mostrar
+                                {% else %}
+                                ----------
+                                {% endif %}</a> 
+                                <a class="btn btn-success" href="{{ path('empresa_edit', { 'id': empresa.id }) }}">Editar</a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+              </div>
+              <div id="solicitudes" class="tab-pane fade">
+                <h3>Solicitudes</h3>
+                    <table class="table table-hover">
+                    <thead>
+                        <tr style="background-color: ">
+                            <th>Id</th>
+                            <th>Empresa</th>
+                            <th>Usuario</th>
+                            <th>Ruc</th>
+                            <th>Telefono</th>
+                            <!-- <th>Pagina Web</th> -->
+                            <th>Logo</th>
+                            <!-- <th>Solagan</th> -->
+                            <th>Estado</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for empresa in empresas %}
+
+                    {% if empresa.estEmp ==null or empresa.estEmp ==0 %}
+
+                        <tr class="{% if empresa.estEmp == 1 %}
+                                active
+                                {% else %}
+                                Inactivo
+                                {% endif %}" >
+                            <td><a href="{{ path('empresa_show', { 'id': empresa.id }) }}">{{ empresa.id }}</a></td>
+                            <td>{{ empresa.nomEmp }}</td>
+                            <td>{{ empresa.usuEmp }}</td>
+                            <!-- <td>{{ empresa.pasEmp }}</td> -->
+                            <td>{{ empresa.rucEmp }}</td>
+                            <td>{{ empresa.tlfEmp }}</td>
+                            <!-- <td>{{ empresa.webEmp }}</td> -->
+
+                            <td><img style="max-width: 100px; max-height: 50px;"  class=" img-thumbnail" src="{{ empresa.logEmp }}"></td>
+                            <!-- <td>{{ empresa.slgEmp }}</td> -->
+
+                            <td>
+
+                                {% if empresa.estEmp == 1 %}
+                                Activo
+                                {% endif %}
+                                {% if empresa.estEmp == 2 %}
+                                Inactivo
+                                {% endif %}
+                                {% if empresa.estEmp == 0 %}
+                                Solicitante
+                                {% else %}
+                                 
+                                {% endif %}
+
+                            </td>
+                            <td>
+                                <a class="{% if empresa.estEmp == 1 %}
+                                btn btn-primary
+                                {% else %}
+                                btn btn-danger 
+                                {% endif %}" href="{{ path('empresa_show', { 'id': empresa.id }) }}">{% if empresa.estEmp == 1 %}
+                                Mostrar
+                                {% else %}
+                                ----------
+                                {% endif %}</a> 
+                                <a class="btn btn-primary" href="{{ path('empresa_edit', { 'id': empresa.id }) }}">Editar</a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+              </div>
+            </div>
+
+            
+    </div>
+    <div class="row">
+    <div class="col-md-10">
+    
+    </div>
     </div>
     </div>
 {% endblock %}

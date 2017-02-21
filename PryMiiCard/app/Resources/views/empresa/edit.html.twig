@@ -1,24 +1,23 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Editar Empresa</h1>
+    <center>
+    <h1 class="jumbotron" style="background-color: blue; opacity: 0.5; color: #fff">Editar  Empresa</h1>
     <div style="width: 40%;">
     {{ form_start(edit_form) }}
         {{ form_widget(edit_form) }}
-        <input class="btn btn-primary" type="submit" value="Guardar" />
+        <br>
+        <input style="width: 300px" class="btn btn-primary" type="submit" value="Guardar" />
     {{ form_end(edit_form) }}
     </div>
     <br>
-    <ul>
-        <li>
-            <a class="btn btn-default" href="{{ path('empresa_index') }}">Back to the list</a>
-        </li>
+    
+            <a style="width: 300px" class="btn btn-success" href="{{ path('empresa_index') }}">Regresar a la lista</a>
+ 
         <br>
-        <li>
-        
+            <br>
             {{ form_start(delete_form) }}
-                <input class="btn btn-danger" type="submit" value="Borrar">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+                <input style="width: 300px" class="btn btn-danger" type="submit" value="Borrar">
+            {{ form_end(delete_form) }}<br><br>
+    </center>
 {% endblock %}

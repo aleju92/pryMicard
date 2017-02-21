@@ -25,34 +25,22 @@ class Usuario implements UserInterface
 
     /**
      * @var string
-     * @Assert\NotBlank(message="Campo Nombre es requerido")
-     * @Assert\Length(
-     *      min = 2,
-     *      max = 50,
-     *      minMessage = "EL nombre debe ser mayor {{ limit }} caracteres",
-     *      maxMessage = "El nombre debe ser menor a {{ limit }} caracteres"
-     * )
+     * @Assert\NotBlank(message="*Campo Nombre es requerido")
      * @ORM\Column(name="nombre", type="string", length=50)
      */
     private $nombre;
 
     /**
      * @var string
-     * @Assert\NotBlank(message="Campo Apellido es requerido")
-     * @Assert\Length(
-     *      min = 2,
-     *      max = 50,
-     *      minMessage = "El apellido debe ser mayor {{ limit }} caracteres",
-     *      maxMessage = "El apellido debe ser menor a {{ limit }} caracteres"
-     * )
+     * @Assert\NotBlank(message="*Campo Apellido es requerido")
      * @ORM\Column(name="apellido", type="string", length=50)
      */
     private $apellido;
     
     /**
      * @var \Date
-     * @Assert\NotBlank(message="Campo Fecha es requerido")
-     * @ORM\Column(name="fechanacim", type="date", nullable=false)
+     * @Assert\NotBlank(message="*Campo Fecha es requerido")
+     * @ORM\Column(name="fechanacim", type="date", nullable=true)
      */
     private $fechanacim;
 
@@ -72,69 +60,44 @@ class Usuario implements UserInterface
     
     /**
      * @var string
-     * @Assert\Length(
-     *      min = 10,
-     *      max = 10,
-     *      minMessage = "La cedula debe ser mayor {{ limit }} caracteres",
-     *      maxMessage = "La cedula deber ser menor a {{ limit }} caracteres"
-     * )
-     * @ORM\Column(name="cedula", type="string", length=10, unique=true, nullable=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(max=10)
+     * @ORM\Column(name="cedula", type="string", length=10, unique=true)
      */
     private $cedula;
 
     /**
      * @var string
-     * @Assert\NotBlank(message="Campo Email es requerido")
-     *@Assert\Email(
-     *     message = "Campo Email '{{ value }}' no es valido")
-     * @Assert\Length(
-     *      min = 10,
-     *      max = 50,
-     *      minMessage = "El Email debe ser mayor {{ limit }} caracteres",
-     *      maxMessage = "El email deber ser menor a {{ limit }} caracteres"
-     * )
+     * @Assert\NotBlank()
      * @ORM\Column(name="email", type="string", length=100, unique=true)
      */
     private $email;
 
     /**
      * @var string
-     * @Assert\Length(
-     *      min = 6,
-     *      max = 10,
-     *      minMessage = "El telefono debe ser mayor {{ limit }} caracteres",
-     *      maxMessage = "El telefono deber ser menor a {{ limit }} caracteres"
-     * )
-     * @ORM\Column(name="telefono", type="string", nullable=true)
+     * @Assert\Length(max=10)
+     * @ORM\Column(name="telefono", type="string")
      */
     private $telefono;
 
     /**
      * @var string
-     *@Assert\NotBlank(message="Campo Nombre de usuario es requerido")
-     *@Assert\Length(
-     *      min = 10,
-     *      max = 50,
-     *      minMessage = "El Nombre de usuario debe ser mayor {{ limit }} caracteres",
-     *      maxMessage = "El Nombre de usuario  debe ser menor a {{ limit }} caracteres"
-     * )
+     *
      * @ORM\Column(name="username", type="string", length=50, unique=true)
      */
     private $username;
     
 	/**
      * @var string
-     * @Assert\NotBlank(message="Campo Contraseña es requerido")
-     * @Assert\Length(
-     *      min = 8,
-     *      max = 12,
-     *      minMessage = "La contraseña debe ser mayor {{ limit }} caracteres",
-     *      maxMessage = "La contraseña debe ser menor a {{ limit }} caracteres")
+     *
+     * @Assert\NotBlank()
+     * @Assert\Length(max=4096)
      */
     private $plainPassword;
 
     /**
      * @var string
+     *
      * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;

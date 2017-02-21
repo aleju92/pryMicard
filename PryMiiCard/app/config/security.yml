@@ -52,7 +52,6 @@ security:
             logout:
                 path:   user_logout
                 target: /
-         
     access_control:
        - {path: ^/registrate, roles: IS_AUTHENTICATED_ANONYMOUSLY}
        - {path: ^/usuario/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}

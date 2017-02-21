@@ -16,7 +16,6 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use AppBundle\Entity\Reserva;
 
 class UserController extends Controller 
 {
@@ -48,7 +47,9 @@ class UserController extends Controller
 		
 		return $this->render('user/Detalle.html.twig',array('promos'=>$promos));
 	}
-
+	
+	
+	
 	/**
 	 * @Route("/usuario/promociones", options={"expose"=true}, name="prom_index")
 	 */
@@ -76,36 +77,14 @@ class UserController extends Controller
 		}
 	}
 	
-	/*/**
-	 * @Route("/usuario/reservas", options={"expose"=true}, name="reserv_us")
+	
+	
+	/**
+	 * @Route("/usuario/logout", name="user_logout")
 	 */
-	/*public function resAction(Request $request)
-	{
-		if ($request->isXMLHttpRequest()){
-			$user=$this->getUser();
-			$id = $request->get($user);
-			$em = $this->getDoctrine()->getManager();
-			$reserv=$em->find("AppBundle:Reserva",$id);
-			dump($reserv);
-			die();
-			$promos = $em->getRepository('AppBundle:Promocion')->findBy(
-					array('usuResFk' => $reserv));
-			dump($promos);
-			die();
-			
-			$em = $this->getDoctrine()->getManager();
-			$em->flush();
-				
-			//$categorias=$this->catAll();
-			$promos_html=$this->render('user/formReserv.html.twig',array(
-					'promos'=> $promos
-			))->getContent();
-				
-			return new JsonResponse(array('promos_html' => $promos_html));
-		}else{
-			return $this->redirectToRoute('reserv_us');
-		}
-	}*/
+	public function logutAction(){
+	
+	}
 	
 	/**
 	 * @Route("/registrate", name="user_register")
@@ -128,19 +107,16 @@ class UserController extends Controller
 				//----------------------
 				
 				//SUBIR ARCHIVO
-				if($form['foto']->getData() !=null){
-					// Recogemos el fichero
-					$img=$form['foto']->getData();
-					// Sacamos la extensión del fichero
-					$ext=$img->guessExtension();
-					// Le ponemos un nombre al fichero
-					$file_name=time().".".$ext;
-					// Guardamos el fichero en el directorio uploads que estará en el directorio /web del framework
-					$img->move("uploads", $file_name);
-					// Establecemos el nombre de fichero en el atributo de la entidad
-					$user->setFoto($file_name);
-				}
-				//$user->setFoto($file_name);
+				// Recogemos el fichero
+				$img=$form['foto']->getData();
+				// Sacamos la extensión del fichero
+				$ext=$img->guessExtension();
+				// Le ponemos un nombre al fichero
+				$file_name=time().".".$ext;
+				// Guardamos el fichero en el directorio uploads que estará en el directorio /web del framework
+				$img->move("uploads", $file_name);
+				// Establecemos el nombre de fichero en el atributo de la entidad
+				$user->setFoto($file_name);
 				
 				//-----------------------
 				$em=$this->getDoctrine()->getManager();
@@ -186,27 +162,39 @@ class UserController extends Controller
 						
 			
 			//$form = $this->createForm(UsuarioType::class,$user);
-			$form->get('plainPassword')->setData('password0');
-			$path=$user->getPathFoto();				
+			$form->get('plainPassword')->setData('pass');
+			$form->get('path')->setData($user->getPathFoto());
+					
 			$form->handleRequest($request);
 			
 			if($form->isSubmitted()){
 				if($form->isValid()){
-					$user=$form->getData();	
+					//encriptacion password
+					$password = $this->get('security.password_encoder')
+					->encodePassword($user, $user->getPlainPassword());
+					$user->setPassword($password);
+						
 					//Subir la foto
-					if(! $form->get('foto')->isEmpty()) {
+					if($form['foto']->getData() != null){
 						$img=$form['foto']->getData();
 						$ext=$img->guessExtension();
 						$file_name=time().".".$ext;
-							
+					
 						//subir la foto al repositorio
 						$img->move("uploads",$file_name);
-							
+					
 						$user->setFoto($file_name);
-						$path=$user->getPathFoto();
+						$em->persist($user);
+						$em->flush();
+					}else{
+						$ruta=$form->get('path')->getData();
+						$nombre=substr($ruta,8);
+						$user->setFoto($nombre);
+							
+						$em->persist($user);
+						$em->flush();
 					}
-					$em->persist($user);
-					$em->flush();
+					//return $this->redirectToRoute('user_perfil');
 					$ms="Sus datos han sido modificado correctamente";
 					$tms='success';
 				}else{
@@ -214,13 +202,10 @@ class UserController extends Controller
 					$tms='error';
 				}
 				$this->addFlash($tms,$ms);
-			}
-			return $this->render("user/miiperfil.html.twig",array("form"=>$form->createView(),'path'=>$path));
+			}	
 			
-		}else{
-			return $this->redirectToRoute('user_logout');
+			return $this->render("user/miiperfil.html.twig",array("user"=>$user,"form"=>$form->createView()));
 		}
-		
 	}
 	
 	/**
@@ -228,12 +213,15 @@ class UserController extends Controller
 	 */
 	
 	public function micardAction(){
-		
-			$promos=$this->promAll();
-			$reserv=$this->resAll();
-			return $this->render('user/miicard.html.twig',array("promos"=>$promos,'reserv'=>$reserv));
-		
+		//$user=$this->getUser();
+		//if($user->getEstado()== 1){
+			return $this->render('user/miicard.html.twig',array("menssaje"=>''));
+		/*}else{
+			throw new AccessDeniedException();
+		}*/
 	}
+	
+	
 	
 	/**
 	 * @Route("/usuario/miiperfil/down", name="user_delete")
@@ -241,24 +229,20 @@ class UserController extends Controller
 	public function userdeleteAction(Request $request)
 	{	
 		$user=$this->getUser();
-		if($user->getEstado()==1){
-			$user->setEstado(0);
-			$em=$this->getDoctrine()->getManager();
-			$em->flush();
-			return $this->redirectToRoute('user_logout');
-		}else{
-			$this->addFlash('error', 'Accion no permitida');
-		}
-		return $this->render('user/miiperfil.html.twig');
+			if($user->getEstado()==1){
+				$user->setEstado(0);
+				$ms='fue Desabilitado';
+				$tms='error';
+				
+				$em=$this->getDoctrine()->getManager();
+				$em->flush();
+				$this->addFlash($tms,$ms);
+				return $this->redirectToRoute("user_perfil");
+			}else{
+				$this->addFlash('error', 'Accion no permitida');
+				return $this->redirectToRoute("user_perfil");
+			}
 	}
-	
-	/**
-	 * @Route("/usuario/logout", name="user_logout")
-	 */
-	public function logutAction(){
-	
-	}
-	
 	
 	private function usAll(){
 		$em=$this->getDoctrine()->getManager();
@@ -275,11 +259,6 @@ class UserController extends Controller
 		$prom= $em->getRepository('AppBundle:Promocion')->findAll();
 		return $prom;
 	}
-	private function resAll(){
-		//$user=$this->getUser();
-		$em=$this->getDoctrine()->getManager();
-		$res= $em->getRepository('AppBundle:Reserva')->findAll();
-		return $res;
-	}
+	
 	
 }

@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Form\EmpresaType;
+use AppBundle\Form\SolicitudType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -16,9 +17,8 @@ class EmpresasController extends Controller
 
     public function empAction(Request $request)
     {
-        $form = $this->createForm(EmpresaType::class);
-        $form->handleRequest($request);
-        return $this->render("emp/regempresa.html.twig",array("form"=>$form->createView()));
+        
+        return $this->render("emp/regempresa.html.twig");
     }
 
     /**
@@ -34,9 +34,33 @@ class EmpresasController extends Controller
      * @Route("/emp/solicitud", name="solicitudemp")
      */
 
-    public function soliAction()
+    public function soliAction(Request $request)
     {
-        return $this->render('emp/solicitud.html.twig');
+        $empresa = new Empresa();
+        $form = $this->createForm('AppBundle\Form\SolicitudType', $empresa);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($empresa);
+            $em->flush($empresa);
+
+
+             $this->get('session')->getFlashBag()->add(
+                    'mensaje',
+                    'Solicitud enviada correctamente este atento a una llamada desde nuestra central ' 
+                    );
+
+             return $this->redirectToRoute('solicitudemp');
+        }
+        
+
+
+        return $this->render('emp/solicitud.html.twig', array(
+            'empresa' => $empresa,
+            'form' => $form->createView(),
+        ));
     }
 
     /**

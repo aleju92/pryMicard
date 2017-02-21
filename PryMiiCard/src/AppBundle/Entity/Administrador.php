@@ -25,12 +25,6 @@ class Administrador implements UserInterface
     /**
      * @var string
      * @Assert\NotBlank(message="*Campo Nombre es requerido")
-     * @Assert\Length(
-     *      min = 2,
-     *      max = 50,
-     *      minMessage = "* EL nombre debe ser mayor {{ limit }} caracteres",
-     *      maxMessage = "* El nombre debe ser menor a {{ limit }} caracteres"
-     * )
      * @ORM\Column(name="nomAdm", type="string", length=50)
      */
     private $nomAdm;
@@ -38,12 +32,6 @@ class Administrador implements UserInterface
     /**
      * @var string
      * @Assert\NotBlank(message="*Campo Apellido es requerido")
-     * @Assert\Length(
-     *      min = 2,
-     *      max = 50,
-     *      minMessage = "* El apellido debe ser mayor {{ limit }} caracteres",
-     *      maxMessage = "* El apellido debe ser menor a {{ limit }} caracteres"
-     * )
      * @ORM\Column(name="apeAdm", type="string", length=50)
      */
     private $apeAdm;
@@ -51,13 +39,7 @@ class Administrador implements UserInterface
     /**
      * @var string
      *@Assert\Email(
-     *     message = "EL Email '{{ value }}' no es valido")
-     * @Assert\Length(
-     *      min = 10,
-     *      max = 50,
-     *      minMessage = "* El Email debe ser mayor {{ limit }} caracteres",
-     *      maxMessage = "* El email deber ser menor a {{ limit }} caracteres"
-     * )
+     *     message = "El Email '{{ value }}' no es valido")
      * @ORM\Column(name="emAdm", type="string", length=100, nullable=true)
      */
     private $emAdm;
@@ -80,13 +62,8 @@ class Administrador implements UserInterface
 
     /**
      * @var string
-     *@Assert\NotBlank(message="*Campo Nombre de usuario es requerido")
-     *@Assert\Length(
-     *      min = 10,
-     *      max = 50,
-     *      minMessage = "* El Nombre de usuario debe ser mayor {{ limit }} caracteres",
-     *      maxMessage = "* El Nombre de usuario  debe ser menor a {{ limit }} caracteres"
-     * )
+     *@Assert\NotBlank()
+     *
      * @ORM\Column(name="useAdm", type="string", length=100, unique=true)
      */
     private $useAdm;
@@ -95,11 +72,7 @@ class Administrador implements UserInterface
      * @var string
      *
      * @Assert\NotBlank()
-     * @Assert\Length(
-     *      min = 8,
-     *      max = 12,
-     *      minMessage = "* La contraseña debe ser mayor {{ limit }} caracteres",
-     *      maxMessage = "* La contraseña debe ser menor a {{ limit }} caracteres")
+     * @Assert\Length(max=4096)
      */
     private $PasswordTemp;
 
