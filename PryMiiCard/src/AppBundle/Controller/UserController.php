@@ -76,10 +76,10 @@ class UserController extends Controller
 		}
 	}
 	
-	/**
+	/*/**
 	 * @Route("/usuario/reservas", options={"expose"=true}, name="reserv_us")
 	 */
-	public function resAction(Request $request)
+	/*public function resAction(Request $request)
 	{
 		if ($request->isXMLHttpRequest()){
 			$user=$this->getUser();
@@ -105,16 +105,7 @@ class UserController extends Controller
 		}else{
 			return $this->redirectToRoute('reserv_us');
 		}
-	}
-	
-	
-	
-	/**
-	 * @Route("/usuario/logout", name="user_logout")
-	 */
-	public function logutAction(){
-	
-	}
+	}*/
 	
 	/**
 	 * @Route("/registrate", name="user_register")
@@ -137,16 +128,19 @@ class UserController extends Controller
 				//----------------------
 				
 				//SUBIR ARCHIVO
-				// Recogemos el fichero
-				$img=$form['foto']->getData();
-				// Sacamos la extensión del fichero
-				$ext=$img->guessExtension();
-				// Le ponemos un nombre al fichero
-				$file_name=time().".".$ext;
-				// Guardamos el fichero en el directorio uploads que estará en el directorio /web del framework
-				$img->move("uploads", $file_name);
-				// Establecemos el nombre de fichero en el atributo de la entidad
-				$user->setFoto($file_name);
+				if($form['foto']->getData() !=null){
+					// Recogemos el fichero
+					$img=$form['foto']->getData();
+					// Sacamos la extensión del fichero
+					$ext=$img->guessExtension();
+					// Le ponemos un nombre al fichero
+					$file_name=time().".".$ext;
+					// Guardamos el fichero en el directorio uploads que estará en el directorio /web del framework
+					$img->move("uploads", $file_name);
+					// Establecemos el nombre de fichero en el atributo de la entidad
+					$user->setFoto($file_name);
+				}
+				//$user->setFoto($file_name);
 				
 				//-----------------------
 				$em=$this->getDoctrine()->getManager();
@@ -192,39 +186,27 @@ class UserController extends Controller
 						
 			
 			//$form = $this->createForm(UsuarioType::class,$user);
-			$form->get('plainPassword')->setData('pass');
-			$form->get('path')->setData($user->getPathFoto());
-					
+			$form->get('plainPassword')->setData('password0');
+			$path=$user->getPathFoto();				
 			$form->handleRequest($request);
 			
 			if($form->isSubmitted()){
 				if($form->isValid()){
-					//encriptacion password
-					$password = $this->get('security.password_encoder')
-					->encodePassword($user, $user->getPlainPassword());
-					$user->setPassword($password);
-						
+					$user=$form->getData();	
 					//Subir la foto
-					if($form['foto']->getData() != null){
+					if(! $form->get('foto')->isEmpty()) {
 						$img=$form['foto']->getData();
 						$ext=$img->guessExtension();
 						$file_name=time().".".$ext;
-					
+							
 						//subir la foto al repositorio
 						$img->move("uploads",$file_name);
-					
-						$user->setFoto($file_name);
-						$em->persist($user);
-						$em->flush();
-					}else{
-						$ruta=$form->get('path')->getData();
-						$nombre=substr($ruta,8);
-						$user->setFoto($nombre);
 							
-						$em->persist($user);
-						$em->flush();
+						$user->setFoto($file_name);
+						$path=$user->getPathFoto();
 					}
-					//return $this->redirectToRoute('user_perfil');
+					$em->persist($user);
+					$em->flush();
 					$ms="Sus datos han sido modificado correctamente";
 					$tms='success';
 				}else{
@@ -233,7 +215,7 @@ class UserController extends Controller
 				}
 				$this->addFlash($tms,$ms);
 			}
-			return $this->render("user/miiperfil.html.twig",array("user"=>$user,"form"=>$form->createView()));
+			return $this->render("user/miiperfil.html.twig",array("form"=>$form->createView(),'path'=>$path));
 			
 		}else{
 			return $this->redirectToRoute('user_logout');
@@ -269,6 +251,14 @@ class UserController extends Controller
 		}
 		return $this->render('user/miiperfil.html.twig');
 	}
+	
+	/**
+	 * @Route("/usuario/logout", name="user_logout")
+	 */
+	public function logutAction(){
+	
+	}
+	
 	
 	private function usAll(){
 		$em=$this->getDoctrine()->getManager();
