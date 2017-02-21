@@ -75,18 +75,18 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                     <div class="modal-header">
-                        <a class="close" href="{{ path('catgegoria_index') }}"><span aria-hidden="true">&times;</span></a>
+                        <a class="close" href="{{ path('listpromo') }}"><span aria-hidden="true">&times;</span></a>
                         <h4 class="modal-title" id="FormNuevo">Detalle Promocion</h4>
                     </div>
                     {% if form2 is defined %}
                         {{ form_start(form2) }}
                         {% form_theme form2 'bootstrap_3_layout.html.twig' %}
                         <div class="modal-body">
-                            {{ form_row(form.titProm) }}
-                            {{ form_row(form.detProm) }}
+                            {{ form_row(form2.titProm) }}
+                            {{ form_row(form2.detProm) }}
                         </div>
                         <div class="modal-footer">
-                            {{ form_row(form2.Modificar,{ 'attr': {'class': 'btn btn-primary'} }) }}
+                            {{ form_row(form2.registrar,{ 'attr': {'class': 'btn btn-primary','label':'Modificar'} }) }}
                         </div>
                         {{ form_end(form2) }}
                     {% endif %}
@@ -99,14 +99,14 @@
         {% form_theme form3 'bootstrap_3_layout.html.twig' %}
     <div class="modal fade" id="FormDelet" tabindex="-1" role="dialog" aria-labelledby="FormDelet" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" role="document">
-            {% if form3.estado.vars.value  == '1' %}
+            {% if form3.estProm.vars.value  == '1' %}
             <div class="modal-content alert alert-danger">
             {% else %}
                 <div class="modal-content alert alert-success">
              {% endif %}
                 <div class="modal-header">
-                    <a class="close" href="{{ path('catgegoria_index') }}"><span aria-hidden="true">&times;</span></a>
-                    {% if form3.estado.vars.value  == '1' %}
+                    <a class="close" href="{{ path('listpromo') }}"><span aria-hidden="true">&times;</span></a>
+                    {% if form3.estProm.vars.value  == '1' %}
                     <h4 class="modal-title" id="FormNuevo"> Desactivar Promocion</h4>
                     {% else %}
                     <h4 class="modal-title" id="FormNuevo"> Activar Promocion</h4>
@@ -119,7 +119,7 @@
                             </div>
                             <div class="media-body">
                                 <p id="ms">
-                                {% if form3.estado.vars.value  == '1' %}
+                                {% if form3.estProm.vars.value  == '1' %}
                                 ¿Está seguro que desea desactivar la promocion: {{ form3.titProm.vars.value }}?
                                 {% else %}
                                 ¿Está seguro que desea activar la promocion: {{ form3.titProm.vars.value }}?
@@ -130,7 +130,7 @@
                     </div>
                     <div class="modal-footer">
                         <div class="col-md-11"><a href="{{ path('regpromo') }}" class="btn btn-primary">No</a></div>
-                        {% if form3.estado.vars.value  == '1' %}
+                        {% if form3.estProm.vars.value  == '1' %}
                         <div class="col-md-1">{{ form_row(form3.Si,{ 'attr': {'class': 'btn btn-danger'} }) }}</div>
                         {% else %}
                         <div class="col-md-1">{{ form_row(form3.Si,{ 'attr': {'class': 'btn btn-success'} }) }}</div>
@@ -170,11 +170,7 @@
                     <td>{{ promocion.preProm }}</td>
                     <td>{{ promocion.fechInProm|date('Y-m-d') }}</td>
                     <td>{{ promocion.fechFinProm|date('Y-m-d') }}</td>
-                    {% for cat in categorias %}
-                        {% if promocion.catPromFk.id == cat.id %}
-                    <td>{{ cat.desCat }}</td>
-                        {% endif %}
-                    {% endfor %}
+                    <td>{{ promocion.catPromFk.desCat }}</td>
                     <td>{% if promocion.estProm == 1 %}
                             <a class="btn bg-info" href="{{ path('modifpromo',{'id':promocion.id}) }}">Modificar</a>
                         {% endif %}

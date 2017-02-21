@@ -71,11 +71,8 @@ class PromocionesController extends Controller
         $promocion = $em->find('AppBundle:Promocion', $id);
         $cate = $em->find('AppBundle:Categoria', $id);
         $emp = $em->find('AppBundle:Empresa', 1);
-        dump($emp);
         $promocion->setCatPromFk($cate);
         $promocion->setEmpPromFk($emp);
-       // dump($promocion);
-      //  die();
         if ($promocion==null)
         {
             $ms="La promocion no existe";
@@ -99,29 +96,27 @@ class PromocionesController extends Controller
                 $this->addFlash('error',"Ya existe una promocion con el mismo nombre");
                 return $this->redirectToRoute('listpromo');
             }
-
         }
-        //return $this->redirectToRoute('listpromo');
-        return $this->redirect('emp/promociones.html.twig',array("promociones"=>$promociones));
+        return $this->render('emp/promociones.html.twig',array('promociones'=>$promociones,"form2"=>$form->createView()));
     }
 
 
     /**
-     * @Route("/emp/promociones/eliminar", name="elimpromo")
+     * @Route("/emp/promociones/eliminar/{id}", name="elimpromo",requirements={"id": "\d+"})
      */
 
-    public function delPromoAction(Request $request)
+    public function delPromoAction(Request $request,$id)
     {
         $em=$this->getDoctrine()->getManager();
         $promociones=$this->promAll();
-        $promocion=$em->find('AppBundle:Promocion');
+        $promocion=$em->find('AppBundle:Promocion',$id);
         if ($promocion==null)
         {
             $ms="La promocion no existe";
             $this->addFlash('error',"$ms");
             return $this->redirectToRoute("listpromo");
         }else{
-            $form=$this->createForm($promocion);
+            $form=$this->createForm(PromocionType::class,$promocion);
             $form->handleRequest($request);
             if($form->isValid() && $form->isSubmitted())
             {
@@ -138,10 +133,10 @@ class PromocionesController extends Controller
                 }
                 $em->flush();
                 $this->addFlash('succes',"$ms");
-                return $this->redirectToRoute('listarpromo');
+                return $this->redirectToRoute("listpromo");
             }
         }
-        return $this->redirect('emp/promociones.html.twig',array("promociones"=>$promociones,"form2"=>$form->createView()));
+        return $this->render('emp/promociones.html.twig',array("promociones"=>$promociones,"form3"=>$form->createView()));
     }
 
 
