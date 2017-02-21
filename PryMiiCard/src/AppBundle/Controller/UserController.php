@@ -16,6 +16,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use AppBundle\Entity\Reserva;
 
 class UserController extends Controller 
 {
@@ -47,9 +48,7 @@ class UserController extends Controller
 		
 		return $this->render('user/Detalle.html.twig',array('promos'=>$promos));
 	}
-	
-	
-	
+
 	/**
 	 * @Route("/usuario/promociones", options={"expose"=true}, name="prom_index")
 	 */
@@ -74,6 +73,37 @@ class UserController extends Controller
 			return new JsonResponse(array('promos_html' => $promos_html));
 		}else{
 			return $this->redirectToRoute('prom_index');
+		}
+	}
+	
+	/**
+	 * @Route("/usuario/reservas", options={"expose"=true}, name="reserv_us")
+	 */
+	public function resAction(Request $request)
+	{
+		if ($request->isXMLHttpRequest()){
+			$user=$this->getUser();
+			$id = $request->get($user);
+			$em = $this->getDoctrine()->getManager();
+			$reserv=$em->find("AppBundle:Reserva",$id);
+			dump($reserv);
+			die();
+			$promos = $em->getRepository('AppBundle:Promocion')->findBy(
+					array('usuResFk' => $reserv));
+			dump($promos);
+			die();
+			
+			$em = $this->getDoctrine()->getManager();
+			$em->flush();
+				
+			//$categorias=$this->catAll();
+			$promos_html=$this->render('user/formReserv.html.twig',array(
+					'promos'=> $promos
+			))->getContent();
+				
+			return new JsonResponse(array('promos_html' => $promos_html));
+		}else{
+			return $this->redirectToRoute('reserv_us');
 		}
 	}
 	
@@ -202,10 +232,13 @@ class UserController extends Controller
 					$tms='error';
 				}
 				$this->addFlash($tms,$ms);
-			}	
-			
+			}
 			return $this->render("user/miiperfil.html.twig",array("user"=>$user,"form"=>$form->createView()));
+			
+		}else{
+			return $this->redirectToRoute('user_logout');
 		}
+		
 	}
 	
 	/**
@@ -213,15 +246,12 @@ class UserController extends Controller
 	 */
 	
 	public function micardAction(){
-		//$user=$this->getUser();
-		//if($user->getEstado()== 1){
-			return $this->render('user/miicard.html.twig',array("menssaje"=>''));
-		/*}else{
-			throw new AccessDeniedException();
-		}*/
+		
+			$promos=$this->promAll();
+			$reserv=$this->resAll();
+			return $this->render('user/miicard.html.twig',array("promos"=>$promos,'reserv'=>$reserv));
+		
 	}
-	
-	
 	
 	/**
 	 * @Route("/usuario/miiperfil/down", name="user_delete")
@@ -229,19 +259,15 @@ class UserController extends Controller
 	public function userdeleteAction(Request $request)
 	{	
 		$user=$this->getUser();
-			if($user->getEstado()==1){
-				$user->setEstado(0);
-				$ms='fue Desabilitado';
-				$tms='error';
-				
-				$em=$this->getDoctrine()->getManager();
-				$em->flush();
-				$this->addFlash($tms,$ms);
-				return $this->redirectToRoute("user_perfil");
-			}else{
-				$this->addFlash('error', 'Accion no permitida');
-				return $this->redirectToRoute("user_perfil");
-			}
+		if($user->getEstado()==1){
+			$user->setEstado(0);
+			$em=$this->getDoctrine()->getManager();
+			$em->flush();
+			return $this->redirectToRoute('user_logout');
+		}else{
+			$this->addFlash('error', 'Accion no permitida');
+		}
+		return $this->render('user/miiperfil.html.twig');
 	}
 	
 	private function usAll(){
@@ -259,6 +285,11 @@ class UserController extends Controller
 		$prom= $em->getRepository('AppBundle:Promocion')->findAll();
 		return $prom;
 	}
-	
+	private function resAll(){
+		//$user=$this->getUser();
+		$em=$this->getDoctrine()->getManager();
+		$res= $em->getRepository('AppBundle:Reserva')->findAll();
+		return $res;
+	}
 	
 }

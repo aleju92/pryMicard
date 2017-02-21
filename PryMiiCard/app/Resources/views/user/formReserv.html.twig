@@ -1,0 +1,22 @@
+<div id="tablediv">
+	<div class="container">
+         		{% for res in reserv %}
+             		{% for promo in promos %}
+             			{% if promo.estProm == 1 %}
+             				<div class="form-group col-md-4" >
+                                	<div class="thumbnail ">
+            							<img src="{{ asset('images/perfil.jpg') }}" width="171px" height="180px"  alt="reservas">
+                                          <div class="caption">
+                                            <h3>{{ promo.titProm }}</h3>
+                                            <p>...</p>
+                                            <p><a class="btn btn-primary" href="{{ path('det_prom',{'id':promo.id}) }}" role="button">Ver más</a> 
+                                            <a href="#" class="btn btn-default" role="button">Reservar</a></p>
+                                          </div>
+                               		</div>
+                              	</div>
+            			{% endif %}
+            			
+            		{% endfor %}
+            {% endfor %}
+        </div>
+</div>
