@@ -73,13 +73,14 @@ class SAdminController extends Controller
                 $password=$this->get('security.password_encoder')
                           ->encodePassWord($Admin,$Admin->getPasswordTemp());
                 $Admin->setPassAdm($password);
-                //Dar formato a la  Foto
-                $img=$form['photoAdm']->getData();
-                $ext=$img->guessExtension();
-                $file_name =time().".".$ext;
-                //Subir la foto al servidor
-                $img->move("AdminPerfil",$file_name);
-
+                if($form['photoAdm']->getData() != null) {
+                    //Dar formato a la  Foto
+                    $img = $form['photoAdm']->getData();
+                    $ext = $img->guessExtension();
+                    $file_name = time() . "." . $ext;
+                    //Subir la foto al servidor
+                    $img->move("AdminPerfil", $file_name);
+                }
                 //Datos adicionales del administrador
                 $Admin->setPhotoAdm($file_name);
                 $Admin->setTipAdm(1);
@@ -198,30 +199,21 @@ class SAdminController extends Controller
     public function miPerfil(Request $request){
         $adminUser=$this->getUser();
         $em=$this->getDoctrine()->getManager();
-        //$adminUser=$em->find("AppBundle:Administrador", $idUser);
-            //$form=$this->createForm(AdministradorType::class, $adminUser);
-            $form=$this->createFormBuilder($adminUser)
+        $form=$this->createFormBuilder($adminUser)
                     ->add('nomAdm',TextType::class,array('label'=>'Nombres','required'=>true))
                     ->add('apeAdm',TextType::class,array('label'=>'Apellido','required'=>true))
                     ->add('emAdm',EmailType::class,array('label'=>'Email Personal'))
                     ->add('PasswordTemp',HiddenType::class)
-                    ->add('path',HiddenType::class,array('mapped'=>false))
                     ->add('photoAdm',FileType::class,array('label'=>'Foto Personal','data_class' => null))
                     ->add('useAdm',TextType::class,array('label'=>'Nombre de Usuario'))
                     ->add('Guardar',SubmitType::class)
                     ->getForm();
-            $form->get('PasswordTemp')->setData('pass');
-            $form->get('path')->setData($adminUser->getPathPhotoAdm());
-            $form->handleRequest($request);
-            if($form->isSubmitted()){
+        $form->get('PasswordTemp')->setData('pass');
+        $path=$adminUser->getPathPhotoAdm();
+        $form->handleRequest($request);
+           if($form->isSubmitted()){
                 if( $form->isValid()){
                     $adminUser=$form->getData();
-
-                    //encriptacion de passwprd
-                    $password=$this->get('security.password_encoder')
-                        ->encodePassword($adminUser,$adminUser->getPasswordTemp());
-                    $adminUser->setPassAdm($password);
-                    
                     if(! $form->get('photoAdm')->isEmpty()) {
                         //Subir la foto
                         $img = $form['photoAdm']->getData();
@@ -232,6 +224,7 @@ class SAdminController extends Controller
                         $img->move("AdminPerfil", $file_name);
 
                         $adminUser->setPhotoAdm($file_name);
+                        $path=$adminUser->getPathPhotoAdm();
                     }
 
                     $em->persist($adminUser);
@@ -242,48 +235,51 @@ class SAdminController extends Controller
                     $ms="Error!!!, los datos son incorrectos ";
                     $tms='error';
                 }
-                $this->addFlash($tms,$ms);
+                 $this->addFlash($tms,$ms);
             }
 
-        return $this->render("sa/miperfil.html.twig",array('Form'=>$form->createView()));
+        return $this->render("sa/miperfil.html.twig",array('Form'=>$form->createView(),'pathfoto'=>$path));
     }
+
+
 
     /**
      * @Route("/sa/MiiPerfil/PassWord", options={"expose"=true}, name="SaAdmPass")
      */
     public function verificarPassword(Request $request){
         if ($request->isXmlHttpRequest()){
-            $passText=$request->get('passText');
-            $idUser=$request->get('idUser');
-            $em=$this->getDoctrine()->getManager();
-            $adminUser=$em->find("AppBundle:Administrador", $idUser);
-            $password=$this->get('security.password_encoder')
-                ->encodePassWord($adminUser,$passText);
-            if($password==$adminUser->getPassAdm()){
+            $adminUser=$this->getUser();
+
+            $passi=$request->get('pass');
+            if(password_verify ($passi,$adminUser->getPassword())){
                 $form=$this->createFormBuilder($adminUser)
-                            ->add('PasswordTemp',RepeatedType::class, array(
-                                'type' => PasswordType::class,
-                                'first_options' => array('label' =>'Nueva Contraseña'),
-                                'second_options' => array('label' => 'Confirme su nueva contraseña')))
-                            ->add('cambiar',SubmitType::class)
-                            ->getForm();
+                    ->add('PasswordTemp',RepeatedType::class, array(
+                        'type' => PasswordType::class,
+                        'first_options' => array('label' =>'Nueva Contraseña'),
+                        'second_options' => array('label' => 'Confirme su nueva contraseña')))
+                    ->add('cambiar',SubmitType::class)
+                    ->getForm();
 
                 $formRende=$this->render("sa/formRender.html.twig",array('Form1'=>$form->createView()))->getContent();
-                return new JsonResponse(array('id'=>$idUser,'mensaje'=>'la contraseña coincide','typems'=>'success','Form'=>$formRende));
+                return new JsonResponse(array('mensaje'=>'la contraseña coincide','typems'=>'success','Form'=>$formRende));
             }else{
-                return new JsonResponse(array('mensaje'=>'Error!, la contraseña no coincide','typems'=>'danger','passw'=>$password));
+                $ms="malo";
+                return new JsonResponse(array('mensaje'=>'Error!, la contraseña no coincide o el valor ingresado está vacío','typems'=>'danger'));
             }
+
         }else{
             $this->addFlash('error','Error!!,Accion no permitida');
             return $this->redirectToRoute('miPerfilSa');
         }
 
     }
+
     /**
      * @Route("/sa/MiiPerfil/PassWordEdit", options={"expose"=true}, name="SaAdmPassEdit")
      */
     public function changePassWord(Request $request){
         if($request->isXmlHttpRequest()){
+            $Admin=$this->getUser();
             //creamos el form
             $form=$this->createFormBuilder()
                 ->add('PasswordTemp',RepeatedType::class, array(
@@ -292,15 +288,16 @@ class SAdminController extends Controller
                     'second_options' => array('label' => 'Confirme su nueva contraseña')))
                 ->add('cambiar',SubmitType::class)
                 ->getForm();
-  //          dump($request->get('form'));
-    //        $form1=$this->createFormBuilder()->getForm();
-
-//            $form1=$request->get('form');
             $form->handleRequest($request);
-            if($form->isValid()){
-                return new JsonResponse(array('message'=>'formulario valido','pass'=>$form->get('PasswordTemp')->getData(),'id'=>$request->get('idUser')));
+            if($form->isValid() && !$form->get('PasswordTemp')->isEmpty()){
+                $password=$this->get('security.password_encoder')
+                    ->encodePassWord($Admin,$form->get('PasswordTemp')->getData());
+                $Admin->setpassAdm($password);
+                $em=$this->getDoctrine()->getManager();
+                $em->flush();
+                return new JsonResponse(array('mensaje'=>'Nueva contraseña aceptada.','typems'=>'success'));
             }else{
-                return new JsonResponse(array('message'=>'formulario  no valido','Form'=>$this->render("sa/formRender.html.twig",array('Form1'=>$form->createView()))));
+                return new JsonResponse(array('mensaje'=>'La nueva contraseña no coincide','typems'=>'danger','Form'=>$this->render("sa/formRender.html.twig",array('Form1'=>$form->createView()))));
             }
 
         }else{
@@ -308,6 +305,8 @@ class SAdminController extends Controller
             return $this->redirectToRoute('miPerfilSa');
         }
     }
+
+
     private function AdminAll(){
         $em=$this->getDoctrine()->getManager();
         $Administadores= $em->getRepository('AppBundle:Administrador')->findAll();
