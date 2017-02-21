@@ -48,8 +48,6 @@ class PromocionesController extends Controller
                 return $this->render("emp/regpromocion.html.twig",array("form"=>$form->createView()));
             }
         }
-        $ms = "submit pero no valido";
-        $this->addFlash('error',"$ms");
         return $this->render("emp/regpromocion.html.twig",array("form"=>$form->createView()));
     }
 
@@ -64,13 +62,20 @@ class PromocionesController extends Controller
     }
 
     /**
-     * @Route("/emp/promociones/modificar", name="modifpromo")
+     * @Route("/emp/promociones/modificar/{id}", name="modifpromo",requirements={"id": "\d+"})
      */
     public function modPromAction(Request $request,$id)
     {
-        $promocion=$this->promAll();
-        $em=$this->getDoctrine()->getManager();
-        $promociones=$em->find('AppBundle:Promocion',$id);
+        $promociones = $this->promAll();
+        $em = $this->getDoctrine()->getManager();
+        $promocion = $em->find('AppBundle:Promocion', $id);
+        $cate = $em->find('AppBundle:Categoria', $id);
+        $emp = $em->find('AppBundle:Empresa', 1);
+        dump($emp);
+        $promocion->setCatPromFk($cate);
+        $promocion->setEmpPromFk($emp);
+       // dump($promocion);
+      //  die();
         if ($promocion==null)
         {
             $ms="La promocion no existe";
@@ -80,6 +85,7 @@ class PromocionesController extends Controller
             try{
                 $form=$this->createForm(PromocionType::class,$promocion);
                 $form->handleRequest($request);
+             
                 if($form->isSubmitted() && $form->isValid())
                 {
                     $em=$this->getDoctrine()->getManager();
@@ -87,26 +93,28 @@ class PromocionesController extends Controller
                     $em->flush();
                     $ms="Promocion Modificada";
                     $this->addFlash('succes',"$ms");
-                    return $this->redirectToRoute("listarpromo");
+                    return $this->redirectToRoute("listpromo");
                 }
             }catch(\PDOException $exception){
                 $this->addFlash('error',"Ya existe una promocion con el mismo nombre");
-                return $this->redirectToRoute('listarpromo');
+                return $this->redirectToRoute('listpromo');
             }
 
         }
-        return $this->redirect('emp/promociones.html.twig',array("promociones"=>$promociones,"form2"=>$form->createView()));
+        //return $this->redirectToRoute('listpromo');
+        return $this->redirect('emp/promociones.html.twig',array("promociones"=>$promociones));
     }
+
 
     /**
      * @Route("/emp/promociones/eliminar", name="elimpromo")
      */
 
-    public function delPromoAction(Request $request,$id)
+    public function delPromoAction(Request $request)
     {
         $em=$this->getDoctrine()->getManager();
         $promociones=$this->promAll();
-        $promocion=$em->find('AppBundle:Promocion',$id);
+        $promocion=$em->find('AppBundle:Promocion');
         if ($promocion==null)
         {
             $ms="La promocion no existe";
@@ -115,8 +123,25 @@ class PromocionesController extends Controller
         }else{
             $form=$this->createForm($promocion);
             $form->handleRequest($request);
-            $form->get('estado')->setData($promocion->getEstado());
+            if($form->isValid() && $form->isSubmitted())
+            {
+                $ms="La promocion";
+                if($promocion->getEstProm()==1)
+                {
+                    $promocion->setEstProm(0);
+                    $ms="fue deshabilitada";
+                }
+                else
+                {
+                    $promocion->setEstProm(1);
+                    $ms="fue habilitada";
+                }
+                $em->flush();
+                $this->addFlash('succes',"$ms");
+                return $this->redirectToRoute('listarpromo');
+            }
         }
+        return $this->redirect('emp/promociones.html.twig',array("promociones"=>$promociones,"form2"=>$form->createView()));
     }
 
 

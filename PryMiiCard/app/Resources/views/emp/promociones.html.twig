@@ -93,6 +93,7 @@
             </div>
         </div>
     </div>
+
     {% if form3 is defined %}
         {{ form_start(form3) }}
         {% form_theme form3 'bootstrap_3_layout.html.twig' %}
@@ -148,6 +149,7 @@
     <div class="table-responsive">
         <table id="#PromocionesTable" class="table table-striped">
             <tr>
+                <th>      </th>
                 <th>Titulo</th>
                 <th>Detalle</th>
                 <th>Tipo</th>
@@ -158,22 +160,30 @@
                 <th>Categoria</th>
             </tr>
 
-            {%  for promo in promociones %}
+            {%  for promocion in promociones %}
                 <tr>
                     <td>{{ loop.index }}</td>
-                    <td>{{ promo.titProm }}</td>
-                    <td>{{ promo.detProm }}</td>
-                    <td>{{ promo.tipProm }}</td>
-                    <td>{{ promo.numProm }}</td>
-                    <td>{{ promo.preProm }}</td>
-                    <td>{{ promo.fechInProm|date('Y-m-d') }}</td>
-                    <td>{{ promo.fechFinProm|date('Y-m-d') }}</td>
-
+                    <td>{{ promocion.titProm }}</td>
+                    <td>{{ promocion.detProm }}</td>
+                    <td>{{ promocion.tipProm }}</td>
+                    <td>{{ promocion.numProm }}</td>
+                    <td>{{ promocion.preProm }}</td>
+                    <td>{{ promocion.fechInProm|date('Y-m-d') }}</td>
+                    <td>{{ promocion.fechFinProm|date('Y-m-d') }}</td>
                     {% for cat in categorias %}
-                        {% if promo.catPromFk.id == cat.id %}
+                        {% if promocion.catPromFk.id == cat.id %}
                     <td>{{ cat.desCat }}</td>
                         {% endif %}
                     {% endfor %}
+                    <td>{% if promocion.estProm == 1 %}
+                            <a class="btn bg-info" href="{{ path('modifpromo',{'id':promocion.id}) }}">Modificar</a>
+                        {% endif %}
+                    </td>
+
+                    <td>{% if promocion.estProm == 1 %}
+                            <a class="btn bg-info" href="{{ path('elimpromo',{'id':promocion.id}) }}">Eliminar</a>
+                        {% endif %}
+                    </td>
             {% endfor %}
         </table>
     </div>
